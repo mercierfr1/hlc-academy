@@ -16,6 +16,8 @@ client
 // For server-side operations, we need to use the API key differently
 const databases = new Databases(client, API_KEY);
 
+const databases = new Databases(client);
+
 async function createCollections() {
     try {
         console.log('🚀 Creating Appwrite collections for HLC Academy...');
@@ -133,4 +135,4 @@ async function createCollections() {
 }
 
 // Run the setup
-createCollections();
+createCollections();        

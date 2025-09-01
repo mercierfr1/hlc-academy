@@ -1,8 +1,9 @@
 import { Progress } from "@/components/ui/progress";
-import { calculateCourseProgress } from "@/lib/progress";
+import { calculateCourseProgress, getStoredProgress } from "@/lib/progress";
 
 export function ProgressBar() {
   const courseProgress = calculateCourseProgress();
+  const userProgress = getStoredProgress();
   
   return (
     <div className="bg-muted/50 border-b">
@@ -17,7 +18,7 @@ export function ProgressBar() {
         <div className="flex items-center justify-between mt-2 text-sm text-muted-foreground">
           <span>{courseProgress.lessonsCompleted} of {courseProgress.totalLessons} lessons completed</span>
           <span>•</span>
-          <span>{courseProgress.totalXP} XP earned</span>
+          <span>{userProgress.totalXP} XP earned</span>
         </div>
       </div>
     </div>
