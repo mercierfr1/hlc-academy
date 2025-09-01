@@ -49,7 +49,7 @@ app.post('/api/create-checkout-session', async (req, res) => {
 
         console.log('✅ Checkout session created:', session.id);
 
-        res.json({ id: session.id });
+        res.json({ url: session.url });
     } catch (error) {
         console.error('Error creating checkout session:', error);
         res.status(500).json({ error: error.message });
