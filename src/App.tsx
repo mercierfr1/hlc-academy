@@ -24,6 +24,7 @@ import Settings from "./pages/Settings";
 import Subscribe from "./pages/Subscribe";
 import Success from "./pages/Success";
 import TrialOnboarding from "./pages/TrialOnboarding";
+import Pricing from "./pages/Pricing";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/trial" element={<TrialOnboarding />} />
             <Route path="/subscribe" element={<Subscribe />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/success" element={<Success />} />
             <Route path="/course/fx" element={<ProtectedRoute><FXCourse /></ProtectedRoute>} />
             <Route path="/course/fx/module/:moduleSlug" element={<ProtectedRoute><FXModule /></ProtectedRoute>} />

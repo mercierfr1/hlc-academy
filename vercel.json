@@ -11,9 +11,37 @@
     {
       "src": "appwrite-backend.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "stripe-webhook.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "stripe-checkout-api.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
+    {
+      "src": "/api/webhooks/stripe",
+      "dest": "/stripe-webhook.js"
+    },
+    {
+      "src": "/api/create-checkout-session",
+      "dest": "/stripe-checkout-api.js"
+    },
+    {
+      "src": "/api/create-portal-session",
+      "dest": "/stripe-checkout-api.js"
+    },
+    {
+      "src": "/api/subscription/(.*)",
+      "dest": "/stripe-checkout-api.js"
+    },
+    {
+      "src": "/api/cancel-subscription/(.*)",
+      "dest": "/stripe-checkout-api.js"
+    },
     {
       "src": "/api/(.*)",
       "dest": "/appwrite-backend.js"

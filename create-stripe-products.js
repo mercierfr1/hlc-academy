@@ -1,146 +1,104 @@
-// Create Stripe Products and Get Price IDs
-// Run this script to automatically create your products
+// Create Stripe Products and Pricing for HLC Academy
+import Stripe from 'stripe';
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-async function createProducts() {
+async function createStripeProducts() {
     try {
-        console.log('🚀 Creating Stripe products for HLC Academy...\n');
+        console.log('🚀 Creating Stripe products for HLC Academy...');
 
-        // Product 1: Kickstart Weekly
-        console.log('📦 Creating Kickstart Weekly product...');
-        const kickstartProduct = await stripe.products.create({
-            name: 'Kickstart Weekly',
-            description: 'Perfect for beginners who want quick results - Weekly access to HLC Academy',
+        // 1. Basic Plan
+        console.log('📝 Creating Basic Plan...');
+        const basicProduct = await stripe.products.create({
+            name: 'HLC Academy Basic',
+            description: 'Essential trading education with basic tools and community access',
             metadata: {
-                plan: 'kickstart',
-                interval: 'weekly'
+                plan: 'basic',
+                features: 'basic_course,community_access,email_support'
             }
         });
 
-        const kickstartPrice = await stripe.prices.create({
-            product: kickstartProduct.id,
-            unit_amount: 3000, // £30.00 in pence
-            currency: 'gbp',
-            recurring: {
-                interval: 'week'
-            },
-            metadata: {
-                plan: 'kickstart',
-                interval: 'weekly'
-            }
-        });
-
-        console.log(`✅ Kickstart Weekly created:`);
-        console.log(`   Product ID: ${kickstartProduct.id}`);
-        console.log(`   Price ID: ${kickstartPrice.id}`);
-        console.log(`   Price: £30.00/week\n`);
-
-        // Product 2: Scale Up Monthly
-        console.log('📦 Creating Scale Up Monthly product...');
-        const scaleupProduct = await stripe.products.create({
-            name: 'Scale Up Monthly',
-            description: 'The sweet spot for serious traders ready to accelerate - Monthly access to HLC Academy',
-            metadata: {
-                plan: 'scaleup',
-                interval: 'monthly'
-            }
-        });
-
-        const scaleupPrice = await stripe.prices.create({
-            product: scaleupProduct.id,
-            unit_amount: 9700, // £97.00 in pence
-            currency: 'gbp',
+        const basicPrice = await stripe.prices.create({
+            product: basicProduct.id,
+            unit_amount: 2900, // $29.00
+            currency: 'usd',
             recurring: {
                 interval: 'month'
             },
+            nickname: 'Basic Monthly'
+        });
+
+        console.log('✅ Basic Plan created:', basicProduct.id);
+        console.log('   Price ID:', basicPrice.id);
+
+        // 2. Premium Plan
+        console.log('📝 Creating Premium Plan...');
+        const premiumProduct = await stripe.products.create({
+            name: 'HLC Academy Premium',
+            description: 'Complete trading education with advanced tools, 1-on-1 coaching, and premium community',
             metadata: {
-                plan: 'scaleup',
-                interval: 'monthly'
+                plan: 'premium',
+                features: 'all_courses,1on1_coaching,premium_community,advanced_tools,priority_support'
             }
         });
 
-        console.log(`✅ Scale Up Monthly created:`);
-        console.log(`   Product ID: ${scaleupProduct.id}`);
-        console.log(`   Price ID: ${scaleupPrice.id}`);
-        console.log(`   Price: £97.00/month\n`);
-
-        // Product 3: Mastery Quarterly
-        console.log('📦 Creating Mastery Quarterly product...');
-        const masteryProduct = await stripe.products.create({
-            name: 'Mastery Quarterly',
-            description: 'For traders committed to achieving consistent profits - 3-month access to HLC Academy',
-            metadata: {
-                plan: 'mastery',
-                interval: 'quarterly'
-            }
-        });
-
-        const masteryPrice = await stripe.prices.create({
-            product: masteryProduct.id,
-            unit_amount: 27900, // £279.00 in pence
-            currency: 'gbp',
+        const premiumPrice = await stripe.prices.create({
+            product: premiumProduct.id,
+            unit_amount: 9900, // $99.00
+            currency: 'usd',
             recurring: {
-                interval: 'month',
-                interval_count: 3
+                interval: 'month'
             },
+            nickname: 'Premium Monthly'
+        });
+
+        console.log('✅ Premium Plan created:', premiumProduct.id);
+        console.log('   Price ID:', premiumPrice.id);
+
+        // 3. Pro Plan (Annual)
+        console.log('📝 Creating Pro Plan (Annual)...');
+        const proProduct = await stripe.products.create({
+            name: 'HLC Academy Pro',
+            description: 'Ultimate trading education package with lifetime access and exclusive benefits',
             metadata: {
-                plan: 'mastery',
-                interval: 'quarterly'
+                plan: 'pro',
+                features: 'all_courses,1on1_coaching,premium_community,advanced_tools,priority_support,lifetime_access,exclusive_content'
             }
         });
 
-        console.log(`✅ Mastery Quarterly created:`);
-        console.log(`   Product ID: ${masteryProduct.id}`);
-        console.log(`   Price ID: ${masteryPrice.id}`);
-        console.log(`   Price: £279.00/3 months\n`);
+        const proPrice = await stripe.prices.create({
+            product: proProduct.id,
+            unit_amount: 99900, // $999.00
+            currency: 'usd',
+            recurring: {
+                interval: 'year'
+            },
+            nickname: 'Pro Annual'
+        });
 
-        // Summary
-        console.log('🎉 All products created successfully!');
-        console.log('\n📋 Copy these Price IDs to your server-example.js:');
-        console.log('```javascript');
-        console.log('const pricing = {');
-        console.log(`    'price_kickstart_weekly': '${kickstartPrice.id}',`);
-        console.log(`    'price_scaleup_monthly': '${scaleupPrice.id}',`);
-        console.log(`    'price_mastery_quarterly': '${masteryPrice.id}'`);
-        console.log('};');
-        console.log('```');
+        console.log('✅ Pro Plan created:', proProduct.id);
+        console.log('   Price ID:', proPrice.id);
 
-        // Save to file
-        const fs = require('fs');
-        const config = {
-            products: {
-                kickstart: {
-                    productId: kickstartProduct.id,
-                    priceId: kickstartPrice.id,
-                    name: 'Kickstart Weekly',
-                    price: '£30.00/week'
-                },
-                scaleup: {
-                    productId: scaleupProduct.id,
-                    priceId: scaleupPrice.id,
-                    name: 'Scale Up Monthly',
-                    price: '£97.00/month'
-                },
-                mastery: {
-                    productId: masteryProduct.id,
-                    priceId: masteryPrice.id,
-                    name: 'Mastery Quarterly',
-                    price: '£279.00/3 months'
-                }
-            }
+        console.log('');
+        console.log('🎉 All Stripe products created successfully!');
+        console.log('');
+        console.log('📋 Product Summary:');
+        console.log('  Basic Plan: $29/month -', basicPrice.id);
+        console.log('  Premium Plan: $99/month -', premiumPrice.id);
+        console.log('  Pro Plan: $999/year -', proPrice.id);
+        console.log('');
+        console.log('🔗 Add these Price IDs to your frontend for checkout!');
+
+        return {
+            basic: basicPrice.id,
+            premium: premiumPrice.id,
+            pro: proPrice.id
         };
 
-        fs.writeFileSync('stripe-config.json', JSON.stringify(config, null, 2));
-        console.log('\n💾 Configuration saved to stripe-config.json');
-
     } catch (error) {
-        console.error('❌ Error creating products:', error.message);
-        if (error.type === 'StripeInvalidRequestError') {
-            console.error('This might be because the products already exist or there\'s an issue with the API key.');
-        }
+        console.error('❌ Error creating Stripe products:', error);
     }
 }
 
-// Run the function
-createProducts();
+// Run the setup
+createStripeProducts();
