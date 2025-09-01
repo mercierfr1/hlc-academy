@@ -1,26 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "appwrite-backend.js": {
+      "runtime": "nodejs18.x"
     },
-    {
-      "src": "appwrite-backend.js",
-      "use": "@vercel/node"
+    "stripe-webhook.js": {
+      "runtime": "nodejs18.x"
     },
-    {
-      "src": "stripe-webhook.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "stripe-checkout-api.js",
-      "use": "@vercel/node"
+    "stripe-checkout-api.js": {
+      "runtime": "nodejs18.x"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/webhooks/stripe",
