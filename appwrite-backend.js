@@ -15,21 +15,21 @@ app.use(express.json());
 // Initialize Appwrite
 const client = new Client();
 client
-    .setEndpoint(process.env.APPWRITE_ENDPOINT || 'https://cloud.appwrite.io/v1')
-    .setProject(process.env.APPWRITE_PROJECT_ID)
+    .setEndpoint(process.env.VITE_APPWRITE_ENDPOINT || 'https://cloud.appwrite.io/v1')
+    .setProject(process.env.VITE_APPWRITE_PROJECT_ID)
     .setKey(process.env.APPWRITE_API_KEY);
 
 const databases = new Databases(client);
 const account = new Account(client);
 
 // Database and Collection IDs
-const DATABASE_ID = process.env.APPWRITE_DATABASE_ID;
+const DATABASE_ID = process.env.VITE_APPWRITE_DATABASE_ID;
 const COLLECTIONS = {
-    USERS: process.env.APPWRITE_USERS_COLLECTION_ID || 'users',
-    TRADING_GOALS: process.env.APPWRITE_GOALS_COLLECTION_ID || 'trading_goals',
-    TRADING_ENTRIES: process.env.APPWRITE_ENTRIES_COLLECTION_ID || 'trading_entries',
-    TRADING_PLANS: process.env.APPWRITE_PLANS_COLLECTION_ID || 'trading_plans',
-    SUBSCRIPTIONS: process.env.APPWRITE_SUBSCRIPTIONS_COLLECTION_ID || 'subscriptions',
+    USERS: process.env.VITE_APPWRITE_USERS_COLLECTION_ID || 'users',
+    TRADING_GOALS: process.env.VITE_APPWRITE_GOALS_COLLECTION_ID || 'trading_goals',
+    TRADING_ENTRIES: process.env.VITE_APPWRITE_ENTRIES_COLLECTION_ID || 'trading_entries',
+    TRADING_PLANS: process.env.VITE_APPWRITE_PLANS_COLLECTION_ID || 'trading_plans',
+    SUBSCRIPTIONS: process.env.VITE_APPWRITE_SUBSCRIPTIONS_COLLECTION_ID || 'subscriptions',
 };
 
 // Health check
@@ -298,7 +298,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
     console.log(`🚀 HLC Academy API server running on port ${PORT} with Appwrite!`);
     console.log(`📊 Database: ${DATABASE_ID}`);
-    console.log(`🔑 Project: ${process.env.APPWRITE_PROJECT_ID}`);
+    console.log(`🔑 Project: ${process.env.VITE_APPWRITE_PROJECT_ID}`);
 });
 
 export default app;
