@@ -7,29 +7,9 @@
       "config": {
         "distDir": "dist"
       }
-    },
-    {
-      "src": "appwrite-backend.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "stripe-webhook.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/create-checkout-session.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
-    {
-      "src": "/api/webhooks/stripe",
-      "dest": "/stripe-webhook.js"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/appwrite-backend.js"
-    },
     {
       "src": "/(.*)",
       "dest": "/$1"
