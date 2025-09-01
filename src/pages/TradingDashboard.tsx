@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { TradeJournal } from '@/components/TradeJournal';
 import { TradingGoals } from '@/components/TradingGoals';
+import { Link } from 'react-router-dom';
 
 export default function TradingDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -71,6 +72,30 @@ export default function TradingDashboard() {
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Premium Upgrade Banner */}
+        <div className="mb-8">
+          <Card className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 border-blue-200 dark:border-blue-800">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold">Unlock Premium Trading Tools</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Get advanced analytics, unlimited trade entries, and 1-on-1 coaching
+                    </p>
+                  </div>
+                </div>
+                <Button asChild>
+                  <Link to="/pricing">Upgrade Now</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="hover:shadow-lg transition-shadow">

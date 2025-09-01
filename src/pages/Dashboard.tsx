@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
-import { BookOpen, Clock, Trophy, Target, Flame, TrendingUp, Play, Lock, CheckCircle2, CreditCard, Settings, LogOut } from "lucide-react";
+import { BookOpen, Clock, Trophy, Target, Flame, TrendingUp, Play, Lock, CheckCircle2, CreditCard, Settings, LogOut, BarChart3 } from "lucide-react";
 import { calculateCourseProgress, getDailyGoalProgress, getStoredProgress, getModuleProgress } from "@/lib/progress";
 import { fxCourse } from "@/data/fxCourseData";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -158,7 +158,7 @@ export default function Dashboard() {
                         size="sm"
                         asChild
                       >
-                        <Link to="/subscribe">
+                        <Link to="/pricing">
                           Subscribe Now
                         </Link>
                       </Button>

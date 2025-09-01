@@ -20,7 +20,7 @@ export default function HomePage() {
               <Link to="#" className="hover:text-primary-foreground/80 transition-colors">Traders</Link>
               <Link to="#" className="hover:text-primary-foreground/80 transition-colors">Investors</Link>
               <Link to="#" className="hover:text-primary-foreground/80 transition-colors">Institutions</Link>
-              <Link to="#" className="hover:text-primary-foreground/80 transition-colors">Pricing</Link>
+              <Link to="/pricing" className="hover:text-primary-foreground/80 transition-colors">Pricing</Link>
               <Link to="#" className="hover:text-primary-foreground/80 transition-colors">Resources</Link>
               <Button variant="secondary" size="sm" asChild>
                 <Link to="/auth">Sign Up</Link>
@@ -45,7 +45,7 @@ export default function HomePage() {
               HLC Academy provides everything you need to master supply and demand trading strategies and achieve consistent profitability. No need for Expensive courses or mentors.
             </p>
             <Button size="lg" className="text-lg px-8 py-3" asChild>
-              <Link to="/subscribe">Start free 3-day trial</Link>
+              <Link to="/pricing">Start free 3-day trial</Link>
             </Button>
           </div>
         </div>
@@ -82,7 +82,7 @@ export default function HomePage() {
                   <p className="text-muted-foreground">Now available from £30/week</p>
                 </div>
                 <Button variant="outline" asChild>
-                  <Link to="/subscribe">Learn More</Link>
+                  <Link to="/pricing">Learn More</Link>
                 </Button>
               </div>
             </CardContent>
@@ -199,7 +199,9 @@ export default function HomePage() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Every trader is guaranteed to achieve consistent profitability or your money back, regardless of experience level.
           </h2>
-          <Button variant="secondary" size="lg">Learn More</Button>
+          <Button variant="secondary" size="lg" asChild>
+            <Link to="/pricing">Learn More</Link>
+          </Button>
         </div>
       </section>
 
@@ -305,7 +307,7 @@ export default function HomePage() {
                   </label>
                 </div>
                 <Button className="w-full" size="lg" asChild>
-                  <Link to="/subscribe">Sign up now</Link>
+                  <Link to="/pricing">Sign up now</Link>
                 </Button>
                 <p className="text-xs text-muted-foreground text-center">
                   HLC Academy will never share your details with third parties. Trading involves risk.
@@ -332,7 +334,7 @@ export default function HomePage() {
             <div>
               <h3 className="font-semibold mb-4">Trading Markets</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link to="#" className="hover:text-background">Pricing</Link></li>
+                <li><Link to="/pricing" className="hover:text-background">Pricing</Link></li>
                 <li><Link to="#" className="hover:text-background">Forex Trading</Link></li>
                 <li><Link to="#" className="hover:text-background">Stock Trading</Link></li>
                 <li><Link to="#" className="hover:text-background">Cryptocurrency</Link></li>
