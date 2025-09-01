@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Details - HLC Academy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .module-details {
+            padding: 120px 0 80px;
+            background: #f8fafc;
+        }
+        
+        .module-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .module-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .lesson-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+        }
+        
+        .lesson-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-color: #6128DB;
+        }
+        
+        .lesson-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .lesson-number {
+            background: #6128DB;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .lesson-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #000000;
+        }
+        
+        .lesson-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .meta-icon {
+            font-size: 1rem;
+        }
+        
+        .lesson-description {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .lesson-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-lesson {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-watch {
+            background: #6128DB;
+            color: white;
+        }
+        
+        .btn-watch:hover {
+            background: #4a1fa8;
+            transform: translateY(-1px);
+        }
+        
+        .btn-quiz {
+            background: white;
+            color: #6128DB;
+            border: 1px solid #6128DB;
+        }
+        
+        .btn-quiz:hover {
+            background: #6128DB;
+            color: white;
+        }
+        
+        .quiz-indicator {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .module-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .module-nav-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #6b7280;
+        }
+        
+        .module-nav-btn.active {
+            background: #6128DB;
+            color: white;
+            border-color: #6128DB;
+        }
+        
+        .module-nav-btn:hover {
+            border-color: #6128DB;
+            color: #6128DB;
+        }
+        
+        .module-nav-btn.active:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">HLC Academy</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="course.html">Course</a>
+                <a href="goals.html">Goals</a>
+                <a href="#" class="nav-cta">My Progress</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Module Details -->
+    <section class="module-details">
+        <div class="container">
+            <div class="module-header">
+                <h1>Course Modules</h1>
+                <p>Each module contains 20 videos (2-3 minutes each) with quizzes after every video</p>
+            </div>
+            
+            <!-- Module Navigation -->
+            <div class="module-nav">
+                <a href="#mindset" class="module-nav-btn active">Module 1: Mindset</a>
+                <a href="#market-structure" class="module-nav-btn">Module 2: Market Structure</a>
+                <a href="#supply-demand" class="module-nav-btn">Module 3: Supply & Demand</a>
+                <a href="#liquidity" class="module-nav-btn">Module 4: Liquidity Zones</a>
+                <a href="#putting-together" class="module-nav-btn">Module 5: Putting It All Together</a>
+                <a href="#trade-plan" class="module-nav-btn">Module 6: Trade Plan & Testing</a>
+                <a href="#journaling" class="module-nav-btn">Module 7: Journaling</a>
+            </div>
+            
+            <!-- Module 1: Mindset -->
+            <div id="mindset" class="lesson-section">
+                <h2>Module 1: Mindset</h2>
+                <p class="section-subtitle">Develop the psychological foundation for successful trading</p>
+                
+                <div class="lesson-grid">
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">01</div>
+                            <div class="lesson-title">Mindset Fundamentals</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Learn the core psychological principles that separate successful traders from the rest.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">02</div>
+                            <div class="lesson-title">Resources + Recap on Mindset</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 2 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Review mindset concepts and access additional resources for reinforcement.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">03</div>
+                            <div class="lesson-title">What is FX Trading?</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Understanding the basics of foreign exchange trading and market mechanics.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">04</div>
+                            <div class="lesson-title">Currency Pairs, Quotes, Pips</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Master the fundamental terminology and concepts of FX trading.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">05</div>
+                            <div class="lesson-title">How to Make Money Trading FX</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Learn the principles of profitable trading and risk management.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">06</div>
+                            <div class="lesson-title">FX Analysis</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 2 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Introduction to different types of market analysis techniques.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">07</div>
+                            <div class="lesson-title">Are You Destined to Fail?</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Addressing common trading pitfalls and how to avoid them.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">08</div>
+                            <div class="lesson-title">What is an Edge?</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 2 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Understanding what gives you an advantage in the markets.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">09</div>
+                            <div class="lesson-title">Developing a Strategy With Positive Expectancy</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Building trading strategies that work over the long term.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">10</div>
+                            <div class="lesson-title">Pips R:R - Figure</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 2 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Understanding risk-reward ratios in pips and their importance.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">11</div>
+                            <div class="lesson-title">The 3 Fatal Trading Sins</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Identify and avoid the most common trading mistakes.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">12</div>
+                            <div class="lesson-title">Trading Mental Models</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Develop mental frameworks for better decision making.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">13</div>
+                            <div class="lesson-title">Emotional Control in Trading</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Master your emotions during winning and losing streaks.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">14</div>
+                            <div class="lesson-title">Building Trading Confidence</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 2 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Develop unshakeable confidence through proper preparation.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">15</div>
+                            <div class="lesson-title">Patience in Trading</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 2 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Learn to wait for the right opportunities.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">16</div>
+                            <div class="lesson-title">Discipline and Consistency</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Building habits that lead to long-term success.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">17</div>
+                            <div class="lesson-title">Handling Losses</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Turn losses into learning opportunities.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">18</div>
+                            <div class="lesson-title">Celebrating Wins</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 2 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Acknowledge success while staying humble.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">19</div>
+                            <div class="lesson-title">Mindset Review</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 3 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +20 XP</span>
+                            <span class="quiz-indicator">Quiz Available</span>
+                        </div>
+                        <p class="lesson-description">Comprehensive review of all mindset concepts.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Watch Video</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Quiz</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-number">20</div>
+                            <div class="lesson-title">Module 1 Assessment</div>
+                        </div>
+                        <div class="lesson-meta">
+                            <span class="meta-item"><span class="meta-icon">⏱️</span> 5 min</span>
+                            <span class="meta-item"><span class="meta-icon">🎯</span> +50 XP</span>
+                            <span class="quiz-indicator">Final Quiz</span>
+                        </div>
+                        <p class="lesson-description">Comprehensive assessment to unlock Module 2.</p>
+                        <div class="lesson-actions">
+                            <a href="#" class="btn-lesson btn-watch">Review Module</a>
+                            <a href="#" class="btn-lesson btn-quiz">Take Final Quiz</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional modules would continue here with similar structure -->
+            <div style="text-align: center; margin-top: 50px; color: #6b7280;">
+                <p>Modules 2-7 follow the same structure with 20 videos each</p>
+                <p>Total: 140 videos + quizzes across all modules</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

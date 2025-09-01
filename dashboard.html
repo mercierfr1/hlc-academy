@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Dashboard - HLC Academy</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script 
+        src="https://widgets.leadconnectorhq.com/loader.js"  
+        data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
+        data-widget-id="68b5b14182891fd8eb91f3ec">
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">HLC Academy</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="course.html">Course</a>
+                <a href="goals.html">Goals</a>
+                <a href="#" class="nav-cta">My Progress</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Progress Bar -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <h2>Your Learning Journey</h2>
+                    <span class="progress-percentage">23% Complete</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 23%"></div>
+                </div>
+                <div class="progress-stats">
+                    <span>3 of 13 modules completed</span>
+                    <span>•</span>
+                    <span>1,247 XP earned</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- XP Goal Widget -->
+                <div class="widget xp-widget">
+                    <div class="widget-header">
+                        <h3>Daily XP Goal</h3>
+                        <span class="time-remaining">23 hours left</span>
+                    </div>
+                    <div class="xp-display">
+                        <div class="xp-current">0</div>
+                        <div class="xp-separator">/</div>
+                        <div class="xp-target">100</div>
+                        <div class="xp-label">XP Today</div>
+                    </div>
+                    <div class="xp-progress">
+                        <div class="xp-progress-bar">
+                            <div class="xp-progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="streak-display">
+                        <span class="streak-icon">🔥</span>
+                        <span class="streak-text">3-day streak</span>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="widget quick-actions">
+                    <div class="widget-header">
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="action-buttons">
+                        <a href="course.html" class="action-btn primary">
+                            <span class="action-icon">📚</span>
+                            Continue Learning
+                        </a>
+                        <a href="goals.html" class="action-btn secondary">
+                            <span class="action-icon">🎯</span>
+                            Set Goals
+                        </a>
+                        <a href="trading-dashboard.html" class="action-btn secondary">
+                            <span class="action-icon">📈</span>
+                            Trading Dashboard
+                        </a>
+                        <a href="#" class="action-btn secondary">
+                            <span class="action-icon">📊</span>
+                            View Analytics
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="widget recent-activity">
+                    <div class="widget-header">
+                        <h3>Recent Activity</h3>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">✅</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Completed Quiz: Support &amp; Resistance</div>
+                                <div class="activity-meta">+25 XP • 2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📹</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Watched: Chart Pattern Basics</div>
+                                <div class="activity-meta">+15 XP • 4 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">🔥</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Maintained 3-day streak</div>
+                                <div class="activity-meta">+10 XP • Yesterday</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Overview -->
+                <div class="widget course-overview">
+                    <div class="widget-header">
+                        <h3>Course Overview</h3>
+                        <a href="course.html" class="view-all">View All</a>
+                    </div>
+                    <div class="module-cards">
+                        <div class="module-card completed">
+                            <div class="module-status">✅</div>
+                            <div class="module-info">
+                                <h4>Module 1: Mindset Fundamentals</h4>
+                                <p>Develop the psychological foundation for successful trading</p>
+                                <div class="module-progress">
+                                    <span>100% Complete</span>
+                                    <span>+400 XP</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module-card in-progress">
+                            <div class="module-status">🔄</div>
+                            <div class="module-info">
+                                <h4>Module 2: Market Structure</h4>
+                                <p>Master mechanical internal structure and swing structure analysis</p>
+                                <div class="module-progress">
+                                    <span>67% Complete</span>
+                                    <span>+267 XP</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module-card locked">
+                            <div class="module-status">🔒</div>
+                            <div class="module-info">
+                                <h4>Module 3: Supply & Demand Zones</h4>
+                                <p>Learn market mechanics, S&D zone creation, and structure zones</p>
+                                <div class="module-progress">
+                                    <span>Locked</span>
+                                    <span>Complete Module 2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module-card locked">
+                            <div class="module-status">🔒</div>
+                            <div class="module-info">
+                                <h4>Module 4: Liquidity Zones</h4>
+                                <p>Master liquidity concepts and identification for institutional trading</p>
+                                <div class="module-progress">
+                                    <span>Locked</span>
+                                    <span>Complete Module 3</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="module-card locked">
+                            <div class="module-status">🔒</div>
+                            <div class="module-info">
+                                <h4>Module 5: Putting It All Together</h4>
+                                <p>Build HTF stories, POI selection, and trend trading strategies</p>
+                                <div class="module-progress">
+                                    <span>Locked</span>
+                                    <span>Complete Module 4</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motivation Section -->
+            <div class="motivation-section">
+                <div class="motivation-content">
+                    <h2>Keep Up the Great Work! 🚀</h2>
+                    <p>You're making excellent progress. At this rate, you'll complete the course in just 3 weeks!</p>
+                    <div class="motivation-stats">
+                        <div class="stat">
+                            <span class="stat-number">23</span>
+                            <span class="stat-label">Days Active</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">1,247</span>
+                            <span class="stat-label">Total XP</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Day Streak</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

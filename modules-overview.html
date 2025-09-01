@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Modules - HLC Academy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .modules-overview {
+            padding: 120px 0 80px;
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+        
+        .overview-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .overview-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #000000;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #6128DB, #4a1fa8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .overview-header p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .course-stats-banner {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 0 auto 50px;
+            max-width: 800px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f3f4f6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #6128DB;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .modules-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .module-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f3f4f6;
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+        
+        .module-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .module-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .status-completed {
+            background: #f0fdf4;
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+        
+        .status-progress {
+            background: #fef3c7;
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+        
+        .status-locked {
+            background: #f9fafb;
+            color: #9ca3af;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .subsections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        
+        .subsection-card {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+        }
+        
+        .subsection-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #6128DB;
+        }
+        
+        .subsection-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .subsection-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #000000;
+        }
+        
+        .lesson-count {
+            background: #6128DB;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .lessons-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .lesson-item:hover {
+            border-color: #6128DB;
+            background: #f8fafc;
+        }
+        
+        .lesson-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .lesson-icon.video {
+            background: linear-gradient(135deg, #6128DB, #4a1fa8);
+            color: white;
+        }
+        
+        .lesson-icon.quiz {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: white;
+        }
+        
+        .lesson-icon.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        
+        .lesson-content {
+            flex: 1;
+        }
+        
+        .lesson-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 2px;
+        }
+        
+        .lesson-meta {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+        
+        .lesson-status {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-watched {
+            color: #10b981;
+        }
+        
+        .status-pending {
+            color: #6b7280;
+        }
+        
+        .final-quiz {
+            background: linear-gradient(135deg, #6128DB, #4a1fa8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .final-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(97, 40, 219, 0.3);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: #6128DB;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary:hover {
+            background: #4a1fa8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(97, 40, 219, 0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #6128DB;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #6128DB;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-secondary:hover {
+            background: #6128DB;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .subsections-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .overview-header h1 {
+                font-size: 2rem;
+            }
+            
+            .module-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">HLC Academy</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="course.html">Course</a>
+                <a href="goals.html">Goals</a>
+                <a href="#" class="nav-cta">My Progress</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modules Overview -->
+    <section class="modules-overview">
+        <div class="container">
+            <div class="overview-header">
+                <h1>Complete Course Modules</h1>
+                <p>Master institutional supply and demand trading through our comprehensive curriculum. Each module contains detailed subsections with videos, quizzes, and practical exercises.</p>
+            </div>
+            
+            <!-- Course Stats Banner -->
+            <div class="course-stats-banner">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">Main Modules</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Subsections</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">250+</span>
+                        <span class="stat-label">Videos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">250+</span>
+                        <span class="stat-label">Quizzes</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modules Container -->
+            <div class="modules-container">
+                
+                <!-- Module 1: Mindset -->
+                <div class="module-section">
+                    <div class="module-header">
+                        <div class="module-title">
+                            <span>🧠</span>
+                            Module 1: Mindset
+                        </div>
+                        <div class="module-status status-completed">✅ Completed</div>
+                    </div>
+                    
+                    <div class="subsections-grid">
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Mindset Fundamentals</div>
+                                <div class="lesson-count">4 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'fundamentals', 1)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Lesson 1: Mindset Fundamentals</div>
+                                        <div class="lesson-meta">Video • 15 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'fundamentals', 2)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Lesson 2: Resources + Recap on Mindset</div>
+                                        <div class="lesson-meta">Video • 12 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'fundamentals', 3)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Lesson 3: What is FX Trading?</div>
+                                        <div class="lesson-meta">Video • 18 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'fundamentals', 4)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Lesson 4: Currency Pairs, Quotes, Pips</div>
+                                        <div class="lesson-meta">Video • 20 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">FX Trading Basics</div>
+                                <div class="lesson-count">3 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'fx-basics', 1)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">How to Make Money Trading FX</div>
+                                        <div class="lesson-meta">Video • 25 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'fx-basics', 2)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">FX Analysis</div>
+                                        <div class="lesson-meta">Video • 22 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'fx-basics', 3)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Are You Destined to Fail?</div>
+                                        <div class="lesson-meta">Video • 16 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Trading Psychology</div>
+                                <div class="lesson-count">4 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'psychology', 1)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">What is an Edge?</div>
+                                        <div class="lesson-meta">Video • 19 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'psychology', 2)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Developing a Strategy With Positive Expectancy</div>
+                                        <div class="lesson-meta">Video • 28 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'psychology', 3)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Pips R:R - Figure</div>
+                                        <div class="lesson-meta">Video • 14 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'psychology', 4)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">The 3 Fatal Trading Sins</div>
+                                        <div class="lesson-meta">Video • 21 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Mental Models & Strategy</div>
+                                <div class="lesson-count">2 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'mental-models', 1)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Trading Mental Models</div>
+                                        <div class="lesson-meta">Video • 24 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('mindset', 'mental-models', 2)">
+                                    <div class="lesson-icon quiz">🧠</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Mindset Fundamentals Quiz</div>
+                                        <div class="lesson-meta">Quiz • 15 questions</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="final-quiz" onclick="navigateToQuiz('mindset', 'final')">
+                        🏆 Take Final Module 1 Quiz (25 Questions)
+                    </div>
+                </div>
+                
+                <!-- Module 2: Market Structure -->
+                <div class="module-section">
+                    <div class="module-header">
+                        <div class="module-title">
+                            <span>📊</span>
+                            Module 2: Market Structure
+                        </div>
+                        <div class="module-status status-progress">🔄 In Progress</div>
+                    </div>
+                    
+                    <div class="subsections-grid">
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Market Structure Basics</div>
+                                <div class="lesson-count">3 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item" onclick="navigateToLesson('market-structure', 'basics', 1)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Market Structure Basics</div>
+                                        <div class="lesson-meta">Video • 18 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('market-structure', 'basics', 2)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Market Structure Basics (Exercise)</div>
+                                        <div class="lesson-meta">Video • 25 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('market-structure', 'basics', 3)">
+                                    <div class="lesson-icon quiz">🧠</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Market Structure Basics Quiz</div>
+                                        <div class="lesson-meta">Quiz • 12 questions</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Mechanical Structure</div>
+                                <div class="lesson-count">3 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item" onclick="navigateToLesson('market-structure', 'mechanical', 1)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Mechanical Internal Structure + ChoCH</div>
+                                        <div class="lesson-meta">Video • 22 min</div>
+                                    </div>
+                                    <div class="lesson-status status-watched">✅</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('market-structure', 'mechanical', 2)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Mechanical Swing Structure</div>
+                                        <div class="lesson-meta">Video • 28 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">⏳</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('market-structure', 'mechanical', 3)">
+                                    <div class="lesson-icon quiz">🧠</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Mechanical Structure Quiz</div>
+                                        <div class="lesson-meta">Quiz • 15 questions</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">⏳</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Advanced Concepts</div>
+                                <div class="lesson-count">2 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item" onclick="navigateToLesson('market-structure', 'advanced', 1)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Premium vs Discount</div>
+                                        <div class="lesson-meta">Video • 20 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">⏳</div>
+                                </div>
+                                <div class="lesson-item" onclick="navigateToLesson('market-structure', 'advanced', 2)">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">MTF Market Structure</div>
+                                        <div class="lesson-meta">Video • 26 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">⏳</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="final-quiz" onclick="navigateToQuiz('market-structure', 'final')">
+                        🏆 Take Final Module 2 Quiz (20 Questions)
+                    </div>
+                </div>
+                
+                <!-- Module 3: Supply & Demand -->
+                <div class="module-section">
+                    <div class="module-header">
+                        <div class="module-title">
+                            <span>⚖️</span>
+                            Module 3: Supply & Demand
+                        </div>
+                        <div class="module-status status-locked">🔒 Locked</div>
+                    </div>
+                    
+                    <div class="subsections-grid">
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Market Mechanics</div>
+                                <div class="lesson-count">1 lesson</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Market Mechanics</div>
+                                        <div class="lesson-meta">Video • 30 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Zone Creation</div>
+                                <div class="lesson-count">2 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">S&D Zone Creation</div>
+                                        <div class="lesson-meta">Video • 25 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">S&D Structure Zones</div>
+                                        <div class="lesson-meta">Video • 20 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Flip Zones</div>
+                                <div class="lesson-count">2 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">S&D Flip Zones</div>
+                                        <div class="lesson-meta">Video • 18 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">S&D Flip Zones (Walkthrough Pt2)</div>
+                                        <div class="lesson-meta">Video • 22 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="final-quiz" style="opacity: 0.5; cursor: not-allowed;">
+                        🔒 Complete Module 2 to unlock
+                    </div>
+                </div>
+                
+                <!-- Module 4: Liquidity Zones -->
+                <div class="module-section">
+                    <div class="module-header">
+                        <div class="module-title">
+                            <span>💧</span>
+                            Module 4: Liquidity Zones
+                        </div>
+                        <div class="module-status status-locked">🔒 Locked</div>
+                    </div>
+                    
+                    <div class="subsections-grid">
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Liquidity Concepts</div>
+                                <div class="lesson-count">2 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Liquidity Concepts</div>
+                                        <div class="lesson-meta">Video • 24 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Liquidity (Walkthrough EURUSD)</div>
+                                        <div class="lesson-meta">Video • 28 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="final-quiz" style="opacity: 0.5; cursor: not-allowed;">
+                        🔒 Complete Module 3 to unlock
+                    </div>
+                </div>
+                
+                <!-- Module 5: Putting It All Together -->
+                <div class="module-section">
+                    <div class="module-header">
+                        <div class="module-title">
+                            <span>🔗</span>
+                            Module 5: Putting It All Together
+                        </div>
+                        <div class="module-status status-locked">🔒 Locked</div>
+                    </div>
+                    
+                    <div class="subsections-grid">
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">HTF Story & POI Selection</div>
+                                <div class="lesson-count">1 lesson</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Building the HTF Story & POI Selection</div>
+                                        <div class="lesson-meta">Video • 32 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Trading Strategies</div>
+                                <div class="lesson-count">2 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Trading Against The HTF Trend</div>
+                                        <div class="lesson-meta">Video • 26 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Trading the M15 (Backtesting Session)</div>
+                                        <div class="lesson-meta">Video • 35 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="final-quiz" style="opacity: 0.5; cursor: not-allowed;">
+                        🔒 Complete Module 4 to unlock
+                    </div>
+                </div>
+                
+                <!-- Module 6: Trade Plan & Testing -->
+                <div class="module-section">
+                    <div class="module-header">
+                        <div class="module-title">
+                            <span>📋</span>
+                            Module 6: Trade Plan & Testing
+                        </div>
+                        <div class="module-status status-locked">🔒 Locked</div>
+                    </div>
+                    
+                    <div class="subsections-grid">
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Process & Strategy</div>
+                                <div class="lesson-count">3 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Perfecting Processes</div>
+                                        <div class="lesson-meta">Video • 22 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">How To Make Your Strategy Mechanical</div>
+                                        <div class="lesson-meta">Video • 28 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Creating Your Trade Plan</div>
+                                        <div class="lesson-meta">Video • 25 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Templates & Systems</div>
+                                <div class="lesson-count">2 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Trade Plan Template (Notion)</div>
+                                        <div class="lesson-meta">Video • 18 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Beginner Trading System</div>
+                                        <div class="lesson-meta">Video • 30 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Testing & Validation</div>
+                                <div class="lesson-count">4 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">The Simulation Game</div>
+                                        <div class="lesson-meta">Video • 20 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Case Studies</div>
+                                        <div class="lesson-meta">Video • 24 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Forward Testing (Daily Markups)</div>
+                                        <div class="lesson-meta">Video • 26 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Backtesting</div>
+                                        <div class="lesson-meta">Video • 22 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="final-quiz" style="opacity: 0.5; cursor: not-allowed;">
+                        🔒 Complete Module 5 to unlock
+                    </div>
+                </div>
+                
+                <!-- Module 7: Journaling -->
+                <div class="module-section">
+                    <div class="module-header">
+                        <div class="module-title">
+                            <span>📝</span>
+                            Module 7: Journaling & Improvement
+                        </div>
+                        <div class="module-status status-locked">🔒 Locked</div>
+                    </div>
+                    
+                    <div class="subsections-grid">
+                        <div class="subsection-card">
+                            <div class="subsection-header">
+                                <div class="subsection-title">Journaling Fundamentals</div>
+                                <div class="lesson-count">2 lessons</div>
+                            </div>
+                            <div class="lessons-list">
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">Journaling For Improvement</div>
+                                        <div class="lesson-meta">Video • 24 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                                <div class="lesson-item">
+                                    <div class="lesson-icon video">📹</div>
+                                    <div class="lesson-content">
+                                        <div class="lesson-title">AI Meeting Access</div>
+                                        <div class="lesson-meta">Video • 16 min</div>
+                                    </div>
+                                    <div class="lesson-status status-pending">🔒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="final-quiz" style="opacity: 0.5; cursor: not-allowed;">
+                        🔒 Complete Module 6 to unlock
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a href="dashboard.html" class="btn-secondary">← Back to Dashboard</a>
+                    <a href="course.html" class="btn-primary">View Course</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navigation functions
+        function navigateToLesson(module, subsection, lesson) {
+            const moduleMap = {
+                'mindset': 'mindset',
+                'market-structure': 'market-structure',
+                'supply-demand': 'supply-demand',
+                'liquidity': 'liquidity',
+                'integration': 'integration',
+                'trade-plan': 'trade-plan',
+                'journaling': 'journaling'
+            };
+            
+            const url = `lesson-video.html?module=${moduleMap[module]}&subsection=${subsection}&lesson=${lesson}`;
+            window.location.href = url;
+        }
+        
+        function navigateToQuiz(module, type) {
+            if (type === 'final') {
+                alert(`Starting ${module} final quiz! This will contain comprehensive questions covering all module content.`);
+                // Navigate to quiz page when implemented
+                // window.location.href = `quiz.html?module=${module}&type=final`;
+            }
+        }
+        
+        // Add interactive features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects for lesson items
+            document.querySelectorAll('.lesson-item').forEach(item => {
+                if (!item.style.opacity || item.style.opacity !== '0.5') {
+                    item.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-2px)';
+                        this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+                    });
+                    
+                    item.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateY(0)';
+                        this.style.boxShadow = 'none';
+                    });
+                }
+            });
+            
+            // Add click effects for final quizzes
+            document.querySelectorAll('.final-quiz').forEach(quiz => {
+                if (quiz.style.opacity !== '0.5') {
+                    quiz.addEventListener('click', function() {
+                        this.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 150);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

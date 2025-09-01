@@ -1,0 +1,22 @@
+{
+  "products": {
+    "kickstart": {
+      "productId": "prod_SyGyV3T8EX9Y8F",
+      "priceId": "price_1S2KQHCFO3z7Hw9FkmcoBEE0",
+      "name": "Kickstart Weekly",
+      "price": "£30.00/week"
+    },
+    "scaleup": {
+      "productId": "prod_SyGy7jsDDECnqC",
+      "priceId": "price_1S2KQHCFO3z7Hw9F1dExtAmD",
+      "name": "Scale Up Monthly",
+      "price": "£97.00/month"
+    },
+    "mastery": {
+      "productId": "prod_SyGyHP4DkTdAD8",
+      "priceId": "price_1S2KQICFO3z7Hw9FkyPx0Igh",
+      "name": "Mastery Quarterly",
+      "price": "£279.00/3 months"
+    }
+  }
+}

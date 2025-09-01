@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Log In - HLC Academy</title>
+    <link rel="stylesheet" href="auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script 
+        src="https://widgets.leadconnectorhq.com/loader.js"  
+        data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
+        data-widget-id="68b5b14182891fd8eb91f3ec">
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+                                <div class="nav-logo">
+                        <span class="logo-icon">🧠</span>
+                        <span class="logo-text">HLC Academy</span>
+                    </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="signup.html" class="nav-cta">Start Free Trial</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1>Welcome Back</h1>
+                    <p>Continue your neuroscience-led trading education</p>
+                </div>
+
+                <form class="auth-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-input">
+                            <input type="password" id="password" name="password" required placeholder="Enter your password">
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <span class="eye-icon">👁️</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="remember">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-submit">
+                        <span class="btn-text">Log In</span>
+                        <span class="btn-loading">Logging in...</span>
+                    </button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-auth">
+                    <button class="btn-social btn-google">
+                        <span class="social-icon">🔍</span>
+                        Continue with Google
+                    </button>
+                    <button class="btn-social btn-discord">
+                        <span class="social-icon">💬</span>
+                        Continue with Discord
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign up for free</a></p>
+                </div>
+            </div>
+
+            <div class="auth-visual">
+                <div class="visual-content">
+                    <h2>Trade with a Clearer Brain</h2>
+                    <p>Join 2,400+ traders who've transformed their decision-making through neuroscience-led education.</p>
+                    
+                    <div class="visual-stats">
+                        <div class="stat">
+                            <span class="stat-number">4.8/5</span>
+                            <span class="stat-label">Member satisfaction</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">5,000+</span>
+                            <span class="stat-label">Community messages/month</span>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-preview">
+                        <p>"The bias checklist stopped me from making impulsive trades. Game-changing."</p>
+                        <span>— Alex, London</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+</html>
