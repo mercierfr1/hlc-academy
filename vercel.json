@@ -1,50 +1,5 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "functions": {
-    "appwrite-backend.js": {
-      "runtime": "nodejs18.x"
-    },
-    "stripe-webhook.js": {
-      "runtime": "nodejs18.x"
-    },
-    "stripe-checkout-api.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/webhooks/stripe",
-      "dest": "/stripe-webhook.js"
-    },
-    {
-      "src": "/api/create-checkout-session",
-      "dest": "/stripe-checkout-api.js"
-    },
-    {
-      "src": "/api/create-portal-session",
-      "dest": "/stripe-checkout-api.js"
-    },
-    {
-      "src": "/api/subscription/(.*)",
-      "dest": "/stripe-checkout-api.js"
-    },
-    {
-      "src": "/api/cancel-subscription/(.*)",
-      "dest": "/stripe-checkout-api.js"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/appwrite-backend.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production",
-    "VITE_APPWRITE_ENDPOINT": "https://cloud.appwrite.io/v1"
-  }
+  "outputDirectory": "dist"
 }
