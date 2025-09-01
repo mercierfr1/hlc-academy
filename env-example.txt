@@ -1,12 +1,18 @@
 # HLC Academy Environment Configuration
 # Copy this file to .env and fill in your actual values
 
-# Database Configuration
-DATABASE_URL=postgresql://username:password@localhost:5432/hlc_academy
-# For Supabase: postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-REF].supabase.co:5432/postgres
+# Appwrite Configuration
+VITE_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+VITE_APPWRITE_PROJECT_ID=your-appwrite-project-id
+VITE_APPWRITE_DATABASE_ID=your-database-id
+VITE_APPWRITE_USERS_COLLECTION_ID=users
+VITE_APPWRITE_GOALS_COLLECTION_ID=trading_goals
+VITE_APPWRITE_ENTRIES_COLLECTION_ID=trading_entries
+VITE_APPWRITE_PLANS_COLLECTION_ID=trading_plans
+VITE_APPWRITE_SUBSCRIPTIONS_COLLECTION_ID=subscriptions
 
-# JWT Secret (Generate a strong random string)
-JWT_SECRET=your-super-secret-jwt-key-change-this-to-something-random
+# Appwrite API Keys (for server-side operations)
+APPWRITE_API_KEY=your-appwrite-api-key
 
 # Stripe Configuration
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here

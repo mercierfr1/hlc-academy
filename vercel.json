@@ -9,14 +9,14 @@
       }
     },
     {
-      "src": "backend-server.js",
+      "src": "appwrite-backend.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend-server.js"
+      "dest": "/appwrite-backend.js"
     },
     {
       "src": "/(.*)",
@@ -24,6 +24,7 @@
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "VITE_APPWRITE_ENDPOINT": "https://cloud.appwrite.io/v1"
   }
 }
