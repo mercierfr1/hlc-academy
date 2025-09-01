@@ -8,6 +8,7 @@
     "dev": "nodemon backend-server.js",
     "build": "vite build",
     "preview": "vite preview",
+    "vercel-build": "vite build",
     "test": "jest",
     "deploy": "./deploy-to-vercel.sh",
     "setup-db": "echo 'Run database-setup.sql in your Supabase SQL editor'",

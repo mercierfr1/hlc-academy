@@ -1,9 +1,8 @@
 {
   "version": 2,
-  "name": "hlc-academy",
   "builds": [
     {
-      "src": "src/main.tsx",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"
@@ -26,10 +25,5 @@
   ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "backend-server.js": {
-      "maxDuration": 30
-    }
   }
 }
