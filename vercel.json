@@ -2,6 +2,9 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
   "env": {
     "NODE_ENV": "production",
     "VITE_APPWRITE_ENDPOINT": "https://cloud.appwrite.io/v1"
