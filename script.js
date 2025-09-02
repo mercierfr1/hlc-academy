@@ -1,6 +1,7 @@
 // Main JavaScript for NeuroTrade Homepage
 
 document.addEventListener('DOMContentLoaded', function() {
+    ensureScrollingEnabled();
     initializeHomepage();
 });
 
@@ -72,8 +73,17 @@ function hideExitModal() {
     const modal = document.getElementById('exitModal');
     if (modal) {
         modal.classList.remove('active');
+        document.body.style.overflow = '';
         document.body.style.overflow = 'auto';
     }
+}
+
+// Ensure scrolling is always enabled on page load
+function ensureScrollingEnabled() {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
 }
 
 // Sticky CTA
@@ -444,3 +454,14 @@ const throttledScroll = debounce(function() {
 }, 16);
 
 window.addEventListener('scroll', throttledScroll);
+
+// Backup: Ensure scrolling is enabled on window load
+window.addEventListener('load', function() {
+    ensureScrollingEnabled();
+});
+
+// Additional backup: Reset scrolling on any potential issues
+window.addEventListener('beforeunload', function() {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+});

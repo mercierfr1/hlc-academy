@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to HLC Academy! - Payment Successful</title>
+    <title>Welcome to HLC Academy - Success</title>
     <link rel="stylesheet" href="styles.css">
-    <script 
-        src="https://widgets.leadconnectorhq.com/loader.js"  
-        data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
-        data-widget-id="68b5b14182891fd8eb91f3ec">
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         .success-container {
             min-height: 100vh;
@@ -23,17 +19,16 @@
         .success-card {
             background: white;
             border-radius: 20px;
-            padding: 60px 40px;
-            text-align: center;
+            padding: 50px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
+            text-align: center;
         }
         
         .success-icon {
             font-size: 4rem;
-            margin-bottom: 30px;
-            color: #10b981;
+            margin-bottom: 20px;
         }
         
         .success-title {
@@ -46,96 +41,59 @@
         .success-message {
             font-size: 1.2rem;
             color: #6b7280;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             line-height: 1.6;
         }
         
         .next-steps {
-            background: #f8fafc;
-            border-radius: 15px;
+            background: #f9fafb;
+            border-radius: 12px;
             padding: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             text-align: left;
         }
         
         .next-steps h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
             color: #1f2937;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
         }
         
-        .next-steps ol {
-            color: #4b5563;
-            line-height: 1.8;
-            padding-left: 20px;
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
         }
         
         .next-steps li {
-            margin-bottom: 10px;
-        }
-        
-        .cta-buttons {
+            padding: 8px 0;
+            color: #6b7280;
             display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
         }
         
-        .btn-primary {
-            background: #6128DB;
+        .next-steps li::before {
+            content: "✅";
+            font-size: 1.2rem;
+        }
+        
+        .btn-dashboard {
+            background: linear-gradient(135deg, #6128DB, #6128DB);
             color: white;
             padding: 15px 30px;
+            border: none;
             border-radius: 8px;
-            text-decoration: none;
+            font-size: 1.1rem;
             font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
         
-        .btn-primary:hover {
-            background: #4a1fa8;
+        .btn-dashboard:hover {
             transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: #6128DB;
-            padding: 15px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            border: 2px solid #6128DB;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background: #6128DB;
-            color: white;
-        }
-        
-        @media (max-width: 768px) {
-            .success-card {
-                padding: 40px 25px;
-            }
-            
-            .success-title {
-                font-size: 2rem;
-            }
-            
-            .success-message {
-                font-size: 1.1rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .cta-buttons a {
-                width: 100%;
-                max-width: 300px;
-                text-align: center;
-            }
+            box-shadow: 0 10px 30px rgba(97, 40, 219, 0.3);
         }
     </style>
 </head>
@@ -145,35 +103,32 @@
             <div class="success-icon">🎉</div>
             <h1 class="success-title">Welcome to HLC Academy!</h1>
             <p class="success-message">
-                Your payment was successful and your account has been created. 
-                You're now ready to start your trading transformation journey!
+                Your subscription has been successfully activated. You now have access to our complete neuroscience-led trading education platform.
             </p>
             
             <div class="next-steps">
-                <h3>What happens next?</h3>
-                <ol>
-                    <li><strong>Check your email</strong> - You'll receive login credentials within 5 minutes</li>
-                    <li><strong>Access your dashboard</strong> - Start with Module 1: Mindset Fundamentals</li>
-                    <li><strong>Join the community</strong> - Connect with other traders in our Discord</li>
-                    <li><strong>Attend live calls</strong> - Your first weekly session starts this week</li>
-                </ol>
+                <h3>What's Next?</h3>
+                <ul>
+                    <li>Check your email for your welcome package</li>
+                    <li>Join our Discord community</li>
+                    <li>Access your first course module</li>
+                    <li>Set up your trading dashboard</li>
+                    <li>Attend your first live trading call</li>
+                </ul>
             </div>
             
-            <div class="cta-buttons">
-                <a href="dashboard.html" class="btn-primary">Go to Dashboard</a>
-                <a href="index.html" class="btn-secondary">Back to Homepage</a>
-            </div>
+            <a href="dashboard.html" class="btn-dashboard">Go to Dashboard</a>
         </div>
     </div>
-    
+
     <script>
-        // Get session ID from URL if available
+        // Get session ID from URL if present
         const urlParams = new URLSearchParams(window.location.search);
         const sessionId = urlParams.get('session_id');
         
         if (sessionId) {
-            console.log('Stripe session ID:', sessionId);
-            // You can send this to your backend to verify the payment
+            console.log('Payment successful for session:', sessionId);
+            // Here you could send the session ID to your backend to verify the payment
         }
     </script>
 </body>

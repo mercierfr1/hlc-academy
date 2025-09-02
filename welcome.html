@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to HLC Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .welcome-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            margin: 20px;
+        }
+        
+        .welcome-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        
+        .welcome-header p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .next-steps {
+            background: #f0fdf4;
+            border: 1px solid #d1fae5;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .next-steps h3 {
+            color: #065f46;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .next-steps li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #047857;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .next-steps li::before {
+            content: "✅";
+            font-size: 1.2rem;
+        }
+        
+        .btn-primary {
+            background: #6128DB;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            background: #4a1f9e;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-container {
+                padding: 40px 20px;
+                margin: 10px;
+            }
+            
+            .welcome-header h1 {
+                font-size: 2rem;
+            }
+            
+            .welcome-header p {
+                font-size: 1rem;
+            }
+            
+            .next-steps {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="success-icon">🎉</div>
+        
+        <div class="welcome-header">
+            <h1>Welcome to HLC Academy!</h1>
+            <p>
+                Join 2,400+ traders who've transformed their psychology and mastered institutional supply & demand. 
+                Your trading transformation journey starts now.
+            </p>
+        </div>
+        
+        <div class="next-steps">
+            <h3>What happens next?</h3>
+            <ul>
+                <li>Check your email for login credentials and setup instructions</li>
+                <li>Join our Discord community to connect with fellow traders</li>
+                <li>Access your personalized dashboard and course materials</li>
+                <li>Attend your first live trading call this week</li>
+                <li>Start your 3-day free trial with full access to all features</li>
+            </ul>
+        </div>
+        
+        <a href="dashboard.html" class="btn-primary">Access Your Dashboard</a>
+    </div>
+</body>
+</html>

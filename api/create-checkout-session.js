@@ -3,7 +3,7 @@ const Stripe = require('stripe');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -37,8 +37,8 @@ module.exports = async function handler(req, res) {
                 },
             ],
             mode: 'subscription',
-            success_url: successUrl || `${process.env.FRONTEND_URL || 'https://www.hlcacademy.co.uk'}/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: cancelUrl || `${process.env.FRONTEND_URL || 'https://www.hlcacademy.co.uk'}/pricing`,
+            success_url: successUrl || `${process.env.FRONTEND_URL || 'https://hlc-academy1-ihz2odqji-mercierfr1s-projects.vercel.app'}/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: cancelUrl || `${process.env.FRONTEND_URL || 'https://hlc-academy1-ihz2odqji-mercierfr1s-projects.vercel.app'}/index.html#pricing`,
             metadata: {
                 userId: userId || '',
                 planName: planName || '',

@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join HLC Academy - Your Trading Journey Starts Here</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="analytics.js"></script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* Onboarding Flow Styles */
+        .onboarding-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        .onboarding-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: #e5e7eb;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #6128DB, #6128DB);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .step-content {
+            padding: 30px 40px 60px 40px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        
+        .step-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .step-title {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 13px;
+        }
+        
+        .step-subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 1.1rem;
+        }
+        
+        .radio-group {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .radio-option:hover {
+            border-color: #6128DB;
+            background: #f8f9ff;
+        }
+        
+        .radio-option.selected {
+            border-color: #6128DB;
+            background: #f8f9ff;
+        }
+        
+        .radio-option input[type="radio"] {
+            margin-right: 12px;
+            accent-color: #6128DB;
+        }
+        
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .text-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .text-input:focus {
+            outline: none;
+            border-color: #6128DB;
+        }
+        
+        .text-input::placeholder {
+            color: #9ca3af;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #6128DB, #6128DB);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(97, 40, 219, 0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #6128DB;
+            padding: 15px 30px;
+            border: 2px solid #6128DB;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: #6128DB;
+            color: white;
+        }
+        
+        .step-navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .step-navigation .btn-primary {
+            flex: 1;
+        }
+        
+        .step-navigation .btn-secondary {
+            flex: 1;
+            margin-top: 0;
+        }
+        
+        /* Plans Section */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .plan-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .plan-card:hover {
+            border-color: #6128DB;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plan-card.popular {
+            border-color: #6128DB;
+            background: linear-gradient(135deg, #ffffff, #f8f9ff);
+            transform: scale(1.02);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #6128DB;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .plan-header {
+            text-align: center;
+            margin-bottom: 13px;
+        }
+        
+        .plan-name {
+            font-size: 1.56rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+        
+        .plan-description {
+            color: #6b7280;
+            font-size: 1.04rem;
+            line-height: 1.3;
+        }
+        
+        .plan-price {
+            text-align: center;
+            margin-bottom: 13px;
+        }
+        
+        .price-amount {
+            font-size: 2.34rem;
+            font-weight: 800;
+            color: #6128DB;
+        }
+        
+        .price-period {
+            color: #6b7280;
+            font-size: 1.105rem;
+        }
+        
+        .price-note {
+            color: #10b981;
+            font-size: 0.975rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 13px;
+        }
+        
+        .plan-features li {
+            padding: 5px 0;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.04rem;
+        }
+        
+        .plan-features li::before {
+            content: "✅";
+            font-size: 1.43rem;
+        }
+        
+        .plan-cta {
+            display: block;
+            background: #f3f4f6;
+            color: #374151;
+            padding: 16px 26px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.17rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin: 0 auto;
+            width: fit-content;
+            min-width: 200px;
+        }
+        
+        .plan-card.popular .plan-cta {
+            background: #6128DB;
+            color: white;
+        }
+        
+        .plan-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plan-card.popular .plan-cta:hover {
+            background: #4a1fa8;
+            box-shadow: 0 5px 15px rgba(97, 40, 219, 0.3);
+        }
+        
+        .help-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .help-link a {
+            color: #6128DB;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .help-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Feature Benefits */
+        .feature-benefit {
+            color: #6b7280;
+            font-size: 0.75rem;
+            font-style: italic;
+            display: block;
+            margin-top: 2px;
+        }
+        
+        /* Urgency Footer */
+        .urgency-footer {
+            background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+            border: 2px solid #d1fae5;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .urgency-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .urgency-icon {
+            font-size: 2rem;
+            color: #f59e0b;
+        }
+        
+        .urgency-text h4 {
+            color: #065f46;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0 0 5px 0;
+        }
+        
+        .urgency-text p {
+            color: #047857;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        
+        /* Dynamic Copy Styles */
+        .dynamic-copy {
+            background: #f0fdf4;
+            border: 1px solid #d1fae5;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .dynamic-copy h4 {
+            color: #065f46;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .dynamic-copy p {
+            color: #065f46;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .plans-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .onboarding-card {
+                margin: 10px;
+                border-radius: 16px;
+                max-width: 100%;
+            }
+            
+            .step-content {
+                padding: 40px 20px;
+            }
+            
+            .step-title {
+                font-size: 1.5rem;
+            }
+            
+            .plans-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .plan-card {
+                padding: 15px;
+            }
+            
+            .plan-card.popular {
+                transform: none;
+            }
+            
+            .plan-name {
+                font-size: 1.2rem;
+            }
+            
+            .plan-description {
+                font-size: 0.8rem;
+            }
+            
+            .price-amount {
+                font-size: 1.8rem;
+            }
+            
+            .plan-features li {
+                font-size: 0.8rem;
+                padding: 4px 0;
+            }
+            
+            .feature-benefit {
+                font-size: 0.7rem;
+            }
+            
+            .urgency-footer {
+                padding: 15px;
+                margin: 20px 0;
+            }
+            
+            .urgency-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .urgency-icon {
+                font-size: 1.5rem;
+            }
+            
+            .urgency-text h4 {
+                font-size: 1rem;
+            }
+            
+            .urgency-text p {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="onboarding-container">
+        <div class="onboarding-card">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+
+            
+            <!-- Step 1: Profile -->
+            <div class="step-content hidden" id="step1">
+                <div class="step-header">
+                    <h2 class="step-title">Tell us about your trading experience</h2>
+                    <p class="step-subtitle">This helps us personalize your learning path</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>How long have you been trading?</label>
+                    <div class="radio-group">
+                        <div class="radio-option" onclick="selectOption(this, 'experience', 'brand_new')">
+                            <input type="radio" name="experience" value="brand_new" id="exp_brand_new">
+                            <label for="exp_brand_new">Brand new to trading</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'experience', 'less_1_year')">
+                            <input type="radio" name="experience" value="less_1_year" id="exp_less_1_year">
+                            <label for="exp_less_1_year">Less than 1 year</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'experience', '1_3_years')">
+                            <input type="radio" name="experience" value="1_3_years" id="exp_1_3_years">
+                            <label for="exp_1_3_years">1-3 years</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'experience', '3_plus_years')">
+                            <input type="radio" name="experience" value="3_plus_years" id="exp_3_plus_years">
+                            <label for="exp_3_plus_years">3+ years</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Would you describe yourself as profitable right now?</label>
+                    <div class="radio-group">
+                        <div class="radio-option" onclick="selectOption(this, 'profitability', 'consistently')">
+                            <input type="radio" name="profitability" value="consistently" id="prof_consistently">
+                            <label for="prof_consistently">Consistently profitable</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'profitability', 'sometimes')">
+                            <input type="radio" name="profitability" value="sometimes" id="prof_sometimes">
+                            <label for="prof_sometimes">Sometimes profitable</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'profitability', 'not_yet')">
+                            <input type="radio" name="profitability" value="not_yet" id="prof_not_yet">
+                            <label for="prof_not_yet">Not yet profitable</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn-primary" onclick="nextStep()">Continue</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Discovery -->
+            <div class="step-content hidden" id="step2">
+                <div class="step-header">
+                    <h2 class="step-title">What's holding you back?</h2>
+                    <p class="step-subtitle">Understanding your challenges helps us provide the right support</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>What's your biggest obstacle in trading?</label>
+                    <div class="radio-group">
+                        <div class="radio-option" onclick="selectOption(this, 'obstacle', 'strategy')">
+                            <input type="radio" name="obstacle" value="strategy" id="obs_strategy">
+                            <label for="obs_strategy">Finding a consistent strategy</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'obstacle', 'psychology')">
+                            <input type="radio" name="obstacle" value="psychology" id="obs_psychology">
+                            <label for="obs_psychology">Risk management & psychology</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'obstacle', 'growing')">
+                            <input type="radio" name="obstacle" value="growing" id="obs_growing">
+                            <label for="obs_growing">Growing my account</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'obstacle', 'discipline')">
+                            <input type="radio" name="obstacle" value="discipline" id="obs_discipline">
+                            <label for="obs_discipline">Discipline & consistency</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Average monthly screen time?</label>
+                    <div class="radio-group">
+                        <div class="radio-option" onclick="selectOption(this, 'screen_time', 'less_10h')">
+                            <input type="radio" name="screen_time" value="less_10h" id="st_less_10h">
+                            <label for="st_less_10h">Less than 10 hours</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'screen_time', '10_30h')">
+                            <input type="radio" name="screen_time" value="10_30h" id="st_10_30h">
+                            <label for="st_10_30h">10-30 hours</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'screen_time', '30_60h')">
+                            <input type="radio" name="screen_time" value="30_60h" id="st_30_60h">
+                            <label for="st_30_60h">30-60 hours</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'screen_time', '60h_plus')">
+                            <input type="radio" name="screen_time" value="60h_plus" id="st_60h_plus">
+                            <label for="st_60h_plus">60+ hours</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Account size range?</label>
+                    <div class="radio-group">
+                        <div class="radio-option" onclick="selectOption(this, 'account_size', 'less_1k')">
+                            <input type="radio" name="account_size" value="less_1k" id="as_less_1k">
+                            <label for="as_less_1k">Less than £1,000</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'account_size', '1k_10k')">
+                            <input type="radio" name="account_size" value="1k_10k" id="as_1k_10k">
+                            <label for="as_1k_10k">£1,000 - £10,000</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'account_size', '10k_50k')">
+                            <input type="radio" name="account_size" value="10k_50k" id="as_10k_50k">
+                            <label for="as_10k_50k">£10,000 - £50,000</label>
+                        </div>
+                        <div class="radio-option" onclick="selectOption(this, 'account_size', '50k_plus')">
+                            <input type="radio" name="account_size" value="50k_plus" id="as_50k_plus">
+                            <label for="as_50k_plus">£50,000+</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>What would a win in 6 months look like for you?</label>
+                    <textarea class="text-input" name="win_vision" placeholder="e.g., consistent risk-adjusted returns, rule-based execution, growing my account by 20%..." rows="3"></textarea>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn-primary" onclick="nextStep()">Continue</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Contact -->
+            <div class="step-content hidden" id="step3">
+                <div class="step-header">
+                    <h2 class="step-title">Almost there!</h2>
+                    <p class="step-subtitle">Let's get your details so we can personalize your experience</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" class="text-input" id="fullName" name="fullName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" class="text-input" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number (optional)</label>
+                    <input type="tel" class="text-input" id="phone" name="phone">
+                </div>
+                
+                <div class="form-group">
+                    <label style="font-size: 0.9rem; color: #6b7280;">
+                        <input type="checkbox" required style="margin-right: 8px;"> 
+                        I agree to receive educational content and updates from HLC Academy. You can unsubscribe at any time.
+                    </label>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn-primary" onclick="nextStep()">See My Options</button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Plans & Checkout -->
+            <div class="step-content hidden" id="step4">
+                <div class="step-header">
+                    <h2 class="step-title">Choose Your Trading Transformation</h2>
+                </div>
+                
+                <div class="plans-grid">
+                    <!-- Kickstart Plan -->
+                    <div class="plan-card" onclick="selectPlan('kickstart')">
+                        <div class="plan-header">
+                            <h3 class="plan-name">Kickstart</h3>
+                            <p class="plan-description">Build confidence fast. Perfect for beginners ready to stop guessing and start executing with clarity.</p>
+                        </div>
+                        <div class="plan-price">
+                            <div class="price-amount">£30</div>
+                            <div class="price-period">per week</div>
+                            <div class="price-note">Start with 3 days free • Cancel anytime</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>Complete Supply & Demand Course</li>
+                            <li>Weekly Live Trading Calls</li>
+                            <li>Trading Dashboard & Journal</li>
+                            <li>Daily Market Learning Notes</li>
+                            <li>Discord Community Access</li>
+                            <li>Basic Support</li>
+                        </ul>
+                        <button class="plan-cta" data-plan="kickstart">Start 3-Day Free Trial</button>
+                    </div>
+                    
+                    <!-- Scale Up Plan -->
+                    <div class="plan-card popular" onclick="selectPlan('scaleup')">
+                        <div class="popular-badge">Most Traders Breakthrough Here</div>
+                        <div class="plan-header">
+                            <h3 class="plan-name">Scale Up</h3>
+                            <p class="plan-description">The proven path to consistent profits. Serious traders accelerate their results here with accountability and advanced psychology training.</p>
+                        </div>
+                        <div class="plan-price">
+                            <div class="price-amount">£97</div>
+                            <div class="price-period">per month</div>
+                            <div class="price-note">Save £23/month • Satisfaction guaranteed</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>Everything in Kickstart, plus:</li>
+                            <li>Priority Support & Office Hours</li>
+                            <li>Advanced Trading Psychology Modules</li>
+                            <li>Private Study Groups</li>
+                            <li>Monthly 1-on-1 Strategy Sessions</li>
+                            <li>Exclusive Market Analysis Tools</li>
+                            <li>30-Day Money-Back Guarantee</li>
+                        </ul>
+                        <button class="plan-cta" data-plan="scaleup">Start 3-Day Free Trial</button>
+                    </div>
+                    
+                    <!-- Mastery Plan -->
+                    <div class="plan-card" onclick="selectPlan('mastery')">
+                        <div class="plan-header">
+                            <h3 class="plan-name">Mastery</h3>
+                            <p class="plan-description">For committed traders ready to scale accounts and achieve long-term wealth. Maximum value with advanced tools and VIP access.</p>
+                        </div>
+                        <div class="plan-price">
+                            <div class="price-amount">£279</div>
+                            <div class="price-period">per 3 months</div>
+                            <div class="price-note">Save £81 • No commitment required</div>
+                        </div>
+                        <ul class="plan-features">
+                            <li>Everything in Scale Up, plus:</li>
+                            <li>3-Month Commitment Discount</li>
+                            <li>Priority Access to New Content</li>
+                            <li>Advanced Risk Management Tools</li>
+                            <li>Quarterly Performance Reviews</li>
+                            <li>VIP Community Events</li>
+                            <li>Extended Support Hours</li>
+                        </ul>
+                        <button class="plan-cta" data-plan="mastery">Start 3-Day Free Trial</button>
+                    </div>
+                </div>
+                
+                <div class="help-link">
+                    <a href="#" onclick="openHelpModal()">Need help choosing? Compare plans →</a>
+                </div>
+                
+                <!-- Urgency & Risk Reversal Footer -->
+                <div class="urgency-footer">
+                    <div class="urgency-content">
+                        <div class="urgency-icon">⚡</div>
+                        <div class="urgency-text">
+                            <h4>Limited Spots Available</h4>
+                            <p>Join 500+ traders who've already transformed their psychology. Start trading with confidence today — cancel anytime with our satisfaction guarantee.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="btn-secondary" onclick="prevStep()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Which Plan is Right for You?</h3>
+                <button class="modal-close" onclick="closeHelpModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Kickstart (£30/week)</strong> - Perfect if you're new to trading or want to test the waters. Cancel anytime with no commitment.</p>
+                <p><strong>Scale Up (£97/month)</strong> - Our most popular choice for serious traders. Best value with priority support and advanced modules.</p>
+                <p><strong>Mastery (£279/3 months)</strong> - For committed traders who want maximum value and are ready to invest in their long-term success.</p>
+                <p style="margin-top: 20px; font-style: italic; color: #6b7280;">All plans include our complete neuroscience-led curriculum, live calls, and community access. The difference is in the level of support and advanced features.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Onboarding Flow Logic
+        let currentStep = 4; // Start directly at pricing step
+        let userData = {};
+        
+        // Stripe configuration
+        const STRIPE_PUBLISHABLE_KEY = 'pk_live_51Rq5yfscED7Qsj7iKOuyEsmxx03cBSmHYb0ZsmcnBxBwkzHgndvTdyMc8QzP36bjCHvJQP5MjcOM0072r0lJBH';
+        let stripe;
+        
+        // Initialize Stripe and onboarding
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Stripe !== 'undefined') {
+                stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+            }
+            initOnboarding();
+        });
+        
+        // Progress tracking
+        function updateProgress() {
+            const progress = (currentStep / 4) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+        
+        // Initialize onboarding - show pricing step
+        function initOnboarding() {
+            showStep(4);
+            updateProgress();
+        }
+        
+        // Step navigation
+        function nextStep() {
+            if (validateCurrentStep()) {
+                saveCurrentStepData();
+                
+                // Track step completion
+                const stepNames = ['welcome', 'profile', 'discovery', 'contact', 'plans'];
+                window.onboardingAnalytics.trackStepCompleted(currentStep, stepNames[currentStep], userData);
+                
+                hideStep(currentStep);
+                currentStep++;
+                showStep(currentStep);
+                updateProgress();
+                
+                // Track step start
+                window.onboardingAnalytics.trackStepStarted(currentStep, stepNames[currentStep]);
+                
+                // Generate dynamic copy for step 4
+                if (currentStep === 4) {
+                    generateDynamicCopy();
+                }
+            }
+        }
+        
+        function prevStep() {
+            hideStep(currentStep);
+            currentStep--;
+            showStep(currentStep);
+            updateProgress();
+        }
+        
+        function showStep(step) {
+            document.getElementById('step' + step).classList.remove('hidden');
+        }
+        
+        function hideStep(step) {
+            document.getElementById('step' + step).classList.add('hidden');
+        }
+        
+        // Form validation
+        function validateCurrentStep() {
+            if (currentStep === 1) {
+                const experience = document.querySelector('input[name="experience"]:checked');
+                const profitability = document.querySelector('input[name="profitability"]:checked');
+                return experience && profitability;
+            } else if (currentStep === 2) {
+                const obstacle = document.querySelector('input[name="obstacle"]:checked');
+                const screenTime = document.querySelector('input[name="screen_time"]:checked');
+                const accountSize = document.querySelector('input[name="account_size"]:checked');
+                return obstacle && screenTime && accountSize;
+            } else if (currentStep === 3) {
+                const fullName = document.getElementById('fullName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const consent = document.querySelector('input[type="checkbox"]').checked;
+                return fullName && email && consent;
+            }
+            return true;
+        }
+        
+        // Save step data
+        function saveCurrentStepData() {
+            if (currentStep === 1) {
+                userData.experience = document.querySelector('input[name="experience"]:checked')?.value;
+                userData.profitability = document.querySelector('input[name="profitability"]:checked')?.value;
+            } else if (currentStep === 2) {
+                userData.obstacle = document.querySelector('input[name="obstacle"]:checked')?.value;
+                userData.screenTime = document.querySelector('input[name="screen_time"]:checked')?.value;
+                userData.accountSize = document.querySelector('input[name="account_size"]:checked')?.value;
+                userData.winVision = document.querySelector('textarea[name="win_vision"]').value;
+            } else if (currentStep === 3) {
+                userData.fullName = document.getElementById('fullName').value;
+                userData.email = document.getElementById('email').value;
+                userData.phone = document.getElementById('phone').value;
+            }
+        }
+        
+        // Radio option selection
+        function selectOption(element, name, value) {
+            // Remove selected class from siblings
+            const siblings = element.parentElement.querySelectorAll('.radio-option');
+            siblings.forEach(sibling => sibling.classList.remove('selected'));
+            
+            // Add selected class to clicked element
+            element.classList.add('selected');
+            
+            // Check the radio button
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+        }
+        
+        // Generate dynamic copy based on user responses
+
+        
+        // Plan selection
+        function selectPlan(plan) {
+            // Remove selected class from all plans
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked plan
+            event.currentTarget.classList.add('selected');
+            
+            // Track plan selection
+            window.onboardingAnalytics.trackPlanSelected(plan, userData);
+            window.onboardingAnalytics.trackCheckoutStarted(plan, userData);
+            
+            // Redirect to Stripe checkout
+            redirectToCheckout(plan);
+        }
+        
+        // Redirect to Stripe checkout
+        function redirectToCheckout(plan) {
+            // Track conversion attempt
+            window.onboardingAnalytics.trackConversion(plan, userData);
+            
+            // Redirect to our high-conversion checkout page
+            window.location.href = `checkout.html?plan=${plan}`;
+        }
+        
+        // Modal functions
+        function openHelpModal() {
+            document.getElementById('helpModal').style.display = 'flex';
+        }
+        
+        function closeHelpModal() {
+            document.getElementById('helpModal').style.display = 'none';
+        }
+        
+        // Event tracking
+        function trackEvent(eventName, data) {
+            // In production, this would send data to your analytics platform
+            console.log('Event:', eventName, data);
+            
+            // Example: Send to Google Analytics, Mixpanel, etc.
+            // gtag('event', eventName, data);
+        }
+        
+        // Initialize
+        // updateProgress(); // Moved to initOnboarding()
+    </script>
+</body>
+</html>
