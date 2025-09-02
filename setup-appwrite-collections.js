@@ -135,4 +135,4 @@ async function createCollections() {
 }
 
 // Run the setup
-createCollections();        
+createCollections();            
