@@ -9,7 +9,7 @@ function initializeHomepage() {
     addLoadingAnimations();
     setupExitIntentModal();
     setupStickyCTA();
-    setupSocialProofToasts();
+    // setupSocialProofToasts(); // Disabled floating messages
     setupSmoothScrolling();
     setupNavbarScroll();
     setupElementAnimations();
