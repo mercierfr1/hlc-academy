@@ -3,9 +3,9 @@
 
 // Test user credentials
 const testUser = {
-    firstName: "Test",
-    lastName: "User", 
-    email: "test@hlcacademy.com",
+    firstName: "Alex",
+    lastName: "Gulesen", 
+    email: "agulesen8@gmail.com",
     password: "password123"
 };
 
@@ -51,11 +51,11 @@ try {
         existingUsers.push(newUser);
         localStorage.setItem('users', JSON.stringify(existingUsers));
         console.log('✅ Test user created successfully!');
-        console.log('📧 Email: test@hlcacademy.com');
+        console.log('📧 Email: agulesen8@gmail.com');
         console.log('🔑 Password: password123');
     } else {
         console.log('ℹ️ Test user already exists!');
-        console.log('📧 Email: test@hlcacademy.com');
+        console.log('📧 Email: agulesen8@gmail.com');
         console.log('🔑 Password: password123');
     }
     
