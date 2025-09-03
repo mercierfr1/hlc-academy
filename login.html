@@ -195,12 +195,21 @@
         <div class="back-link">
             <a href="index.html">← Back to Home</a>
         </div>
+        
+        <div style="text-align: center; margin-top: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px; border: 1px solid #e5e7eb;">
+            <h4 style="color: #6128DB; margin-bottom: 10px;">🔐 Test Login Credentials</h4>
+            <p style="margin: 5px 0; color: #374151;"><strong>Email:</strong> agulesen8@gmail.com</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Password:</strong> password123</p>
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Create test user if it doesn't exist
+            createTestUserIfNeeded();
+            
             // Redirect if already logged in
-            if (window.auth.redirectIfLoggedIn()) {
+            if (window.auth && window.auth.redirectIfLoggedIn()) {
                 return;
             }
 
@@ -212,12 +221,72 @@
                 const password = document.getElementById('password').value;
                 
                 try {
-                    window.auth.loginAndRedirect(email, password);
+                    if (window.auth) {
+                        window.auth.loginAndRedirect(email, password);
+                    } else {
+                        showError('Authentication system not loaded. Please refresh the page.');
+                    }
                 } catch (error) {
                     showError('Login failed: ' + error.message);
                 }
             });
         });
+
+        function createTestUserIfNeeded() {
+            try {
+                // Test user credentials
+                const testUser = {
+                    firstName: "Alex",
+                    lastName: "Gulesen", 
+                    email: "agulesen8@gmail.com",
+                    password: "password123"
+                };
+
+                // Check if user already exists
+                const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+                const userExists = existingUsers.find(user => user.email === testUser.email);
+                
+                if (!userExists) {
+                    // Create new user
+                    const newUser = {
+                        id: Date.now().toString(),
+                        firstName: testUser.firstName,
+                        lastName: testUser.lastName,
+                        email: testUser.email,
+                        password: testUser.password,
+                        createdAt: new Date().toISOString(),
+                        lastLogin: new Date().toISOString(),
+                        profile: {
+                            experience: "Beginner",
+                            profitability: "Not profitable yet",
+                            obstacle: "Overtrading",
+                            screenTime: "3+ hours",
+                            accountSize: "Under $1,000",
+                            winVision: "Consistent profits",
+                            phone: "+1234567890"
+                        },
+                        progress: {
+                            currentModule: 1,
+                            completedModules: [],
+                            totalXP: 150,
+                            dailyXP: 25,
+                            streak: 3
+                        },
+                        preferences: {
+                            notifications: true,
+                            emailUpdates: true,
+                            theme: 'light'
+                        }
+                    };
+                    
+                    existingUsers.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(existingUsers));
+                    console.log('✅ Test user created successfully!');
+                }
+            } catch (error) {
+                console.error('❌ Error creating test user:', error);
+            }
+        }
 
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
