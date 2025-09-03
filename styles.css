@@ -113,11 +113,11 @@ html {
 
 /* Mobile Navigation Toggle (hidden on desktop) */
 .mobile-nav-toggle {
-    display: none;
+    display: none !important;
 }
 
 .mobile-nav {
-    display: none;
+    display: none !important;
 }
 
 /* Hero Section */
@@ -1455,7 +1455,7 @@ html {
     
     /* Mobile Navigation */
     .mobile-nav-toggle {
-        display: block;
+        display: block !important;
         background: none;
         border: none;
         font-size: 1.5rem;
@@ -1465,7 +1465,7 @@ html {
     }
     
     .mobile-nav {
-        display: none;
+        display: none !important;
         position: fixed;
         top: 70px;
         left: 0;
@@ -1478,7 +1478,7 @@ html {
     }
     
     .mobile-nav.active {
-        display: block;
+        display: block !important;
     }
     
     .mobile-nav-links {
