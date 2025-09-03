@@ -18,9 +18,9 @@ h<!DOCTYPE html>
         /* New HLC Academy Logo Styles */
         .logo-container {
             display: flex;
-            flex-direction: column;
             align-items: center;
             text-decoration: none;
+            gap: 8px;
         }
         
         .logo-hlc {
@@ -28,21 +28,24 @@ h<!DOCTYPE html>
             color: white;
             padding: 8px 16px;
             border-radius: 4px;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.2rem;
             letter-spacing: 1px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             line-height: 1;
+            text-transform: uppercase;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
         }
         
         .logo-academy {
             color: #6128DB;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            font-family: 'Inter', sans-serif;
-            margin-top: 2px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            font-family: 'Montserrat', sans-serif;
             line-height: 1;
+            text-transform: uppercase;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
         
         /* Responsive logo sizing */
@@ -53,8 +56,8 @@ h<!DOCTYPE html>
             }
             
             .logo-academy {
-                font-size: 0.8rem;
-                letter-spacing: 1.5px;
+                font-size: 1rem;
+                letter-spacing: 0.5px;
             }
         }
     </style>
@@ -64,15 +67,16 @@ h<!DOCTYPE html>
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <div class="logo-container">
+                <a href="index.html" class="logo-container">
                     <div class="logo-hlc">HLC</div>
                     <div class="logo-academy">ACADEMY</div>
-                </div>
+                </a>
             </div>
             <div class="nav-links">
                 <a href="#curriculum">Curriculum</a>
                 <a href="#how-it-works">How It Works</a>
                 <a href="#pricing">Pricing</a>
+                <a href="faq.html">FAQ</a>
                 <a href="login.html" class="nav-login">Log In</a>
                 <a href="onboarding.html" class="nav-cta">Start 3-Day Free Trial</a>
             </div>
@@ -163,20 +167,7 @@ h<!DOCTYPE html>
                 </div>
             </div>
             
-            <div class="testimonials">
-                <div class="testimonial-card">
-                    <p>"Finally stopped making impulsive trades. The bias checklist is game-changing."</p>
-                    <div class="testimonial-author">— Alex, London</div>
-                </div>
-                <div class="testimonial-card">
-                    <p>"Went from 3 hours of YouTube to 30 minutes of focused learning."</p>
-                    <div class="testimonial-author">— Sarah, Manchester</div>
-                </div>
-                <div class="testimonial-card">
-                    <p>"The spaced repetition actually works. Concepts stick now."</p>
-                    <div class="testimonial-author">— Marcus, Edinburgh</div>
-                </div>
-            </div>
+
         </div>
     </section>
 
@@ -214,32 +205,7 @@ h<!DOCTYPE html>
                     </div>
                 </div>
                 
-                <div class="edge-card">
-                    <div class="edge-icon">🎯</div>
-                    <h3>Cognitive Load Design</h3>
-                    <p>Dashboards &amp; notes that surface only what matters per market session</p>
-                    <div class="edge-example">
-                        <strong>In practice:</strong> Session-specific checklists and focus areas
-                    </div>
-                </div>
-                
-                <div class="edge-card">
-                    <div class="edge-icon">🧠</div>
-                    <h3>Neural Pathway Reinforcement</h3>
-                    <p>Daily micro-practices that wire your brain for better decision-making</p>
-                    <div class="edge-example">
-                        <strong>In practice:</strong> 5-minute morning routines that build trading discipline
-                    </div>
-                </div>
-                
-                <div class="edge-card">
-                    <div class="edge-icon">⚡</div>
-                    <h3>Emotional Regulation Training</h3>
-                    <p>Real-time stress management techniques during live market sessions</p>
-                    <div class="edge-example">
-                        <strong>In practice:</strong> Breathing exercises and mental anchors when markets move against you
-                    </div>
-                </div>
+
             </div>
             
             <div class="credibility">
@@ -285,86 +251,6 @@ h<!DOCTYPE html>
                         <h3>Iterate</h3>
                         <p>Weekly recaps + checkpoints to tighten execution</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Grid -->
-    <section class="features">
-        <div class="container">
-            <h2>Everything You Need to Succeed</h2>
-            <p class="section-subtitle">We never tell you what to buy/sell. We teach process.</p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📚</div>
-                    <h3>Video Supply and Demand Course</h3>
-                    <p>Set curriculum + milestones</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📞</div>
-                    <h3>Weekly Group Calls</h3>
-                    <p>Trading breakdowns, Q&amp;A; replays included</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Trading Dashboard</h3>
-                    <p>Journaling, bias checklists, metrics</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3>Trade Recaps</h3>
-                    <p>Annotated case studies of institutional moves</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📰</div>
-                    <h3>Daily Market Learning Notes</h3>
-                    <p>Education, not signals—context &amp; structure, no recommendations</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3>Discord Community</h3>
-                    <p>Cohorts, study rooms, accountability</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Outcomes -->
-    <section class="outcomes">
-        <div class="container">
-            <h2>Outcomes You Can Track</h2>
-            <p class="section-subtitle">Your dashboard visualizes progress weekly</p>
-            
-            <div class="outcomes-grid">
-                <div class="outcome-item">
-                    <div class="outcome-icon">📉</div>
-                    <h3>Bias Error Rate ↓</h3>
-                    <p>Tracked via checklist</p>
-                </div>
-                
-                <div class="outcome-item">
-                    <div class="outcome-icon">📊</div>
-                    <h3>Plan-vs-Execution Consistency ↑</h3>
-                    <p>Measured weekly</p>
-                </div>
-                
-                <div class="outcome-item">
-                    <div class="outcome-icon">🔥</div>
-                    <h3>Journal Completion Streaks ↑</h3>
-                    <p>Daily tracking</p>
-                </div>
-                
-                <div class="outcome-item">
-                    <div class="outcome-icon">⏱️</div>
-                    <h3>Time-to-Decision Stability ↑</h3>
-                    <p>Session analysis</p>
                 </div>
             </div>
         </div>
@@ -505,6 +391,86 @@ h<!DOCTYPE html>
         </div>
     </section>
 
+    <!-- Features Grid -->
+    <section class="features">
+        <div class="container">
+            <h2>Everything You Need to Succeed</h2>
+            <p class="section-subtitle">We never tell you what to buy/sell. We teach process.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Video Supply and Demand Course</h3>
+                    <p>Set curriculum + milestones</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h3>Weekly Group Calls</h3>
+                    <p>Trading breakdowns, Q&amp;A; replays included</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Trading Dashboard</h3>
+                    <p>Journaling, bias checklists, metrics</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Trade Recaps</h3>
+                    <p>Annotated case studies of institutional moves</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📰</div>
+                    <h3>Daily Market Learning Notes</h3>
+                    <p>Education, not signals—context &amp; structure, no recommendations</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Discord Community</h3>
+                    <p>Cohorts, study rooms, accountability</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outcomes -->
+    <section class="outcomes">
+        <div class="container">
+            <h2>Outcomes You Can Track</h2>
+            <p class="section-subtitle">Your dashboard visualizes progress weekly</p>
+            
+            <div class="outcomes-grid">
+                <div class="outcome-item">
+                    <div class="outcome-icon">📉</div>
+                    <h3>Bias Error Rate ↓</h3>
+                    <p>Tracked via checklist</p>
+                </div>
+                
+                <div class="outcome-item">
+                    <div class="outcome-icon">📊</div>
+                    <h3>Plan-vs-Execution Consistency ↑</h3>
+                    <p>Measured weekly</p>
+                </div>
+                
+                <div class="outcome-item">
+                    <div class="outcome-icon">🔥</div>
+                    <h3>Journal Completion Streaks ↑</h3>
+                    <p>Daily tracking</p>
+                </div>
+                
+                <div class="outcome-item">
+                    <div class="outcome-icon">⏱️</div>
+                    <h3>Time-to-Decision Stability ↑</h3>
+                    <p>Session analysis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Final CTA -->
     <section class="final-cta">
         <div class="container">
@@ -516,117 +482,20 @@ h<!DOCTYPE html>
         </div>
     </section>
 
-    <!-- Proof Section -->
-    <section class="proof-section">
-        <div class="container">
-            <h2>Real Results from Real Traders</h2>
-            <p class="section-subtitle">Focusing on process, not promises</p>
-            
-            <div class="proof-content">
-                <div class="proof-stories">
-                    <div class="story-card">
-                        <h3>From Guesswork to Playbook</h3>
-                        <p>"Used to make 5-6 trades a day on gut feeling. Now I make 1-2 trades with a clear plan. The bias checklist stopped me from chasing every move."</p>
-                        <div class="story-meta">— James, 6 months in program</div>
-                    </div>
-                    
-                    <div class="story-card">
-                        <h3>Consistency Over Time</h3>
-                        <p>"Journaled every trade for 90 days straight. My impulsive trades dropped from 40% to 8%. The spaced repetition made the concepts stick."</p>
-                        <div class="story-meta">— Emma, 3 months in program</div>
-                    </div>
-                    
-                    <div class="story-card">
-                        <h3>Better Decision Speed</h3>
-                        <p>"Went from 15 minutes of analysis paralysis to 3 minutes of focused decision-making. The cognitive load design is brilliant."</p>
-                        <div class="story-meta">— David, 4 months in program</div>
-                    </div>
-                </div>
-                
-                <div class="proof-visual">
-                    <div class="dashboard-mockup">
-                        <div class="mockup-header">
-                            <h4>Your Progress Dashboard</h4>
-                        </div>
-                        <div class="mockup-stats">
-                            <div class="stat">
-                                <span class="stat-label">Bias Score</span>
-                                <span class="stat-value">87/100</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">Journal Streak</span>
-                                <span class="stat-value">23 days</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">Plan Execution</span>
-                                <span class="stat-value">94%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="mockup-caption">From guesswork to a defined playbook</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- FAQ -->
-    <section class="faq">
-        <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>Is this financial advice?</h3>
-                    <p>No, education only. We teach process and market structure, not what to buy or sell.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3>Do you provide signals?</h3>
-                    <p>No. Educational notes only. We focus on teaching you how to read markets yourself.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3>What markets do you cover?</h3>
-                    <p>FX, indices, and commodities. We focus on institutional supply and demand across major markets.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3>Time commitment?</h3>
-                    <p>3–5 hours per week. Crash courses are self-paced, live calls are 60 minutes weekly.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3>Refunds/cancel?</h3>
-                    <p>Cancel anytime. 30-day money-back guarantee if you're not satisfied.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3>Who is it for?</h3>
-                    <p>Beginner+ to intermediate traders, prop-curious individuals who want structured learning.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3>Do I need prior experience?</h3>
-                    <p>Basic market knowledge helps, but we start from fundamentals and build up systematically.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3>Will I get 1-to-1 help?</h3>
-                    <p>Premium mentorship (£3,800) includes dedicated 1-to-1 sessions. Community office hours and mentor replies included at £120/mo. <a href="https://calendly.com/thernssystem/45m" target="_blank" style="color: #6128DB; text-decoration: none; font-weight: 600;">Book a strategy session →</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
+
+
+
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="logo-container">
+                    <a href="index.html" class="logo-container">
                         <div class="logo-hlc">HLC</div>
                         <div class="logo-academy">ACADEMY</div>
-                    </div>
+                    </a>
                 </div>
                 
                 <div class="footer-disclaimer">
@@ -638,6 +507,7 @@ h<!DOCTYPE html>
                     <a href="signup.html">Sign Up</a>
                     <a href="#curriculum">Curriculum</a>
                     <a href="#pricing">Pricing</a>
+                    <a href="faq.html">FAQ</a>
                 </div>
                 
                 <p class="footer-copyright">&copy; 2024 NeuroTrade. All rights reserved.</p>
@@ -670,6 +540,7 @@ h<!DOCTYPE html>
         <!-- Stripe.js -->
     <script src="https://js.stripe.com/v3/"></script>
     <script src="stripe-integration.js"></script>
+    <script src="user-management.js"></script>
     <script src="script.js"></script>
     
     <!-- Modal JavaScript -->

@@ -1,6 +1,11 @@
 // Dashboard functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize dashboard
+    // Check authentication
+    if (!window.auth.requireAuth()) {
+        return;
+    }
+    
+    // Initialize dashboard with user data
     initializeDashboard();
     
     // Set up real-time updates
@@ -11,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeDashboard() {
+    // Load user data and personalize dashboard
+    loadUserData();
+    
     // Animate progress bars on load
     animateProgressBars();
     
@@ -22,6 +30,66 @@ function initializeDashboard() {
     
     // Add loading animations
     addLoadingAnimations();
+}
+
+function loadUserData() {
+    const user = window.userManager.getCurrentUser();
+    if (!user) return;
+    
+    // Update user name
+    const userName = document.getElementById('userName');
+    if (userName) {
+        userName.textContent = user.firstName || 'User';
+    }
+    
+    // Update progress
+    const progress = user.progress;
+    const progressPercentage = document.getElementById('progressPercentage');
+    const progressFill = document.getElementById('progressFill');
+    const modulesCompleted = document.getElementById('modulesCompleted');
+    const totalXP = document.getElementById('totalXP');
+    
+    if (progressPercentage) {
+        progressPercentage.textContent = `${progress.overallProgress}% Complete`;
+    }
+    
+    if (progressFill) {
+        progressFill.style.width = `${progress.overallProgress}%`;
+    }
+    
+    if (modulesCompleted) {
+        modulesCompleted.textContent = `${progress.completedModules.length} of 13 modules completed`;
+    }
+    
+    if (totalXP) {
+        totalXP.textContent = `${progress.timeSpent} XP earned`;
+    }
+    
+    // Update streak
+    const streakText = document.getElementById('streakText');
+    const streakNumber = document.getElementById('streakNumber');
+    
+    if (streakText) {
+        streakText.textContent = `${progress.streak}-day streak`;
+    }
+    
+    if (streakNumber) {
+        streakNumber.textContent = progress.streak;
+    }
+    
+    // Update motivation stats
+    const daysActive = document.getElementById('daysActive');
+    const totalXPStats = document.getElementById('totalXPStats');
+    
+    if (daysActive) {
+        const joinDate = new Date(user.createdAt);
+        const daysSinceJoin = Math.floor((Date.now() - joinDate.getTime()) / (1000 * 60 * 60 * 24));
+        daysActive.textContent = Math.max(daysSinceJoin, 1);
+    }
+    
+    if (totalXPStats) {
+        totalXPStats.textContent = progress.timeSpent;
+    }
 }
 
 function animateProgressBars() {
@@ -290,3 +358,11 @@ function showAchievement(message) {
 
 // Initialize gamification
 setTimeout(addGamification, 2000);
+
+// Logout function
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        window.userManager.logout();
+        window.location.href = 'index.html';
+    }
+}

@@ -25,6 +25,7 @@
                 <a href="course.html">Course</a>
                 <a href="goals.html">Goals</a>
                 <a href="#" class="nav-cta">My Progress</a>
+                <a href="#" onclick="logout()" class="nav-logout">Logout</a>
             </div>
         </div>
     </nav>
@@ -35,16 +36,16 @@
             <!-- Progress Bar -->
             <div class="progress-section">
                 <div class="progress-header">
-                    <h2>Your Learning Journey</h2>
-                    <span class="progress-percentage">23% Complete</span>
+                    <h2>Welcome, <span id="userName">User</span>!</h2>
+                    <span class="progress-percentage" id="progressPercentage">0% Complete</span>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 23%"></div>
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
                 </div>
-                <div class="progress-stats">
-                    <span>3 of 13 modules completed</span>
+                <div class="progress-stats" id="progressStats">
+                    <span id="modulesCompleted">0 of 13 modules completed</span>
                     <span>•</span>
-                    <span>1,247 XP earned</span>
+                    <span id="totalXP">0 XP earned</span>
                 </div>
             </div>
 
@@ -69,7 +70,7 @@
                     </div>
                     <div class="streak-display">
                         <span class="streak-icon">🔥</span>
-                        <span class="streak-text">3-day streak</span>
+                        <span class="streak-text" id="streakText">0-day streak</span>
                     </div>
                 </div>
 
@@ -201,15 +202,15 @@
                     <p>You're making excellent progress. At this rate, you'll complete the course in just 3 weeks!</p>
                     <div class="motivation-stats">
                         <div class="stat">
-                            <span class="stat-number">23</span>
+                            <span class="stat-number" id="daysActive">0</span>
                             <span class="stat-label">Days Active</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">1,247</span>
+                            <span class="stat-number" id="totalXPStats">0</span>
                             <span class="stat-label">Total XP</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">3</span>
+                            <span class="stat-number" id="streakNumber">0</span>
                             <span class="stat-label">Day Streak</span>
                         </div>
                     </div>
@@ -218,6 +219,7 @@
         </div>
     </main>
 
+    <script src="user-management.js"></script>
     <script src="dashboard.js"></script>
 </body>
 </html>

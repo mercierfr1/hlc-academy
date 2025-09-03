@@ -1,10 +1,7 @@
 {
   "version": 2,
+  "name": "hlc-academy",
   "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    },
     {
       "src": "*.html",
       "use": "@vercel/static"
@@ -16,16 +13,20 @@
     {
       "src": "*.js",
       "use": "@vercel/static"
+    },
+    {
+      "src": "backend-server.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "dest": "/backend-server.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/$1"
+      "dest": "/"
     }
   ],
   "env": {

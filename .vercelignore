@@ -1,0 +1,15 @@
+node_modules
+.env
+.env.local
+.env.production
+*.log
+.DS_Store
+.git
+.gitignore
+README.md
+*.md
+database-setup.sql
+auth-system.js
+backend-package.json
+env-example.txt
+deploy-to-vercel.sh

@@ -89,6 +89,20 @@ body {
     box-shadow: 0 10px 25px rgba(97, 40, 219, 0.3);
 }
 
+.nav-logout {
+    color: #dc2626;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.nav-logout:hover {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
 /* Main Content */
 .main-content {
     padding-top: 90px;
