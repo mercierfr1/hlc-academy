@@ -895,6 +895,12 @@
         }
         
         function prevStep() {
+            // If we're on step 4 (pricing), go back to home page
+            if (currentStep === 4) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
             hideStep(currentStep);
             currentStep--;
             showStep(currentStep);
