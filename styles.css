@@ -141,12 +141,58 @@ html {
 
 /* Hero Section */
 .hero {
-    padding: 40px 0 80px;
+    padding: 40px 0 0px;
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     min-height: calc(100vh - 40px);
     display: flex;
     align-items: flex-start;
     padding-top: 120px; /* 70px nav height + 50px increased padding */
+}
+
+/* Hero Statistics Section */
+.hero-stats {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    padding: 60px 0;
+    border-top: 1px solid rgba(97, 40, 219, 0.1);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.stat-item {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(97, 40, 219, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #6128DB;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 .hero-container {
@@ -1433,9 +1479,31 @@ html {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero {
-        padding: 35px 0 60px;
+        padding: 35px 0 0px;
         min-height: calc(100vh - 35px);
         padding-top: 90px; /* ~50px mobile nav height + 40px increased mobile padding */
+    }
+    
+    .hero-stats {
+        padding: 40px 0;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px;
+    }
+    
+    .stat-item {
+        padding: 25px 20px;
+    }
+    
+    .stat-number {
+        font-size: 2.2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
     }
     
     .hero-container {
@@ -1864,9 +1932,25 @@ html {
     
     /* Hero Section Extra Small */
     .hero {
-        padding: 30px 0 50px;
+        padding: 30px 0 0px;
         min-height: calc(100vh - 30px);
         padding-top: 80px; /* ~44px extra small nav height + 36px increased extra small padding */
+    }
+    
+    .hero-stats {
+        padding: 30px 0;
+    }
+    
+    .stat-item {
+        padding: 20px 15px;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.85rem;
     }
     
     .hero-container {
