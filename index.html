@@ -72,7 +72,6 @@
                     <div class="logo-academy">ACADEMY</div>
                 </a>
             </div>
-            <button class="mobile-nav-toggle" onclick="toggleMobileNav()">☰</button>
             <div class="nav-links">
                 <a href="#curriculum">Curriculum</a>
                 <a href="#how-it-works">How It Works</a>
@@ -81,20 +80,25 @@
                 <a href="login.html" class="nav-login">Log In</a>
                 <a href="onboarding.html" class="nav-cta">Start 3-Day Free Trial</a>
             </div>
-        </div>
-        <div class="mobile-nav" id="mobileNav">
-            <div class="mobile-nav-links">
-                <a href="#curriculum">Curriculum</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#pricing">Pricing</a>
-                <a href="faq.html">FAQ</a>
-                <a href="login.html">Log In</a>
-            </div>
-            <div class="mobile-nav-cta">
-                <a href="onboarding.html" class="btn-primary">Start 3-Day Free Trial</a>
-            </div>
+            <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+                ☰
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-links">
+            <a href="#curriculum">Curriculum</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="faq.html">FAQ</a>
+            <a href="login.html">Log In</a>
+        </div>
+        <div class="mobile-nav-cta">
+            <a href="onboarding.html" class="btn-primary">Start 3-Day Free Trial</a>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -556,13 +560,14 @@
     <script src="user-management.js"></script>
     <script src="script.js"></script>
     
-    <!-- Mobile Navigation JavaScript -->
+    <!-- Modal JavaScript -->
     <script>
+        // Mobile Navigation Toggle
         function toggleMobileNav() {
             const mobileNav = document.getElementById('mobileNav');
             mobileNav.classList.toggle('active');
         }
-        
+
         // Close mobile nav when clicking outside
         document.addEventListener('click', function(event) {
             const mobileNav = document.getElementById('mobileNav');
@@ -572,10 +577,14 @@
                 mobileNav.classList.remove('active');
             }
         });
-    </script>
-    
-    <!-- Modal JavaScript -->
-    <script>
+
+        // Close mobile nav when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobileNav').classList.remove('active');
+            });
+        });
+
         // Exit Intent Modal functionality
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('exitModal');
