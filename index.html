@@ -72,6 +72,7 @@
                     <div class="logo-academy">ACADEMY</div>
                 </a>
             </div>
+            <button class="mobile-nav-toggle" onclick="toggleMobileNav()">☰</button>
             <div class="nav-links">
                 <a href="#curriculum">Curriculum</a>
                 <a href="#how-it-works">How It Works</a>
@@ -79,6 +80,18 @@
                 <a href="faq.html">FAQ</a>
                 <a href="login.html" class="nav-login">Log In</a>
                 <a href="onboarding.html" class="nav-cta">Start 3-Day Free Trial</a>
+            </div>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-links">
+                <a href="#curriculum">Curriculum</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="faq.html">FAQ</a>
+                <a href="login.html">Log In</a>
+            </div>
+            <div class="mobile-nav-cta">
+                <a href="onboarding.html" class="btn-primary">Start 3-Day Free Trial</a>
             </div>
         </div>
     </nav>
@@ -542,6 +555,24 @@
     <script src="stripe-integration.js"></script>
     <script src="user-management.js"></script>
     <script src="script.js"></script>
+    
+    <!-- Mobile Navigation JavaScript -->
+    <script>
+        function toggleMobileNav() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('active');
+        }
+        
+        // Close mobile nav when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileNav = document.getElementById('mobileNav');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            
+            if (!mobileNav.contains(event.target) && !mobileNavToggle.contains(event.target)) {
+                mobileNav.classList.remove('active');
+            }
+        });
+    </script>
     
     <!-- Modal JavaScript -->
     <script>
