@@ -113,11 +113,11 @@ function setupStickyCTA() {
 // Social Proof Toasts
 function setupSocialProofToasts() {
     const messages = [
-        "Alex just joined the London cohort",
-        "Sarah completed Module 1",
-        "Mike achieved his daily XP goal",
-        "Emma joined the Discord community",
-        "David attended the live call"
+        "Marcus just joined the London cohort",
+        "Priya completed Module 1",
+        "James achieved his daily XP goal",
+        "Sofia joined the Discord community",
+        "Oliver attended the live call"
     ];
     
     let toastIndex = 0;

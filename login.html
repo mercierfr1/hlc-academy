@@ -72,8 +72,14 @@
             border-color: #6128DB;
         }
 
+        .buttons-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
         .btn-primary {
-            width: 100%;
+            flex: 1;
             background: linear-gradient(135deg, #6128DB, #6128DB);
             color: white;
             padding: 14px;
@@ -83,7 +89,6 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 15px;
         }
 
         .btn-primary:hover {
@@ -92,7 +97,7 @@
         }
 
         .btn-secondary {
-            width: 100%;
+            flex: 1;
             background: white;
             color: #6128DB;
             padding: 14px;
@@ -110,13 +115,6 @@
         .btn-secondary:hover {
             background: #6128DB;
             color: white;
-        }
-
-        .divider {
-            text-align: center;
-            margin: 20px 0;
-            color: #6b7280;
-            font-size: 0.9rem;
         }
 
         .error-message {
@@ -159,6 +157,11 @@
                 padding: 30px 20px;
                 margin: 10px;
             }
+            
+            .buttons-container {
+                flex-direction: column;
+                gap: 12px;
+            }
         }
     </style>
 </head>
@@ -183,12 +186,11 @@
                 <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
             </div>
 
-            <button type="submit" class="btn-primary">Sign In</button>
+            <div class="buttons-container">
+                <button type="submit" class="btn-primary">Sign In</button>
+                <a href="onboarding.html" class="btn-secondary">Create New Account</a>
+            </div>
         </form>
-
-        <div class="divider">or</div>
-
-        <a href="onboarding.html" class="btn-secondary">Create New Account</a>
 
         <div class="back-link">
             <a href="index.html">← Back to Home</a>
