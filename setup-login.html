@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Login - HLC Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="user-management.js"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .setup-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .setup-header h1 {
+            color: #1f2937;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .setup-header p {
+            color: #6b7280;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .credentials-box {
+            background: #f8f9ff;
+            border: 2px solid #6128DB;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .credentials-box h3 {
+            color: #6128DB;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .credential-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .credential-item:last-child {
+            border-bottom: none;
+        }
+
+        .credential-label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .credential-value {
+            font-family: monospace;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            color: #6128DB;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6128DB, #6128DB);
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(97, 40, 219, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #6128DB;
+            padding: 14px 28px;
+            border: 2px solid #6128DB;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: #6128DB;
+            color: white;
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background: #f0fdf4;
+            border: 1px solid #d1fae5;
+            color: #065f46;
+        }
+
+        .status-info {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <div class="setup-header">
+            <h1>🔐 Login Setup</h1>
+            <p>Create a test user account to log into HLC Academy</p>
+        </div>
+
+        <div id="statusMessage" class="status-message status-info" style="display: none;">
+            Setting up your test account...
+        </div>
+
+        <div class="credentials-box" id="credentialsBox" style="display: none;">
+            <h3>✅ Your Login Credentials</h3>
+            <div class="credential-item">
+                <span class="credential-label">Email:</span>
+                <span class="credential-value" id="emailValue">test@hlcacademy.com</span>
+            </div>
+            <div class="credential-item">
+                <span class="credential-label">Password:</span>
+                <span class="credential-value" id="passwordValue">password123</span>
+            </div>
+        </div>
+
+        <div id="buttonContainer">
+            <button class="btn-primary" onclick="createTestUser()">Create Test User</button>
+            <a href="login.html" class="btn-secondary">Go to Login</a>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="index.html" style="color: #6b7280; text-decoration: none;">← Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        function createTestUser() {
+            const statusDiv = document.getElementById('statusMessage');
+            const credentialsBox = document.getElementById('credentialsBox');
+            const buttonContainer = document.getElementById('buttonContainer');
+            
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'status-message status-info';
+            statusDiv.textContent = 'Creating test user account...';
+            
+            try {
+                // Test user credentials
+                const testUser = {
+                    firstName: "Test",
+                    lastName: "User", 
+                    email: "test@hlcacademy.com",
+                    password: "password123"
+                };
+
+                // Check if user already exists
+                const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+                const userExists = existingUsers.find(user => user.email === testUser.email);
+                
+                if (!userExists) {
+                    // Create new user
+                    const newUser = {
+                        id: Date.now().toString(),
+                        firstName: testUser.firstName,
+                        lastName: testUser.lastName,
+                        email: testUser.email,
+                        password: testUser.password,
+                        createdAt: new Date().toISOString(),
+                        lastLogin: new Date().toISOString(),
+                        profile: {
+                            experience: "Beginner",
+                            profitability: "Not profitable yet",
+                            obstacle: "Overtrading",
+                            screenTime: "3+ hours",
+                            accountSize: "Under $1,000",
+                            winVision: "Consistent profits",
+                            phone: "+1234567890"
+                        },
+                        progress: {
+                            currentModule: 1,
+                            completedModules: [],
+                            totalXP: 150,
+                            dailyXP: 25,
+                            streak: 3
+                        },
+                        preferences: {
+                            notifications: true,
+                            emailUpdates: true,
+                            theme: 'light'
+                        }
+                    };
+                    
+                    existingUsers.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(existingUsers));
+                    
+                    statusDiv.className = 'status-message status-success';
+                    statusDiv.textContent = '✅ Test user created successfully!';
+                } else {
+                    statusDiv.className = 'status-message status-success';
+                    statusDiv.textContent = 'ℹ️ Test user already exists!';
+                }
+                
+                // Show credentials
+                credentialsBox.style.display = 'block';
+                document.getElementById('emailValue').textContent = testUser.email;
+                document.getElementById('passwordValue').textContent = testUser.password;
+                
+                // Update button
+                buttonContainer.innerHTML = `
+                    <a href="login.html" class="btn-primary">Login Now</a>
+                    <button class="btn-secondary" onclick="createTestUser()">Recreate User</button>
+                `;
+                
+            } catch (error) {
+                statusDiv.className = 'status-message status-error';
+                statusDiv.textContent = '❌ Error creating test user: ' + error.message;
+            }
+        }
+
+        // Auto-create user on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            createTestUser();
+        });
+    </script>
+</body>
+</html>
