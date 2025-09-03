@@ -114,10 +114,29 @@ html {
 /* Mobile Navigation Toggle (hidden on desktop) */
 .mobile-nav-toggle {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
 
 .mobile-nav {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Ensure mobile nav is hidden on all desktop sizes */
+@media (min-width: 769px) {
+    .mobile-nav-toggle {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+    
+    .mobile-nav {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
 }
 
 /* Hero Section */
@@ -1456,6 +1475,8 @@ html {
     /* Mobile Navigation */
     .mobile-nav-toggle {
         display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
         background: none;
         border: none;
         font-size: 1.5rem;
@@ -1479,6 +1500,8 @@ html {
     
     .mobile-nav.active {
         display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     .mobile-nav-links {
