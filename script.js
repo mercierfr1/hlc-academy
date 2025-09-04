@@ -13,6 +13,7 @@ function initializeHomepage() {
     setupSmoothScrolling();
     setupNavbarScroll();
     setupElementAnimations();
+    setupAnimatedStats();
 }
 
 // Loading Animations
@@ -465,3 +466,36 @@ window.addEventListener('beforeunload', function() {
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
 });
+
+// Animated Statistics Counter
+function setupAnimatedStats() {
+    const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+    
+    const animateValue = (element, start, end, duration) => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const current = progress * (end - start) + start;
+            element.textContent = current.toFixed(1);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseFloat(entry.target.getAttribute('data-target'));
+                animateValue(entry.target, 0, target, 2000);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    statNumbers.forEach(stat => {
+        observer.observe(stat);
+    });
+}
