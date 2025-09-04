@@ -4,6 +4,7 @@ import Button from "../components/ui/Button";
 import Container from "../components/ui/Container";
 import Section from "../components/ui/Section";
 import Hero from "../components/Hero";
+import VideoDemo from "../components/VideoDemo";
 import FeatureGrid from "../components/FeatureGrid";
 import Steps from "../components/Steps";
 import Testimonials from "../components/Testimonials";
@@ -14,6 +15,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       <Hero />
+      <VideoDemo />
       <FeatureGrid />
       <Steps />
       <Testimonials />
