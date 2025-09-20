@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Card } from '@/components/ui/Card'
@@ -13,6 +13,7 @@ import DailyGoalSettings from './DailyGoalSettings'
 import CourseOverview from './CourseOverview'
 import XPBar from './XPBar'
 import ContentSection from './ContentSection'
+import TradingStats from './TradingStats'
 import { 
   BarChart3, 
   Target, 
@@ -33,6 +34,13 @@ export default function TradingDashboard() {
   const [activeTab, setActiveTab] = useState('overview')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [expandedSteps, setExpandedSteps] = useState<number[]>([])
+  const [recentTrades, setRecentTrades] = useState<any[]>([])
+  const [stats, setStats] = useState([
+    { label: 'Total P&L', value: '£0', change: '0%', positive: true },
+    { label: 'Win Rate', value: '0%', change: '0%', positive: true },
+    { label: 'Trades This Month', value: '0', change: '0', positive: true },
+    { label: 'Streak', value: '0 days', change: '0', positive: true }
+  ])
   const [checklistItems, setChecklistItems] = useState<{[key: string]: boolean}>({
     'market-analysis': false,
     'htf-perspective': false,
@@ -57,18 +65,127 @@ export default function TradingDashboard() {
     { id: 'plan', label: 'Trading Plan', icon: Brain }
   ]
 
-  const stats = [
-    { label: 'Total P&L', value: '+$2,450', change: '+12.5%', positive: true },
-    { label: 'Win Rate', value: '87%', change: '+5%', positive: true },
-    { label: 'Trades Today', value: '3', change: '+1', positive: true },
-    { label: 'Streak', value: '12 days', change: '+2', positive: true }
-  ]
+  // Load trade data on component mount
+  useEffect(() => {
+    loadTradeData()
+    
+    // Listen for trade updates
+    const handleDataUpdate = () => {
+      loadTradeData()
+    }
+    
+    window.addEventListener('dataUpdated', handleDataUpdate)
+    
+    return () => {
+      window.removeEventListener('dataUpdated', handleDataUpdate)
+    }
+  }, [])
 
-  const recentTrades = [
-    { symbol: 'BTC', type: 'Long', pnl: 450, time: '2h ago' },
-    { symbol: 'ETH', type: 'Short', pnl: -120, time: '4h ago' },
-    { symbol: 'SOL', type: 'Long', pnl: 320, time: '6h ago' }
-  ]
+  const loadTradeData = () => {
+    try {
+      // Load trades from localStorage
+      const savedTrades = localStorage.getItem('trade-journal')
+      if (savedTrades) {
+        const trades = JSON.parse(savedTrades)
+        
+        // Sort trades by date (most recent first) and take last 3
+        const sortedTrades = trades
+          .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          .slice(0, 3)
+        
+        // Format trades for display
+        const formattedTrades = sortedTrades.map((trade: any) => ({
+          symbol: trade.symbol,
+          type: trade.type,
+          pnl: trade.pnl,
+          time: getTimeAgo(trade.date)
+        }))
+        
+        setRecentTrades(formattedTrades)
+        
+        // Calculate stats
+        calculateStats(trades)
+      }
+    } catch (error) {
+      console.error('Error loading trade data:', error)
+    }
+  }
+
+  const getTimeAgo = (dateString: string) => {
+    const now = new Date()
+    const tradeDate = new Date(dateString)
+    const diffInHours = Math.floor((now.getTime() - tradeDate.getTime()) / (1000 * 60 * 60))
+    
+    if (diffInHours < 1) return 'Just now'
+    if (diffInHours < 24) return `${diffInHours}h ago`
+    const diffInDays = Math.floor(diffInHours / 24)
+    return `${diffInDays}d ago`
+  }
+
+  const calculateStats = (trades: any[]) => {
+    // Calculate total P&L
+    const totalPnL = trades.reduce((sum, trade) => sum + trade.pnl, 0)
+    
+    // Calculate win rate
+    const winningTrades = trades.filter(trade => trade.pnl > 0)
+    const winRate = trades.length > 0 ? (winningTrades.length / trades.length) * 100 : 0
+    
+    // Calculate monthly trades
+    const now = new Date()
+    const currentMonth = now.getMonth()
+    const currentYear = now.getFullYear()
+    const monthlyTrades = trades.filter(trade => {
+      const tradeDate = new Date(trade.date)
+      return tradeDate.getMonth() === currentMonth && tradeDate.getFullYear() === currentYear
+    })
+    
+    // Calculate streak
+    let currentStreak = 0
+    for (let i = trades.length - 1; i >= 0; i--) {
+      if (trades[i].pnl > 0) {
+        currentStreak++
+      } else {
+        break
+      }
+    }
+    
+    // Format currency
+    const formatCurrency = (amount: number) => {
+      return new Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'GBP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(amount)
+    }
+    
+    setStats([
+      { 
+        label: 'Total P&L', 
+        value: formatCurrency(totalPnL), 
+        change: '0%', 
+        positive: totalPnL >= 0 
+      },
+      { 
+        label: 'Win Rate', 
+        value: `${winRate.toFixed(1)}%`, 
+        change: '0%', 
+        positive: winRate >= 50 
+      },
+      { 
+        label: 'Trades This Month', 
+        value: monthlyTrades.length.toString(), 
+        change: '0', 
+        positive: true 
+      },
+      { 
+        label: 'Streak', 
+        value: `${currentStreak} days`, 
+        change: '0', 
+        positive: currentStreak > 0 
+      }
+    ])
+  }
 
   const mindsetQuotes = [
     "The markets transfer money from the impatient to the patient.",

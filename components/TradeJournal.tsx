@@ -47,6 +47,9 @@ export default function TradeJournal() {
   const saveTrades = (updatedTrades: Trade[]) => {
     setTrades(updatedTrades)
     localStorage.setItem('trade-journal', JSON.stringify(updatedTrades))
+    
+    // Trigger overview refresh
+    window.dispatchEvent(new CustomEvent('dataUpdated'))
   }
 
   const addTrade = () => {

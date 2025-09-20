@@ -3,33 +3,38 @@
 import { motion } from 'framer-motion'
 import { Container } from '@/components/ui/Container'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Brain, BarChart3, CheckCircle, Star, Users } from 'lucide-react'
+import { Brain, BarChart3, CheckCircle, Star, Users, MessageCircle, Calendar, Target, BookOpen, Zap } from 'lucide-react'
 
 const features = [
   {
-    icon: Brain,
-    title: 'Neuroscience-Led',
-    description: 'Evidence-based training that rewires your brain for better trading decisions',
+    icon: Users,
+    title: 'Discord Community',
+    description: 'Join a community of serious traders and get expert mentorship',
+  },
+  {
+    icon: Target,
+    title: 'Daily Trade Ideas',
+    description: 'Get fresh trading opportunities delivered to your inbox every morning',
+  },
+  {
+    icon: Calendar,
+    title: 'Personalised Trading Journal Calendar',
+    description: 'Track your progress with a custom calendar that adapts to your trading schedule',
+  },
+  {
+    icon: BookOpen,
+    title: 'All You Need Video Modules',
+    description: 'Complete video modules designed to make you profitable from day one',
+  },
+  {
+    icon: Zap,
+    title: 'Daily XP Goals',
+    description: 'Gamified learning with daily experience points to keep you motivated',
   },
   {
     icon: BarChart3,
-    title: 'Dashboard Analytics',
-    description: 'Real-time insights into your trading performance and psychological patterns',
-  },
-  {
-    icon: CheckCircle,
-    title: 'Bias Checklist',
-    description: 'Pre-trade discipline system to eliminate emotional decision-making',
-  },
-  {
-    icon: Star,
-    title: 'Deliberate Practice',
-    description: 'Structured learning loops that accelerate skill development',
-  },
-  {
-    icon: Users,
-    title: 'Community & Support',
-    description: 'Join a community of serious traders and get expert mentorship',
+    title: 'Trading Goal Manager',
+    description: 'Set, track, and achieve your trading goals with our comprehensive management system',
   },
 ]
 
@@ -63,7 +68,7 @@ export default function FeatureGrid() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12"
         >
           {features.map((feature, index) => (
             <motion.div key={feature.title} variants={itemVariants}>

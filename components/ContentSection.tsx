@@ -51,32 +51,32 @@ const modules: Module[] = [
     id: 'module-1',
     title: 'Module 1: Trading Psychology Fundamentals',
     description: 'Master the psychological edge required for consistent trading success.',
-    progressPct: 100,
+    progressPct: 0,
     xp: 400,
-    status: 'completed',
+    status: 'locked',
     difficulty: 'beginner',
     duration: '2h 30m',
     subsections: [
-      { id: '1-1', title: 'Understanding Market Psychology', type: 'video', duration: '15m', completed: true },
-      { id: '1-2', title: 'Emotional Control Techniques', type: 'video', duration: '20m', completed: true },
-      { id: '1-3', title: 'Risk Management Psychology', type: 'video', duration: '10m', completed: true },
-      { id: '1-4', title: 'Building Trading Discipline', type: 'video', duration: '25m', completed: true }
+      { id: '1-1', title: 'Understanding Market Psychology', type: 'video', duration: '15m', completed: false },
+      { id: '1-2', title: 'Emotional Control Techniques', type: 'video', duration: '20m', completed: false },
+      { id: '1-3', title: 'Risk Management Psychology', type: 'video', duration: '10m', completed: false },
+      { id: '1-4', title: 'Building Trading Discipline', type: 'video', duration: '25m', completed: false }
     ],
-    endQuiz: { id: 'quiz-1', title: 'Psychology Fundamentals Quiz', questions: 10, completed: true }
+    endQuiz: { id: 'quiz-1', title: 'Psychology Fundamentals Quiz', questions: 10, completed: false }
   },
   {
     id: 'module-2',
     title: 'Module 2: Technical Analysis Mastery',
     description: 'Learn to read charts like a professional trader.',
-    progressPct: 75,
+    progressPct: 0,
     xp: 500,
-    status: 'in_progress',
+    status: 'locked',
     difficulty: 'intermediate',
     duration: '3h 15m',
     subsections: [
-      { id: '2-1', title: 'Chart Patterns & Formations', type: 'video', duration: '25m', completed: true },
-      { id: '2-2', title: 'Support & Resistance Levels', type: 'video', duration: '20m', completed: true },
-      { id: '2-3', title: 'Moving Averages & Trends', type: 'video', duration: '18m', completed: true },
+      { id: '2-1', title: 'Chart Patterns & Formations', type: 'video', duration: '25m', completed: false },
+      { id: '2-2', title: 'Support & Resistance Levels', type: 'video', duration: '20m', completed: false },
+      { id: '2-3', title: 'Moving Averages & Trends', type: 'video', duration: '18m', completed: false },
       { id: '2-4', title: 'Advanced Chart Analysis', type: 'video', duration: '30m', completed: false }
     ],
     endQuiz: { id: 'quiz-2', title: 'Technical Analysis Quiz', questions: 15, completed: false }

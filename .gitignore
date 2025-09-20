@@ -143,3 +143,6 @@ public/uploads/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Starter templates and examples
+starter-for-js/

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Payment Flow - HLC Academy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 HLC Academy Payment Flow Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Test Payment Success Page</h2>
+        <p>This simulates what happens when GoHighLevel redirects after payment:</p>
+        <button class="test-button" onclick="testPaymentSuccess()">Test Payment Success</button>
+        <button class="test-button" onclick="clearStorage()">Clear Storage</button>
+        <div id="payment-status" class="status info">Click "Test Payment Success" to simulate payment redirect</div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Test Login Page with Email Pre-fill</h2>
+        <p>This tests if the email gets pre-filled from localStorage:</p>
+        <button class="test-button" onclick="testLoginPage()">Test Login Page</button>
+        <div id="login-status" class="status info">Click "Test Login Page" to check email pre-fill</div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Current Storage State</h2>
+        <button class="test-button" onclick="showStorage()">Show Storage</button>
+        <div id="storage-info"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. GoHighLevel Integration URLs</h2>
+        <p>Use these URLs in your GoHighLevel Success URL setting:</p>
+        <div class="status info">
+            <strong>Production:</strong><br>
+            <code>https://your-domain.vercel.app/payment-success?plan={{plan_name}}&success=true&email={{email}}</code><br><br>
+            
+            <strong>Local Testing:</strong><br>
+            <code>http://localhost:3000/payment-success?plan={{plan_name}}&success=true&email={{email}}</code>
+        </div>
+    </div>
+
+    <script>
+        function testPaymentSuccess() {
+            // Simulate GoHighLevel redirect with parameters
+            const params = {
+                plan: 'kickstart',
+                success: 'true',
+                email: 'test@example.com'
+            };
+            
+            // Store in localStorage like the payment success page does
+            localStorage.setItem('selectedPlan', params.plan);
+            localStorage.setItem('showWelcomeAfterPayment', 'true');
+            localStorage.setItem('customerEmail', params.email);
+            
+            document.getElementById('payment-status').innerHTML = 
+                `<div class="success">✅ Payment Success Simulated!</div>
+                <pre>Stored in localStorage:
+- selectedPlan: ${params.plan}
+- showWelcomeAfterPayment: true
+- customerEmail: ${params.email}</pre>
+                <p><strong>Next:</strong> Click "Test Login Page" to see if email pre-fills</p>`;
+        }
+        
+        function testLoginPage() {
+            const customerEmail = localStorage.getItem('customerEmail');
+            const showWelcome = localStorage.getItem('showWelcomeAfterPayment');
+            const selectedPlan = localStorage.getItem('selectedPlan');
+            
+            if (showWelcome === 'true' && customerEmail) {
+                document.getElementById('login-status').innerHTML = 
+                    `<div class="success">✅ Email Pre-fill Ready!</div>
+                    <pre>Login page should show:
+- Email: ${customerEmail} (pre-filled and read-only)
+- Mode: Sign Up (default)
+- Plan: ${selectedPlan}
+- Payment banner: Visible</pre>
+                    <p><strong>Action:</strong> <a href="/login" target="_blank">Open Login Page</a> to verify</p>`;
+            } else {
+                document.getElementById('login-status').innerHTML = 
+                    `<div class="error">❌ No payment data found!</div>
+                    <p>Run "Test Payment Success" first to set up the data</p>`;
+            }
+        }
+        
+        function showStorage() {
+            const storage = {
+                selectedPlan: localStorage.getItem('selectedPlan'),
+                showWelcomeAfterPayment: localStorage.getItem('showWelcomeAfterPayment'),
+                customerEmail: localStorage.getItem('customerEmail')
+            };
+            
+            document.getElementById('storage-info').innerHTML = 
+                `<pre>${JSON.stringify(storage, null, 2)}</pre>`;
+        }
+        
+        function clearStorage() {
+            localStorage.removeItem('selectedPlan');
+            localStorage.removeItem('showWelcomeAfterPayment');
+            localStorage.removeItem('customerEmail');
+            document.getElementById('payment-status').innerHTML = 
+                '<div class="info">🧹 Storage cleared</div>';
+            document.getElementById('login-status').innerHTML = 
+                '<div class="info">Storage cleared - run tests again</div>';
+            document.getElementById('storage-info').innerHTML = '';
+        }
+        
+        // Auto-show storage on load
+        showStorage();
+    </script>
+</body>
+</html>

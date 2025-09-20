@@ -17,8 +17,8 @@ export default function XPTracker({
   streak = 0, 
   timeRemaining = "23 hours left" 
 }: XPTrackerProps) {
-  const [xp, setXp] = useState(currentXP)
-  const [currentStreak, setCurrentStreak] = useState(streak)
+  const [xp, setXp] = useState(0) // Always start fresh
+  const [currentStreak, setCurrentStreak] = useState(0) // Always start fresh
   
   const progressPercentage = (xp / targetXP) * 100
 

@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
 import VideoDemo from '@/components/VideoDemo'
@@ -7,8 +10,11 @@ import Steps from '@/components/Steps'
 import Testimonials from '@/components/Testimonials'
 import Pricing from '@/components/Pricing'
 import FAQ from '@/components/FAQ'
+import OnboardingModal from '@/components/OnboardingModal'
 
 export default function Home() {
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false)
+
   return (
     <main className="min-h-screen relative">
       {/* Gradient Background */}
@@ -26,6 +32,12 @@ export default function Home() {
         <Pricing />
         <FAQ />
       </div>
+
+      {/* Onboarding Modal */}
+      <OnboardingModal 
+        isOpen={isOnboardingOpen} 
+        onClose={() => setIsOnboardingOpen(false)} 
+      />
     </main>
   )
 }

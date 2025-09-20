@@ -1,5 +1,5 @@
-import TradingDashboard from '@/components/TradingDashboard'
+import TradingDashboardWrapper from '@/components/TradingDashboardWrapper'
 
 export default function TradingDashboardPage() {
-  return <TradingDashboard />
+  return <TradingDashboardWrapper />
 }

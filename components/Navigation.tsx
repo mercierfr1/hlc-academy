@@ -60,17 +60,17 @@ export default function Navigation() {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Link href="/trading-dashboard">
+            <Link href="/login">
               <Button variant="ghost" size="sm">
                 Login
               </Button>
             </Link>
-            <Link href="/trading-dashboard">
-              <Button size="sm" className="group">
+            <Button size="sm" className="group" asChild>
+              <Link href="/onboarding.html">
                 Start Free Trial
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -102,17 +102,22 @@ export default function Navigation() {
                 </Link>
               ))}
               <div className="pt-4 space-y-2">
-                <Link href="/trading-dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
                   <Button variant="ghost" size="sm" className="w-full justify-center">
                     Login
                   </Button>
                 </Link>
-                <Link href="/trading-dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button size="sm" className="w-full justify-center group">
+                <Button 
+                  size="sm" 
+                  className="w-full justify-center group" 
+                  asChild
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Link href="/onboarding.html">
                     Start Free Trial
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

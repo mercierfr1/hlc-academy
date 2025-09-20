@@ -34,31 +34,32 @@ export default function Hero() {
                   Trading
                 </h1>
 
-                <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-8 sm:leading-9">
-                  Transform your trading psychology with neuroscience-backed learning. Join 2,400+ traders who've achieved consistent profits through institutional-grade decision making.
-                </p>
+                       <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-8 sm:leading-9">
+                         Transform your trading with neuroscience-backed learning. Join the traders who've achieved consistent profits through institutional-grade decision making.
+                       </p>
               </div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex flex-wrap items-center justify-center gap-6"
+                className="flex flex-wrap items-center justify-center gap-8"
               >
-                <Button asChild size="lg" className="group h-20 px-12 text-2xl">
-                  <Link href="/onboarding.html">
+                <Button size="lg" className="group h-36 px-36 text-4xl flex items-center justify-center" asChild>
+                  <Link href="/onboarding.html" className="flex items-center justify-center">
                     Start Free Trial
-                    <ArrowRight className="ml-4 h-7 w-7 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="ml-5 h-8 w-8 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
 
-                <Button variant="secondary" size="lg" asChild className="group h-20 px-12 text-2xl">
-                  <Link href="#demo">
-                    <Play className="mr-4 h-7 w-7" />
+                <Button variant="secondary" size="lg" asChild className="group h-36 px-28 text-4xl text-gray-700 dark:text-white flex items-center justify-center">
+                  <Link href="#demo" className="flex items-center justify-center">
+                    <Play className="mr-5 h-8 w-8" />
                     See Live Demo
                   </Link>
                 </Button>
               </motion.div>
+
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

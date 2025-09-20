@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
@@ -90,6 +91,29 @@ const itemVariants = {
 }
 
 export default function Pricing() {
+  const handlePlanSelection = (planName: string) => {
+    // Store the selected plan
+    localStorage.setItem('selectedPlan', planName)
+    
+    // GoHighLevel/FastPay Direct payment URLs for each plan
+    const paymentUrls = {
+      'kickstart': 'https://link.fastpaydirect.com/payment-link/68b75a8c67ee3b3dca68bf37',
+      'scaleup': 'https://link.fastpaydirect.com/payment-link/68b75a8c67ee3b3dca68bf37', 
+      'mastery': 'https://link.fastpaydirect.com/payment-link/68b75a8c67ee3b3dca68bf37'
+    }
+    
+    // Redirect directly to the GoHighLevel payment page
+    const paymentUrl = paymentUrls[planName as keyof typeof paymentUrls]
+    if (paymentUrl) {
+      // Add success URL parameter to redirect back to our payment success page
+      const successUrl = encodeURIComponent(`${window.location.origin}/payment-success?plan=${planName}&success=true`)
+      window.location.href = `${paymentUrl}?success_url=${successUrl}`
+    } else {
+      // Fallback to onboarding page
+      window.location.href = '/onboarding.html'
+    }
+  }
+
   return (
     <section id="pricing" className="py-32 sm:py-40 lg:py-48 bg-white dark:bg-gray-900">
       <Container>
@@ -205,17 +229,15 @@ export default function Pricing() {
                   </ul>
                   
                   <Button 
-                    asChild 
                     size="lg" 
                     className={`w-full ${
                       plan.popular 
                         ? 'bg-gradient-to-r from-blue-600 to-cyan-500 hover:opacity-90' 
                         : ''
                     }`}
+                    onClick={() => handlePlanSelection(plan.name.toLowerCase())}
                   >
-                    <a href={plan.href} target="_blank" rel="noopener noreferrer">
-                      {plan.cta}
-                    </a>
+                    {plan.cta}
                   </Button>
                 </CardContent>
               </Card>

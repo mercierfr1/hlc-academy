@@ -336,47 +336,40 @@
                     });
                 }
                 
-                // All plans use the same payment link
-                window.location.href = config.stripeUrl;
+                // Redirect to GoHighLevel payment
+                redirectToGoHighLevel(plan, config);
             }
         }
         
-        // Create Stripe checkout session
-        async function createCheckoutSession(planName, config) {
+        // Redirect to GoHighLevel payment
+        function redirectToGoHighLevel(planName, config) {
             try {
                 // Show loading message
                 const button = document.querySelector('.checkout-button');
                 if (button) {
-                    button.textContent = 'Creating checkout session...';
+                    button.textContent = 'Redirecting to payment...';
                     button.disabled = true;
                 }
                 
-                // Call the API to create a real Stripe checkout session
-                const response = await fetch('/api/create-checkout-session', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        plan: planName,
-                        planName: config.name,
-                        price: config.price,
-                        successUrl: window.location.origin + '/welcome.html',
-                        cancelUrl: window.location.origin + '/onboarding.html'
-                    })
-                });
+                // GoHighLevel/FastPay Direct payment URLs
+                const paymentUrls = {
+                    'kickstart': 'https://link.fastpaydirect.com/payment-link/68b75a8c67ee3b3dca68bf37',
+                    'scaleup': 'https://link.fastpaydirect.com/payment-link/68b75a8c67ee3b3dca68bf37', 
+                    'mastery': 'https://link.fastpaydirect.com/payment-link/68b75a8c67ee3b3dca68bf37'
+                }
                 
-                const data = await response.json();
-                
-                if (data.url) {
-                    // Redirect to real Stripe checkout
-                    window.location.href = data.url;
+                // Redirect to GoHighLevel payment page
+                const paymentUrl = paymentUrls[planName]
+                if (paymentUrl) {
+                    // Add success URL parameter to redirect back to our payment success page
+                    const successUrl = encodeURIComponent(`${window.location.origin}/payment-success?plan=${planName}&success=true`)
+                    window.location.href = `${paymentUrl}?success_url=${successUrl}`
                 } else {
-                    throw new Error('No checkout URL received');
+                    throw new Error('Payment URL not found for plan: ' + planName);
                 }
                 
             } catch (error) {
-                console.error('Error creating checkout session:', error);
+                console.error('Error redirecting to payment:', error);
                 
                 // Show error message
                 const button = document.querySelector('.checkout-button');
@@ -386,7 +379,7 @@
                 }
                 
                 // Show error to user
-                alert('There was an error creating your checkout session. Please try again.');
+                alert('There was an error redirecting to payment. Please try again.');
             }
         }
         
