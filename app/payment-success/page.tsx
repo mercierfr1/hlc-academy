@@ -10,8 +10,21 @@ import Link from 'next/link'
 export default function PaymentSuccessPage() {
   const [customerEmail, setCustomerEmail] = useState('')
   const [selectedPlan, setSelectedPlan] = useState('kickstart')
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
+    // Check for dark mode preference
+    const checkDarkMode = () => {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      setIsDarkMode(prefersDark)
+    }
+
+    checkDarkMode()
+
+    // Listen for changes in color scheme preference
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    mediaQuery.addEventListener('change', checkDarkMode)
+
     // Check URL parameters for GoHighLevel payment success
     const urlParams = new URLSearchParams(window.location.search)
     const plan = urlParams.get('plan')
@@ -29,6 +42,10 @@ export default function PaymentSuccessPage() {
     if (email && email !== '{{email}}' && email.includes('@')) {
       setCustomerEmail(email)
       localStorage.setItem('customerEmail', email)
+    }
+
+    return () => {
+      mediaQuery.removeEventListener('change', checkDarkMode)
     }
   }, [])
 

@@ -699,9 +699,73 @@
         .hidden {
             display: none !important;
         }
+        
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .dark-mode-toggle {
+            background: #374151;
+            border-color: #4b5563;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark-mode-toggle:hover {
+            transform: scale(1.05);
+        }
+        
+        .toggle-icon {
+            display: block;
+            width: 20px;
+            height: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .toggle-icon {
+            filter: invert(1);
+        }
+        
+        /* Enhanced Dark Mode Colors */
+        .dark .dynamic-copy {
+            background: #064e3b;
+            border-color: #10b981;
+        }
+        
+        .dark .dynamic-copy h4 {
+            color: #10b981;
+        }
+        
+        .dark .dynamic-copy p {
+            color: #a7f3d0;
+        }
+        
+        /* Better contrast for dark mode */
+        .dark .modal-body p {
+            color: #e5e7eb;
+        }
+        
+        .dark .modal-body strong {
+            color: #f9fafb;
+        }
     </style>
 </head>
 <body>
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+        <span class="toggle-icon">🌙</span>
+    </button>
+    
     <div class="onboarding-container">
         <div class="onboarding-card">
             <div class="progress-bar">
@@ -1194,6 +1258,33 @@
             // Example: Send to Google Analytics, Mixpanel, etc.
             // gtag('event', eventName, data);
         }
+        
+        // Dark Mode Toggle Function
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.querySelector('.toggle-icon').textContent = '🌙';
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.querySelector('.toggle-icon').textContent = '☀️';
+            }
+        }
+        
+        // Update toggle icon based on current theme
+        function updateToggleIcon() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.querySelector('.toggle-icon').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        // Initialize toggle icon
+        document.addEventListener('DOMContentLoaded', function() {
+            updateToggleIcon();
+        });
         
         // Initialize
         // updateProgress(); // Moved to initOnboarding()
