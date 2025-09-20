@@ -26,9 +26,10 @@ export default function PaymentSuccessPage() {
 
     // Check if this is a valid GoHighLevel payment success
     // Accept both literal template strings and actual values
-    if ((success === 'true' || success === '{{success}}') && plan && plan !== '{{plan_name}}') {
+    if (success === 'true' || success === '{{success}}') {
       // Store payment success data
-      localStorage.setItem('selectedPlan', plan)
+      const planToStore = (plan && plan !== '{{plan_name}}') ? plan : 'kickstart'
+      localStorage.setItem('selectedPlan', planToStore)
       localStorage.setItem('showWelcomeAfterPayment', 'true')
       
       // Store customer email if available from FastPay (and not template string)
@@ -44,17 +45,6 @@ export default function PaymentSuccessPage() {
       setTimeout(() => {
         setShowRegistrationPrompt(true)
       }, 1500)
-
-    } else if (plan === '{{plan_name}}' || email === '{{email}}') {
-      // Handle case where GoHighLevel hasn't replaced the template variables yet
-      console.log('Template variables detected - this might be a GoHighLevel configuration issue')
-      setIsValidPayment(true)
-      setIsLoading(false)
-      setShowRegistrationPrompt(true)
-      
-      // Store default values for testing
-      localStorage.setItem('selectedPlan', 'kickstart')
-      localStorage.setItem('showWelcomeAfterPayment', 'true')
       
     } else {
       // Check if user came from local payment flow
