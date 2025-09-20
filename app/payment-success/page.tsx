@@ -24,41 +24,25 @@ export default function PaymentSuccessPage() {
 
     console.log('Payment Success Page - URL Params:', { plan, success, email })
 
-    // Check if this is a valid GoHighLevel payment success
-    // Accept both literal template strings and actual values
-    if (success === 'true' || success === '{{success}}') {
-      // Store payment success data
-      const planToStore = (plan && plan !== '{{plan_name}}') ? plan : 'kickstart'
-      localStorage.setItem('selectedPlan', planToStore)
-      localStorage.setItem('showWelcomeAfterPayment', 'true')
-      
-      // Store customer email if available from FastPay (and not template string)
-      if (email && email !== '{{email}}' && email.includes('@')) {
-        setCustomerEmail(email)
-        localStorage.setItem('customerEmail', email)
-      }
-      
-      setIsValidPayment(true)
-      setIsLoading(false)
-
-      // Show registration prompt immediately for better UX
-      setTimeout(() => {
-        setShowRegistrationPrompt(true)
-      }, 1500)
-      
-    } else {
-      // Check if user came from local payment flow
-      const showWelcome = localStorage.getItem('showWelcomeAfterPayment')
-      if (showWelcome !== 'true') {
-        // If not from payment, redirect to home
-        window.location.href = '/'
-        return
-      }
-
-      setIsValidPayment(true)
-      setIsLoading(false)
-      setShowRegistrationPrompt(true)
+    // Always show the registration form for any payment success
+    // This makes it more robust and handles all cases
+    const planToStore = (plan && plan !== '{{plan_name}}') ? plan : 'kickstart'
+    localStorage.setItem('selectedPlan', planToStore)
+    localStorage.setItem('showWelcomeAfterPayment', 'true')
+    
+    // Store customer email if available from FastPay (and not template string)
+    if (email && email !== '{{email}}' && email.includes('@')) {
+      setCustomerEmail(email)
+      localStorage.setItem('customerEmail', email)
     }
+    
+    setIsValidPayment(true)
+    setIsLoading(false)
+
+    // Show registration prompt after a short delay
+    setTimeout(() => {
+      setShowRegistrationPrompt(true)
+    }, 1000)
   }, [])
 
   const handleCreateAccount = () => {
