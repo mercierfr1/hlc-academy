@@ -36,7 +36,8 @@ import {
   Filter,
   Plus,
   ExternalLink,
-  X
+  X,
+  MessageSquare
 } from 'lucide-react'
 
 interface Call {
