@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +9,25 @@
     <script src="analytics.js"></script>
     <script src="user-management.js"></script>
     <script>
-        // Dark mode detection
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
+        // Dark mode detection and application
+        function applyDarkMode() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const storedTheme = localStorage.getItem('theme');
+            
+            if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            } else {
+                document.documentElement.classList.add('light');
+                document.documentElement.classList.remove('dark');
+            }
         }
+        
+        // Apply dark mode immediately
+        applyDarkMode();
+        
+        // Listen for changes in system color scheme
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyDarkMode);
     </script>
     <style>
         /* Global Styles */

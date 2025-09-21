@@ -130,7 +130,7 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
             // Store user session
             localStorage.setItem('userEmail', formData.email)
             localStorage.setItem('userName', formData.fullName)
-            localStorage.setItem('userPlan', selectedPlan || 'Kickstart')
+            localStorage.setItem('userPlan', 'Kickstart')
             localStorage.setItem('userLoginSet', 'true')
             localStorage.setItem('isLoggedIn', 'true')
             
