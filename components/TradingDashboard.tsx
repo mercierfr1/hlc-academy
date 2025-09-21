@@ -16,6 +16,8 @@ import ContentSection from './ContentSection'
 import TradingStats from './TradingStats'
 import EnhancedTradingPlan from './EnhancedTradingPlan'
 import MentorshipDashboard from './MentorshipDashboard'
+import FundingTracker from './FundingTracker'
+import FundingOverviewWidget from './FundingOverviewWidget'
 import { 
   BarChart3, 
   Target, 
@@ -67,6 +69,7 @@ export default function TradingDashboard() {
     { id: 'goals', label: 'Goals', icon: Target },
     { id: 'daily-goals', label: 'Daily Goals', icon: Award },
     { id: 'plan', label: 'Trading Plan', icon: Brain },
+    { id: 'funding', label: 'Funding Tracker', icon: DollarSign },
     { id: 'mentorship', label: 'Premium Mentorship', icon: Trophy }
   ]
 
@@ -297,6 +300,18 @@ export default function TradingDashboard() {
         ))}
       </div>
 
+      {/* Funding Overview Widget */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.4 }}
+        className="lg:col-span-2"
+      >
+        <FundingOverviewWidget 
+          onViewDetails={() => setActiveTab('funding')}
+        />
+      </motion.div>
+
       {/* XP Bar Section */}
       <XPBar currentXP={400} totalXP={1000} level={1} />
 
@@ -507,6 +522,7 @@ export default function TradingDashboard() {
           {activeTab === 'goals' && <TradingGoals />}
           {activeTab === 'daily-goals' && <DailyGoalSettings />}
           {activeTab === 'plan' && renderTradingPlan()}
+          {activeTab === 'funding' && <FundingTracker />}
           {activeTab === 'mentorship' && <MentorshipDashboard />}
         </motion.div>
       </Container>
