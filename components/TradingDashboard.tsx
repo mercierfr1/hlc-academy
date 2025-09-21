@@ -15,7 +15,7 @@ import XPBar from './XPBar'
 import ContentSection from './ContentSection'
 import TradingStats from './TradingStats'
 import EnhancedTradingPlan from './EnhancedTradingPlan'
-import MentorshipDashboard from './MentorshipDashboard'
+// import MentorshipDashboard from './MentorshipDashboard' // Temporarily disabled
 import FundingTracker from './FundingTracker'
 import FundingOverviewWidget from './FundingOverviewWidget'
 import { 
