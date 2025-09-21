@@ -10,21 +10,8 @@ import Link from 'next/link'
 export default function PaymentSuccessPage() {
   const [customerEmail, setCustomerEmail] = useState('')
   const [selectedPlan, setSelectedPlan] = useState('kickstart')
-  const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
-    // Check for dark mode preference
-    const checkDarkMode = () => {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setIsDarkMode(prefersDark)
-    }
-
-    checkDarkMode()
-
-    // Listen for changes in color scheme preference
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    mediaQuery.addEventListener('change', checkDarkMode)
-
     // Check URL parameters for GoHighLevel payment success
     const urlParams = new URLSearchParams(window.location.search)
     const plan = urlParams.get('plan')
@@ -43,10 +30,6 @@ export default function PaymentSuccessPage() {
       setCustomerEmail(email)
       localStorage.setItem('customerEmail', email)
     }
-
-    return () => {
-      mediaQuery.removeEventListener('change', checkDarkMode)
-    }
   }, [])
 
   const handleCreateAccount = () => {
@@ -64,114 +47,66 @@ export default function PaymentSuccessPage() {
   }
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 transition-colors duration-300 ${
-      isDarkMode 
-        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
-        : 'bg-gradient-to-br from-green-50 via-white to-blue-50'
-    }`}>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="w-full max-w-2xl"
       >
-        <Card className={`text-center p-8 shadow-2xl border-0 ${
-          isDarkMode 
-            ? 'bg-gray-800/90 backdrop-blur-sm' 
-            : 'bg-white/90 backdrop-blur-sm'
-        }`}>
+        <Card className="text-center p-8">
           <CardHeader className="pb-6">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${
-                isDarkMode 
-                  ? 'bg-blue-600/20' 
-                  : 'bg-green-100'
-              }`}
+              className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
             >
-              <Check className={`w-10 h-10 ${
-                isDarkMode ? 'text-blue-400' : 'text-green-600'
-              }`} />
+              <Check className="w-10 h-10 text-green-600" />
             </motion.div>
             
-            <CardTitle className={`text-3xl font-bold mb-4 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
-            }`}>
+            <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
               Payment Successful! 🎉
             </CardTitle>
             
-            <p className={`text-xl mb-6 ${
-              isDarkMode ? 'text-gray-300' : 'text-gray-600'
-            }`}>
+            <p className="text-xl text-gray-600 mb-6">
               Welcome to HLC Academy! Your {planNames[selectedPlan as keyof typeof planNames]} plan is now active.
             </p>
           </CardHeader>
 
           <CardContent className="space-y-6">
-            <div className={`border rounded-xl p-6 text-left ${
-              isDarkMode
-                ? 'bg-blue-900/20 border-blue-800'
-                : 'bg-blue-50 border-blue-200'
-            }`}>
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 text-left">
               <div className="flex items-center mb-4">
-                <Shield className={`w-6 h-6 mr-3 ${
-                  isDarkMode ? 'text-blue-400' : 'text-blue-600'
-                }`} />
-                <h3 className={`text-lg font-semibold ${
-                  isDarkMode ? 'text-blue-300' : 'text-blue-800'
-                }`}>Complete Your Account Setup</h3>
+                <Shield className="w-6 h-6 text-blue-600 mr-3" />
+                <h3 className="text-lg font-semibold text-blue-800">Complete Your Account Setup</h3>
               </div>
-              <p className={`mb-4 ${
-                isDarkMode ? 'text-blue-200' : 'text-blue-700'
-              }`}>
+              <p className="text-blue-700 mb-4">
                 To access your trading dashboard and course materials, please create your HLC Academy account or login if you already have one.
               </p>
-              <ul className={`space-y-2 ${
-                isDarkMode ? 'text-blue-200' : 'text-blue-700'
-              }`}>
+              <ul className="space-y-2 text-blue-700">
                 <li className="flex items-center">
-                  <Check className={`w-4 h-4 mr-2 flex-shrink-0 ${
-                    isDarkMode ? 'text-blue-400' : 'text-blue-500'
-                  }`} />
+                  <Check className="w-4 h-4 text-blue-500 mr-2 flex-shrink-0" />
                   Secure access to your trading dashboard
                 </li>
                 <li className="flex items-center">
-                  <Check className={`w-4 h-4 mr-2 flex-shrink-0 ${
-                    isDarkMode ? 'text-blue-400' : 'text-blue-500'
-                  }`} />
+                  <Check className="w-4 h-4 text-blue-500 mr-2 flex-shrink-0" />
                   Personalized course progress tracking
                 </li>
                 <li className="flex items-center">
-                  <Check className={`w-4 h-4 mr-2 flex-shrink-0 ${
-                    isDarkMode ? 'text-blue-400' : 'text-blue-500'
-                  }`} />
+                  <Check className="w-4 h-4 text-blue-500 mr-2 flex-shrink-0" />
                   Exclusive community access
                 </li>
               </ul>
             </div>
 
             {customerEmail && (
-              <div className={`border rounded-xl p-4 ${
-                isDarkMode
-                  ? 'bg-gray-700/50 border-gray-600'
-                  : 'bg-gray-50 border-gray-200'
-              }`}>
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                 <div className="flex items-center mb-2">
-                  <Mail className={`w-5 h-5 mr-2 ${
-                    isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                  }`} />
-                  <span className={`text-sm font-medium ${
-                    isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                  }`}>Payment Email:</span>
+                  <Mail className="w-5 h-5 text-gray-600 mr-2" />
+                  <span className="text-sm font-medium text-gray-700">Payment Email:</span>
                 </div>
-                <p className={`font-mono text-sm ${
-                  isDarkMode ? 'text-white' : 'text-gray-900'
-                }`}>{customerEmail}</p>
-                <p className={`text-xs mt-1 ${
-                  isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                }`}>This email will be used for your account</p>
+                <p className="text-gray-900 font-mono text-sm">{customerEmail}</p>
+                <p className="text-xs text-gray-500 mt-1">This email will be used for your account</p>
               </div>
             )}
 
@@ -200,9 +135,7 @@ export default function PaymentSuccessPage() {
               </div>
 
               <div className="text-center">
-                <p className={`text-sm ${
-                  isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                }`}>
+                <p className="text-sm text-gray-500">
                   After creating your account, you'll be redirected to your personalized trading dashboard
                 </p>
               </div>

@@ -44,8 +44,6 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isSignUp, setIsSignUp] = useState(false)
-  const [cameFromPayment, setCameFromPayment] = useState(false)
-  const [selectedPlan, setSelectedPlan] = useState('')
   const router = useRouter()
 
   useEffect(() => {
@@ -62,24 +60,7 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
     const observer = new MutationObserver(checkDarkMode)
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
     
-    // Check if user came from payment
-    const showWelcome = localStorage.getItem('showWelcomeAfterPayment')
-    const plan = localStorage.getItem('selectedPlan')
-    const customerEmail = localStorage.getItem('customerEmail')
-    
-    if (showWelcome === 'true') {
-      setCameFromPayment(true)
-      setIsSignUp(true) // Default to signup for new users
-      
-      if (plan) {
-        setSelectedPlan(plan)
-      }
-      
-      // Pre-fill email if available from payment
-      if (customerEmail) {
-        setFormData(prev => ({ ...prev, email: customerEmail }))
-      }
-    }
+        // Clean login page - no payment-specific logic
     
     return () => observer.disconnect()
   }, [])
@@ -153,9 +134,8 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
             localStorage.setItem('userLoginSet', 'true')
             localStorage.setItem('isLoggedIn', 'true')
             
-                // Clear payment flags
+                // Clear any onboarding flags
                 localStorage.removeItem('showWelcomeAfterPayment')
-                localStorage.removeItem('customerEmail')
             
             // Redirect to dashboard
             router.push('/trading-dashboard')
@@ -242,18 +222,6 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
               <User className={`w-10 h-10 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
             </motion.div>
             
-            {cameFromPayment && (
-              <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                <div className="flex items-center mb-2">
-                  <Check className="w-5 h-5 text-blue-600 mr-2" />
-                  <span className="text-sm font-medium text-blue-800">Payment Successful!</span>
-                </div>
-                <p className="text-sm text-blue-700">
-                  {selectedPlan && `Welcome to HLC Academy ${selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1)} Plan!`}
-                  Complete your account setup to access your dashboard.
-                </p>
-              </div>
-            )}
 
             <CardTitle className={`text-3xl font-bold mb-2 ${
               isDarkMode ? 'text-white' : 'text-gray-900'
@@ -308,9 +276,6 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
                       isDarkMode ? 'text-gray-300' : 'text-gray-700'
                     }`}>
                       Email Address
-                      {cameFromPayment && formData.email && (
-                        <span className="text-xs text-green-600 ml-2">(from payment)</span>
-                      )}
                     </label>
                     <div className="relative">
                       <input
@@ -319,27 +284,17 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
                         className={`w-full px-4 py-3 pl-12 text-lg border-2 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                          cameFromPayment && formData.email
-                            ? 'bg-green-50 border-green-300 text-gray-900'
-                            : isDarkMode
+                          isDarkMode
                             ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                             : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                         }`}
                         placeholder="Enter your email"
                         required
-                        readOnly={cameFromPayment && formData.email ? true : false}
                       />
                       <Mail className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
-                        cameFromPayment && formData.email
-                          ? 'text-green-500'
-                          : isDarkMode ? 'text-gray-400' : 'text-gray-400'
+                        isDarkMode ? 'text-gray-400' : 'text-gray-400'
                       }`} />
                     </div>
-                    {cameFromPayment && formData.email && (
-                      <p className="text-xs text-green-600 mt-1">
-                        ✓ Email pre-filled from your payment
-                      </p>
-                    )}
                   </div>
 
               {/* Password Field */}
