@@ -523,7 +523,16 @@ export default function TradingDashboard() {
           {activeTab === 'daily-goals' && <DailyGoalSettings />}
           {activeTab === 'plan' && renderTradingPlan()}
           {activeTab === 'funding' && <FundingTracker />}
-          {activeTab === 'mentorship' && <MentorshipDashboard />}
+          {activeTab === 'mentorship' && (
+            <div className="text-center py-12">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                Mentorship Dashboard
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Coming soon - Premium mentorship features
+              </p>
+            </div>
+          )}
         </motion.div>
       </Container>
       </div>
