@@ -670,7 +670,7 @@ export default function MentorshipDashboard() {
                   { title: 'Market Analysis Cheat Sheet', type: 'PDF', size: '1.8 MB', icon: TrendingUp },
                   { title: 'Trading Journal Template', type: 'PDF', size: '892 KB', icon: BookOpen },
                   { title: 'Economic Calendar Template', type: 'Excel', size: '234 KB', icon: CalendarDays },
-                  { title: 'Position Sizing Calculator', type: 'Excel', size: '445 KB', icon: Calculator }
+                  { title: 'Position Sizing Calculator', type: 'Excel', size: '445 KB', icon: BarChart2 }
                 ].map((resource, index) => (
                   <Card key={index} className="p-4 bg-slate-700/30 border-slate-600 hover:bg-slate-700/50 transition-colors group">
                     <div className="flex items-start space-x-3">
