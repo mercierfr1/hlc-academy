@@ -645,59 +645,6 @@ export default function MentorshipDashboard() {
                 </div>
               </Card>
 
-              {/* Weekly Market Analysis & Q&A */}
-              <Card className="p-6 bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl border-0 shadow-xl">
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Weekly Market Analysis & Q&A</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                      <TrendingUp className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white">Market Outlook</h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">Updated every Monday</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <div className="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
-                      <h5 className="text-sm font-medium text-slate-900 dark:text-white mb-2">This Week's Focus</h5>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">
-                        EUR/USD consolidation pattern, watch for breakout above 1.0850 resistance
-                      </p>
-                    </div>
-                    
-                    <div className="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
-                      <h5 className="text-sm font-medium text-slate-900 dark:text-white mb-2">Key Events</h5>
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-slate-600 dark:text-slate-400">Wed 14:30</span>
-                          <span className="text-slate-700 dark:text-slate-300">US CPI Data</span>
-                        </div>
-                        <div className="flex justify-between text-xs">
-                          <span className="text-slate-600 dark:text-slate-400">Thu 12:45</span>
-                          <span className="text-slate-700 dark:text-slate-300">ECB Rate Decision</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
-                    <div className="flex items-center justify-between mb-2">
-                      <h5 className="text-sm font-medium text-slate-900 dark:text-white">Q&A Session</h5>
-                      <span className="text-xs text-green-600 dark:text-green-400 font-medium">Live</span>
-                    </div>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">
-                      Ask questions about this week's analysis or your trading setup
-                    </p>
-                    <Button size="sm" variant="secondary" className="w-full" onClick={joinQASession}>
-                      <MessageSquare className="w-4 h-4 mr-2" />
-                      Join Q&A
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-
               {/* Accountability Partner */}
               <Card className="p-6 bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl border-0 shadow-xl">
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Connect</h3>
@@ -789,6 +736,53 @@ export default function MentorshipDashboard() {
                 </Button>
               </Card>
             )}
+
+            {/* Weekly Market Analysis & Q&A */}
+            <Card className="p-4 border-0 mb-6">
+              <div className="flex items-center space-x-2 mb-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-sm font-semibold text-slate-900 dark:text-white">Weekly Market Analysis & Q&A</span>
+              </div>
+              
+              <div className="space-y-3">
+                <div className="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+                  <h5 className="text-xs font-medium text-slate-900 dark:text-white mb-1">This Week's Focus</h5>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
+                    EUR/USD consolidation pattern, watch for breakout above 1.0850 resistance
+                  </p>
+                </div>
+                
+                <div className="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+                  <h5 className="text-xs font-medium text-slate-900 dark:text-white mb-2">Key Events</h5>
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-600 dark:text-slate-400">Wed 14:30</span>
+                      <span className="text-slate-700 dark:text-slate-300">US CPI Data</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-600 dark:text-slate-400">Thu 12:45</span>
+                      <span className="text-slate-700 dark:text-slate-300">ECB Rate Decision</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
+                  <div className="flex items-center justify-between mb-2">
+                    <h5 className="text-xs font-medium text-slate-900 dark:text-white">Q&A Session</h5>
+                    <span className="text-xs text-green-600 dark:text-green-400 font-medium">Live</span>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">
+                    Ask questions about this week's analysis
+                  </p>
+                  <Button size="sm" variant="secondary" className="w-full h-7 text-xs" onClick={joinQASession}>
+                    <MessageSquare className="w-3 h-3 mr-1" />
+                    Join Q&A
+                  </Button>
+                </div>
+              </div>
+            </Card>
 
             {/* Quick Reminders */}
             <Card className="p-4 border-0 mb-6">
