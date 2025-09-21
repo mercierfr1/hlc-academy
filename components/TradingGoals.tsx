@@ -26,16 +26,64 @@ export default function TradingGoals() {
   })
 
   useEffect(() => {
-    // Load goals from localStorage
+    // Load goals from localStorage first
     const savedGoals = localStorage.getItem('trading-goals')
     if (savedGoals) {
       setGoals(JSON.parse(savedGoals))
     }
+
+    // Then try to load from Supabase
+    loadGoalsFromSupabase()
   }, [])
 
-  const saveGoals = (updatedGoals: Goal[]) => {
+  const loadGoalsFromSupabase = async () => {
+    try {
+      const userEmail = localStorage.getItem('userEmail')
+      if (!userEmail) return
+
+      const response = await fetch(`/api/trading-goals?email=${encodeURIComponent(userEmail)}`)
+      const result = await response.json()
+
+      if (response.ok && result.goals) {
+        const supabaseGoals = result.goals.map((goal: any) => ({
+          id: goal.id,
+          title: goal.title,
+          description: goal.description,
+          targetDate: goal.target_date,
+          priority: goal.priority,
+          completed: goal.completed,
+          createdAt: goal.created_at
+        }))
+        setGoals(supabaseGoals)
+        localStorage.setItem('trading-goals', JSON.stringify(supabaseGoals))
+      }
+    } catch (error) {
+      console.error('Error loading goals from Supabase:', error)
+    }
+  }
+
+  const saveGoals = async (updatedGoals: Goal[]) => {
     setGoals(updatedGoals)
     localStorage.setItem('trading-goals', JSON.stringify(updatedGoals))
+    
+    // Also save to Supabase
+    try {
+      const userEmail = localStorage.getItem('userEmail')
+      if (!userEmail) return
+
+      await fetch('/api/trading-goals', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          goals: updatedGoals
+        }),
+      })
+    } catch (error) {
+      console.error('Error saving goals to Supabase:', error)
+    }
   }
 
   const addGoal = () => {
