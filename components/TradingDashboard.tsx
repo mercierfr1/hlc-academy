@@ -18,6 +18,7 @@ import EnhancedTradingPlan from './EnhancedTradingPlan'
 // import MentorshipDashboard from './MentorshipDashboard' // Temporarily disabled
 import FundingTracker from './FundingTracker'
 import FundingOverviewWidget from './FundingOverviewWidget'
+import MentorshipDashboard from './MentorshipDashboard'
 import { 
   BarChart3, 
   Target, 
@@ -523,16 +524,7 @@ export default function TradingDashboard() {
           {activeTab === 'daily-goals' && <DailyGoalSettings />}
           {activeTab === 'plan' && renderTradingPlan()}
           {activeTab === 'funding' && <FundingTracker />}
-          {activeTab === 'mentorship' && (
-            <div className="text-center py-12">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                Mentorship Dashboard
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Coming soon - Premium mentorship features
-              </p>
-            </div>
-          )}
+          {activeTab === 'mentorship' && <MentorshipDashboard />}
         </motion.div>
       </Container>
       </div>
