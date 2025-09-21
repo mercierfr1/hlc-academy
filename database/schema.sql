@@ -25,6 +25,25 @@ CREATE TABLE public.profiles (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Onboarding responses table
+CREATE TABLE public.onboarding_responses (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    email TEXT NOT NULL,
+    trading_experience TEXT,
+    current_profitability TEXT,
+    biggest_challenge TEXT,
+    account_size TEXT,
+    time_commitment TEXT,
+    primary_goal TEXT,
+    motivation_level TEXT,
+    preferred_learning_style TEXT,
+    completed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    UNIQUE(user_id, email)
+);
+
 -- Trading courses/modules
 CREATE TABLE public.courses (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -181,6 +200,7 @@ CREATE INDEX idx_xp_transactions_user ON public.xp_transactions(user_id);
 
 -- Row Level Security (RLS) policies
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.onboarding_responses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_course_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_section_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.trade_journal ENABLE ROW LEVEL SECURITY;
@@ -198,6 +218,16 @@ CREATE POLICY "Users can update own profile" ON public.profiles
 
 CREATE POLICY "Users can insert own profile" ON public.profiles
     FOR INSERT WITH CHECK (auth.uid() = id);
+
+-- Onboarding responses policies
+CREATE POLICY "Users can view own onboarding responses" ON public.onboarding_responses
+    FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert own onboarding responses" ON public.onboarding_responses
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update own onboarding responses" ON public.onboarding_responses
+    FOR UPDATE USING (auth.uid() = user_id);
 
 -- Course progress policies
 CREATE POLICY "Users can view own course progress" ON public.user_course_progress

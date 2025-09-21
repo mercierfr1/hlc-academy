@@ -141,9 +141,9 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
             
                 // Clear any onboarding flags
                 localStorage.removeItem('showWelcomeAfterPayment')
-            
-            // Redirect to dashboard
-            router.push('/trading-dashboard')
+                
+                // Redirect to onboarding first, then dashboard
+                router.push('/onboarding')
           } else {
             setError(loginResult.error || 'Account created but login failed. Please try logging in.')
           }
@@ -173,16 +173,21 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
           localStorage.setItem('userLoginSet', 'true')
           localStorage.setItem('isLoggedIn', 'true')
           
-          // Clear any onboarding flags
-          localStorage.removeItem('showWelcomeAfterPayment')
-          localStorage.removeItem('showLoginSetup')
-          
-          // Redirect to dashboard
-          if (onLoginSuccess) {
-            onLoginSuccess()
-          } else {
-            router.push('/trading-dashboard')
-          }
+              // Clear any onboarding flags
+              localStorage.removeItem('showWelcomeAfterPayment')
+              localStorage.removeItem('showLoginSetup')
+              
+              // Check if onboarding is completed
+              const onboardingCompleted = localStorage.getItem('onboardingCompleted')
+              
+              // Redirect to onboarding first if not completed, otherwise dashboard
+              if (onLoginSuccess) {
+                onLoginSuccess()
+              } else if (onboardingCompleted !== 'true') {
+                router.push('/onboarding')
+              } else {
+                router.push('/trading-dashboard')
+              }
         } else {
           setError(result.error || 'Invalid email or password. Please try again.')
         }

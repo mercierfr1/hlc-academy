@@ -35,6 +35,7 @@ export default function TradingDashboard() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [expandedSteps, setExpandedSteps] = useState<number[]>([])
   const [recentTrades, setRecentTrades] = useState<any[]>([])
+  const [userName, setUserName] = useState('')
   const [stats, setStats] = useState([
     { label: 'Total P&L', value: '£0', change: '0%', positive: true },
     { label: 'Win Rate', value: '0%', change: '0%', positive: true },
@@ -68,6 +69,12 @@ export default function TradingDashboard() {
   // Load trade data on component mount
   useEffect(() => {
     loadTradeData()
+    
+    // Get user name from localStorage
+    const savedUserName = localStorage.getItem('userName')
+    if (savedUserName) {
+      setUserName(savedUserName)
+    }
     
     // Listen for trade updates
     const handleDataUpdate = () => {
@@ -573,11 +580,18 @@ export default function TradingDashboard() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
+              {userName && (
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Welcome back, <span className="font-semibold text-gray-900 dark:text-white">{userName}</span>
+                </div>
+              )}
               <Button 
                 onClick={() => {
                   // Add logout functionality here
                   if (typeof window !== 'undefined') {
                     localStorage.removeItem('user')
+                    localStorage.removeItem('userName')
+                    localStorage.removeItem('userEmail')
                     window.location.href = '/'
                   }
                 }}
@@ -607,11 +621,18 @@ export default function TradingDashboard() {
               className="md:hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-700"
             >
               <div className="flex flex-col space-y-3">
+                {userName && (
+                  <div className="text-center py-2 text-sm text-gray-600 dark:text-gray-400">
+                    Welcome back, <span className="font-semibold text-gray-900 dark:text-white">{userName}</span>
+                  </div>
+                )}
                 <Button 
                   onClick={() => {
                     // Add logout functionality here
                     if (typeof window !== 'undefined') {
                       localStorage.removeItem('user')
+                      localStorage.removeItem('userName')
+                      localStorage.removeItem('userEmail')
                       window.location.href = '/'
                     }
                     setIsMobileMenuOpen(false)
