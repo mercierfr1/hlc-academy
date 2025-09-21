@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Check, ArrowRight, User, Mail, Lock, Shield } from 'lucide-react'
+import { Check, ArrowRight, User, Mail, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import Link from 'next/link'
@@ -33,10 +33,6 @@ export default function PaymentSuccessPage() {
   }, [])
 
   const handleCreateAccount = () => {
-    window.location.href = '/login'
-  }
-
-  const handleLogin = () => {
     window.location.href = '/login'
   }
 
@@ -81,7 +77,7 @@ export default function PaymentSuccessPage() {
                 <h3 className="text-lg font-semibold text-blue-800">Complete Your Account Setup</h3>
               </div>
               <p className="text-blue-700 mb-4">
-                To access your trading dashboard and course materials, please create your HLC Academy account or login if you already have one.
+                To access your trading dashboard and course materials, please create your HLC Academy account.
               </p>
               <ul className="space-y-2 text-blue-700">
                 <li className="flex items-center">
@@ -111,25 +107,14 @@ export default function PaymentSuccessPage() {
             )}
 
             <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex justify-center">
                 <Button
                   onClick={handleCreateAccount}
-                  className="group h-14"
+                  className="group h-14 px-12"
                   size="lg"
                 >
                   <User className="mr-2 h-5 w-5" />
-                  Create Account
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-                
-                <Button
-                  onClick={handleLogin}
-                  variant="secondary"
-                  className="group h-14"
-                  size="lg"
-                >
-                  <Lock className="mr-2 h-5 w-5" />
-                  Already Have Account? Login
+                  Create Your Account
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </div>
