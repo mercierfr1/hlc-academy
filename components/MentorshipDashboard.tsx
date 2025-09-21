@@ -577,49 +577,7 @@ export default function MentorshipDashboard() {
             </Card>
 
             {/* Engagement Widgets */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5 gap-6">
-              {/* Next Call */}
-              {nextCall && (
-                <Card className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 backdrop-blur-xl border-0 shadow-xl">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                      <Video className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Next Call</h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">Upcoming Session</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-slate-900 dark:text-white">
-                      {nextCall.title}
-                    </h4>
-                    <div className="flex items-center space-x-2 text-sm text-slate-600 dark:text-slate-400">
-                      <CalendarIcon className="w-4 h-4" />
-                      <span>{new Date(nextCall.date).toLocaleDateString()}</span>
-                      <Clock className="w-4 h-4 ml-2" />
-                      <span>{nextCall.time}</span>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Agenda:</p>
-                      {nextCall.agenda.map((item, index) => (
-                        <div key={index} className="flex items-center space-x-2 text-sm text-slate-600 dark:text-slate-400">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                          <span>{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <Button size="sm" className="w-full mt-4">
-                      <CalendarIcon className="w-4 h-4 mr-2" />
-                      Add to Calendar
-                    </Button>
-                  </div>
-                </Card>
-              )}
-
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Progress Tracker */}
               <Card className="p-6 bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl border-0 shadow-xl">
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Progress</h3>
@@ -798,6 +756,39 @@ export default function MentorshipDashboard() {
             animate={{ opacity: 1, x: 0 }}
             className="fixed right-0 top-0 h-full w-72 bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl border-l border-slate-200 dark:border-slate-700 p-4 overflow-y-auto z-30"
           >
+            {/* Next Call */}
+            {nextCall && (
+              <Card className="p-4 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-0 mb-6">
+                <div className="flex items-center space-x-2 mb-3">
+                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <Video className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">Next Call</span>
+                </div>
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">
+                  {nextCall.title}
+                </h3>
+                <div className="flex items-center space-x-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
+                  <CalendarIcon className="w-4 h-4" />
+                  <span>{new Date(nextCall.date).toLocaleDateString()}</span>
+                  <Clock className="w-4 h-4 ml-2" />
+                  <span>{nextCall.time}</span>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-slate-700 dark:text-slate-300">Agenda:</p>
+                  {nextCall.agenda.map((item, index) => (
+                    <div key={index} className="flex items-center space-x-2 text-xs text-slate-600 dark:text-slate-400">
+                      <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <Button size="sm" className="w-full mt-4">
+                  <CalendarIcon className="w-4 h-4 mr-2" />
+                  Add to Calendar
+                </Button>
+              </Card>
+            )}
 
             {/* Quick Reminders */}
             <Card className="p-4 border-0 mb-6">
