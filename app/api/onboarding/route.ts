@@ -27,40 +27,14 @@ export async function POST(req: NextRequest) {
       .single()
 
     if (userError || !userData) {
-      // For now, let's use a fallback approach - save onboarding without user_id
-      console.log('User not found, saving onboarding responses without user_id for:', email)
+      // User doesn't have an account yet - don't save onboarding responses
+      console.log('User not found in database for:', email, '- onboarding responses will be saved after account creation')
       
-      // Save onboarding responses without user_id (we'll add it later when user signs up properly)
-      const { data, error } = await supabase
-        .from('onboarding_responses')
-        .upsert({
-          user_id: null, // Will be updated later when user properly signs up
-          email: email,
-          trading_experience: responses.tradingExperience,
-          current_profitability: responses.currentProfitability,
-          biggest_challenge: responses.biggestChallenge,
-          account_size: responses.accountSize,
-          time_commitment: responses.timeCommitment,
-          primary_goal: responses.primaryGoal,
-          motivation_level: responses.motivationLevel,
-          preferred_learning_style: responses.preferredLearningStyle,
-          completed_at: new Date().toISOString()
-        })
-        .select()
-
-      if (error) {
-        console.error('Error saving onboarding responses:', error)
-        return NextResponse.json(
-          { error: 'Failed to save onboarding responses' },
-          { status: 500 }
-        )
-      }
-
       return NextResponse.json({
-        success: true,
-        message: 'Onboarding responses saved successfully (user will be created on signup)',
-        data
-      })
+        success: false,
+        message: 'User account not found. Please create an account first.',
+        error: 'User not authenticated'
+      }, { status: 401 })
     }
 
     // Save onboarding responses

@@ -98,11 +98,11 @@ export default function OnboardingQuestions() {
         userEmail = localStorage.getItem('customerEmail')
       }
       
-      // If still no email, use a temporary email for testing
+      // If no email found, redirect to login/signup
       if (!userEmail) {
-        userEmail = 'temp-user@example.com'
-        console.warn('No user email found, using temporary email for onboarding')
-        console.log('Available localStorage keys:', Object.keys(localStorage))
+        setError('Please log in or create an account first before completing onboarding.')
+        setIsLoading(false)
+        return
       }
 
       const response = await fetch('/api/onboarding', {
@@ -127,7 +127,11 @@ export default function OnboardingQuestions() {
         router.push('/trading-dashboard')
       } else {
         console.error('Onboarding API error:', result)
-        setError(result.error || 'Failed to save onboarding responses. Please try again.')
+        if (response.status === 401) {
+          setError('Please log in or create an account first before completing onboarding.')
+        } else {
+          setError(result.error || 'Failed to save onboarding responses. Please try again.')
+        }
       }
     } catch (error) {
       console.error('Onboarding error:', error)
@@ -501,6 +505,16 @@ export default function OnboardingQuestions() {
                   }`}>
                     {error}
                   </span>
+                  {error.includes('log in or create an account') && (
+                    <div className="mt-3">
+                      <Button
+                        onClick={() => router.push('/login')}
+                        className="w-full"
+                      >
+                        Go to Login/Signup
+                      </Button>
+                    </div>
+                  )}
                 </motion.div>
               )}
 
