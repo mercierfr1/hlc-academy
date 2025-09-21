@@ -103,3 +103,4 @@ done
 - **Email Templates**: https://supabase.com/dashboard/project/mwrtykejdzvnlckmqbbn/auth/templates
 
 The password reset functionality is now fully operational!
+

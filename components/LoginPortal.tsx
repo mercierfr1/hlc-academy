@@ -139,11 +139,11 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
             localStorage.setItem('userLoginSet', 'true')
             localStorage.setItem('isLoggedIn', 'true')
             
-            // Clear any onboarding flags
-            localStorage.removeItem('showWelcomeAfterPayment')
-            
-            // New users always go to onboarding first
-            router.push('/onboarding')
+                // Clear any onboarding flags
+                localStorage.removeItem('showWelcomeAfterPayment')
+                
+                // Redirect to onboarding first, then dashboard
+                router.push('/onboarding')
           } else {
             setError(loginResult.error || 'Account created but login failed. Please try logging in.')
           }
@@ -177,18 +177,15 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
               localStorage.removeItem('showWelcomeAfterPayment')
               localStorage.removeItem('showLoginSetup')
               
-              // Check if onboarding is completed in database
-              const onboardingCheckResponse = await fetch(`/api/onboarding?email=${encodeURIComponent(formData.email)}`)
-              const onboardingResult = await onboardingCheckResponse.json()
+              // Check if onboarding is completed
+              const onboardingCompleted = localStorage.getItem('onboardingCompleted')
               
-              // Redirect based on onboarding status
+              // Redirect to onboarding first if not completed, otherwise dashboard
               if (onLoginSuccess) {
                 onLoginSuccess()
-              } else if (!onboardingCheckResponse.ok || !onboardingResult.completed) {
-                // User hasn't completed onboarding - redirect to onboarding
+              } else if (onboardingCompleted !== 'true') {
                 router.push('/onboarding')
               } else {
-                // User has completed onboarding - redirect to dashboard
                 router.push('/trading-dashboard')
               }
         } else {

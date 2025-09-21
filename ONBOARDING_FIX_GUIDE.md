@@ -103,3 +103,4 @@ If you still get errors:
 - `database/schema.sql` - Database schema (needs to be deployed)
 
 The issue is simply that the database table hasn't been created yet. Once you run the SQL in Supabase, everything should work perfectly!
+

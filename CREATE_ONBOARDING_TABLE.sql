@@ -31,3 +31,4 @@ CREATE POLICY "Users can insert own onboarding responses" ON public.onboarding_r
 
 CREATE POLICY "Users can update own onboarding responses" ON public.onboarding_responses
     FOR UPDATE USING (auth.uid() = user_id);
+
