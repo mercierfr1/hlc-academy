@@ -511,7 +511,7 @@ export default function MentorshipDashboard() {
               <div className="flex items-center space-x-2">
                 <Button
                   size="sm"
-                  variant={viewMode === 'month' ? 'default' : 'ghost'}
+                  variant={viewMode === 'month' ? 'primary' : 'ghost'}
                   onClick={() => setViewMode('month')}
                   className="text-xs"
                 >
@@ -519,7 +519,7 @@ export default function MentorshipDashboard() {
                 </Button>
                 <Button
                   size="sm"
-                  variant={viewMode === 'week' ? 'default' : 'ghost'}
+                  variant={viewMode === 'week' ? 'primary' : 'ghost'}
                   onClick={() => setViewMode('week')}
                   className="text-xs"
                 >
@@ -585,7 +585,7 @@ export default function MentorshipDashboard() {
                 <Button
                   key={tab}
                   size="sm"
-                  variant={activeTab === tab ? 'default' : 'ghost'}
+                  variant={activeTab === tab ? 'primary' : 'ghost'}
                   onClick={() => setActiveTab(tab as any)}
                   className="capitalize"
                 >
