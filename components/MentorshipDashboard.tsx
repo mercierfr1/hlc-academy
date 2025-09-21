@@ -85,6 +85,12 @@ export default function MentorshipDashboard() {
   const [activeTab, setActiveTab] = useState<'recordings' | 'notes' | 'resources'>('recordings')
   const [showSidebar, setShowSidebar] = useState(true)
   const [showEconomicTicker, setShowEconomicTicker] = useState(true)
+  const [newTask, setNewTask] = useState('')
+  const [showAddTask, setShowAddTask] = useState(false)
+  const [selectedPoll, setSelectedPoll] = useState('')
+  const [showAddReminder, setShowAddReminder] = useState(false)
+  const [newReminder, setNewReminder] = useState('')
+  const [newReminderUrgent, setNewReminderUrgent] = useState(false)
 
   // Mock data - in real implementation, this would come from API
   const [upcomingCalls] = useState<Call[]>([
@@ -135,7 +141,7 @@ export default function MentorshipDashboard() {
     }
   ])
 
-  const [tasks] = useState<Task[]>([
+  const [tasks, setTasks] = useState<Task[]>([
     {
       id: '1',
       title: 'Complete Risk Management Worksheet',
@@ -206,6 +212,88 @@ export default function MentorshipDashboard() {
 
   const nextCall = upcomingCalls[0]
 
+  // Interactive functions
+  const addTask = () => {
+    if (newTask.trim()) {
+      const task: Task = {
+        id: Date.now().toString(),
+        title: newTask,
+        dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 week from now
+        completed: false,
+        priority: 'medium',
+        category: 'Personal'
+      }
+      setTasks([...tasks, task])
+      setNewTask('')
+      setShowAddTask(false)
+    }
+  }
+
+  const toggleTask = (id: string) => {
+    setTasks(tasks.map(task => 
+      task.id === id ? { ...task, completed: !task.completed } : task
+    ))
+  }
+
+  const deleteTask = (id: string) => {
+    setTasks(tasks.filter(task => task.id !== id))
+  }
+
+  const submitPoll = () => {
+    if (selectedPoll) {
+      alert(`Thank you for voting: ${selectedPoll}`)
+      setSelectedPoll('')
+    }
+  }
+
+  const addReminder = () => {
+    if (newReminder.trim()) {
+      // In a real app, this would save to database
+      alert(`Reminder added: ${newReminder}`)
+      setNewReminder('')
+      setNewReminderUrgent(false)
+      setShowAddReminder(false)
+    }
+  }
+
+  const connectAccountabilityPartner = () => {
+    alert('Accountability Partner matching system would open here. This feature connects you with other traders for mutual support and motivation.')
+  }
+
+  const quickAdd = () => {
+    const options = ['Task', 'Reminder', 'Note', 'Goal']
+    const choice = prompt(`What would you like to add?\n${options.map((opt, i) => `${i + 1}. ${opt}`).join('\n')}`)
+    
+    if (choice) {
+      const index = parseInt(choice) - 1
+      if (index >= 0 && index < options.length) {
+        const item = prompt(`Enter your ${options[index].toLowerCase()}:`)
+        if (item) {
+          alert(`${options[index]} added: ${item}`)
+        }
+      }
+    }
+  }
+
+  const exportData = () => {
+    const data = {
+      upcomingCalls,
+      recordings,
+      tasks,
+      economicEvents,
+      progressStats,
+      exportDate: new Date().toISOString()
+    }
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `mentorship-data-${new Date().toISOString().split('T')[0]}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900">
       {/* Header */}
@@ -236,7 +324,7 @@ export default function MentorshipDashboard() {
               >
                 <Settings className="w-4 h-4" />
               </Button>
-              <Button size="sm">
+              <Button size="sm" onClick={quickAdd}>
                 <Plus className="w-4 h-4 mr-2" />
                 Quick Add
               </Button>
@@ -247,7 +335,7 @@ export default function MentorshipDashboard() {
 
       <div className="flex">
         {/* Main Content */}
-        <div className={`flex-1 transition-all duration-300 ${showSidebar ? 'lg:mr-80' : ''}`}>
+        <div className={`flex-1 transition-all duration-300 ${showSidebar ? 'lg:mr-72' : ''}`}>
           <div className="p-6 space-y-6">
             {/* Calendar Section */}
             <Card className="p-6 bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl border-0 shadow-xl">
@@ -528,12 +616,24 @@ export default function MentorshipDashboard() {
                   <div className="space-y-2">
                     {['Risk Management', 'Market Analysis', 'Psychology', 'Execution'].map((option, index) => (
                       <div key={index} className="flex items-center space-x-2">
-                        <input type="radio" name="poll" className="text-blue-500" />
+                        <input 
+                          type="radio" 
+                          name="poll" 
+                          value={option}
+                          checked={selectedPoll === option}
+                          onChange={(e) => setSelectedPoll(e.target.value)}
+                          className="text-blue-500" 
+                        />
                         <span className="text-sm text-slate-700 dark:text-slate-300">{option}</span>
                       </div>
                     ))}
                   </div>
-                  <Button size="sm" className="w-full">
+                  <Button 
+                    size="sm" 
+                    className="w-full"
+                    onClick={submitPoll}
+                    disabled={!selectedPoll}
+                  >
                     Submit Vote
                   </Button>
                 </div>
@@ -550,7 +650,7 @@ export default function MentorshipDashboard() {
                     <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
                       Find an accountability partner to stay motivated
                     </p>
-                    <Button size="sm" variant="secondary">
+                    <Button size="sm" variant="secondary" onClick={connectAccountabilityPartner}>
                       <MessageCircle className="w-4 h-4 mr-2" />
                       Connect Now
                     </Button>
@@ -595,7 +695,7 @@ export default function MentorshipDashboard() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="fixed right-0 top-0 h-full w-80 bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl border-l border-slate-200 dark:border-slate-700 p-6 overflow-y-auto z-30"
+            className="fixed right-0 top-0 h-full w-72 bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl border-l border-slate-200 dark:border-slate-700 p-4 overflow-y-auto z-30"
           >
             {/* Next Call */}
             {nextCall && (
@@ -633,7 +733,54 @@ export default function MentorshipDashboard() {
 
             {/* Quick Reminders */}
             <Card className="p-4 border-0 mb-6">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Quick Reminders</h3>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Quick Reminders</h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowAddReminder(!showAddReminder)}
+                  className="h-6 w-6 p-0"
+                >
+                  <Plus className="w-3 h-3" />
+                </Button>
+              </div>
+              
+              {showAddReminder && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-3 p-2 bg-slate-50 dark:bg-slate-700/50 rounded-lg"
+                >
+                  <input
+                    type="text"
+                    value={newReminder}
+                    onChange={(e) => setNewReminder(e.target.value)}
+                    placeholder="Add reminder..."
+                    className="w-full text-xs px-2 py-1 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white mb-2"
+                  />
+                  <div className="flex items-center justify-between">
+                    <label className="flex items-center space-x-1 text-xs text-slate-600 dark:text-slate-400">
+                      <input
+                        type="checkbox"
+                        checked={newReminderUrgent}
+                        onChange={(e) => setNewReminderUrgent(e.target.checked)}
+                        className="rounded"
+                      />
+                      <span>Urgent</span>
+                    </label>
+                    <div className="flex space-x-1">
+                      <Button size="sm" variant="ghost" onClick={addReminder} className="h-6 px-2 text-xs">
+                        Add
+                      </Button>
+                      <Button size="sm" variant="ghost" onClick={() => setShowAddReminder(false)} className="h-6 px-2 text-xs">
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+              
               <div className="space-y-3">
                 {[
                   { text: 'Submit weekly trading journal', urgent: true },
@@ -654,22 +801,63 @@ export default function MentorshipDashboard() {
             <Card className="p-4 border-0">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white">To-Do List</h3>
-                <Button variant="ghost" size="sm">
-                  <Plus className="w-4 h-4" />
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => setShowAddTask(!showAddTask)}
+                  className="h-6 w-6 p-0"
+                >
+                  <Plus className="w-3 h-3" />
                 </Button>
               </div>
+              
+              {showAddTask && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-3 p-2 bg-slate-50 dark:bg-slate-700/50 rounded-lg"
+                >
+                  <input
+                    type="text"
+                    value={newTask}
+                    onChange={(e) => setNewTask(e.target.value)}
+                    placeholder="Add new task..."
+                    className="w-full text-xs px-2 py-1 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white mb-2"
+                    onKeyPress={(e) => e.key === 'Enter' && addTask()}
+                  />
+                  <div className="flex justify-end space-x-1">
+                    <Button size="sm" variant="ghost" onClick={addTask} className="h-6 px-2 text-xs">
+                      Add
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => setShowAddTask(false)} className="h-6 px-2 text-xs">
+                      Cancel
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+              
               <div className="space-y-2">
                 {tasks.map((task) => (
                   <motion.div
                     key={task.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`flex items-center space-x-2 p-2 rounded-lg transition-colors ${
-                      task.completed ? 'bg-green-50 dark:bg-green-900/20' : 'bg-slate-50 dark:bg-slate-700/50'
+                    className={`flex items-center space-x-2 p-2 rounded-lg transition-colors group ${
+                      task.completed ? 'bg-green-50 dark:bg-green-900/20' : 'bg-slate-50 dark:bg-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-600/50'
                     }`}
                   >
-                    <CheckCircle className={`w-4 h-4 ${task.completed ? 'text-green-500' : 'text-slate-400'}`} />
-                    <span className={`text-xs flex-1 ${task.completed ? 'line-through text-slate-500' : 'text-slate-700 dark:text-slate-300'}`}>
+                    <button
+                      onClick={() => toggleTask(task.id)}
+                      className="flex-shrink-0"
+                    >
+                      <CheckCircle className={`w-4 h-4 transition-colors ${
+                        task.completed ? 'text-green-500' : 'text-slate-400 hover:text-green-500'
+                      }`} />
+                    </button>
+                    <span className={`text-xs flex-1 cursor-pointer ${
+                      task.completed ? 'line-through text-slate-500' : 'text-slate-700 dark:text-slate-300'
+                    }`}>
                       {task.title}
                     </span>
                     <span className={`text-xs px-2 py-1 rounded ${
@@ -679,6 +867,12 @@ export default function MentorshipDashboard() {
                     }`}>
                       {task.priority}
                     </span>
+                    <button
+                      onClick={() => deleteTask(task.id)}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-600"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
                   </motion.div>
                 ))}
               </div>
