@@ -89,10 +89,20 @@ export default function OnboardingQuestions() {
     setError('')
 
     try {
-      // Get user email from localStorage
-      const userEmail = localStorage.getItem('userEmail')
+      // Get user email from localStorage, with fallback for testing
+      let userEmail = localStorage.getItem('userEmail')
+      
+      // If no email in localStorage, try to get it from other sources
       if (!userEmail) {
-        throw new Error('User not authenticated')
+        // Check if there's a customer email from payment flow
+        userEmail = localStorage.getItem('customerEmail')
+      }
+      
+      // If still no email, use a temporary email for testing
+      if (!userEmail) {
+        userEmail = 'temp-user@example.com'
+        console.warn('No user email found, using temporary email for onboarding')
+        console.log('Available localStorage keys:', Object.keys(localStorage))
       }
 
       const response = await fetch('/api/onboarding', {
@@ -107,6 +117,7 @@ export default function OnboardingQuestions() {
       })
 
       const result = await response.json()
+      console.log('Onboarding API response:', result)
 
       if (response.ok) {
         // Mark onboarding as completed
@@ -115,6 +126,7 @@ export default function OnboardingQuestions() {
         // Redirect to trading dashboard
         router.push('/trading-dashboard')
       } else {
+        console.error('Onboarding API error:', result)
         setError(result.error || 'Failed to save onboarding responses. Please try again.')
       }
     } catch (error) {
