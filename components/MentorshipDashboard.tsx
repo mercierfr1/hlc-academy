@@ -85,7 +85,6 @@ export default function MentorshipDashboard() {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [viewMode, setViewMode] = useState<'month' | 'week'>('month')
   const [activeTab, setActiveTab] = useState<'recordings' | 'notes' | 'resources'>('recordings')
-  const [showSidebar, setShowSidebar] = useState(true)
   const [showEconomicTicker, setShowEconomicTicker] = useState(true)
   const [newTask, setNewTask] = useState('')
   const [showAddTask, setShowAddTask] = useState(false)
@@ -322,14 +321,6 @@ export default function MentorshipDashboard() {
             </div>
             
             <div className="flex items-center space-x-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowSidebar(!showSidebar)}
-                className="hidden lg:flex"
-              >
-                <Settings className="w-4 h-4" />
-              </Button>
               <Button size="sm" onClick={quickAdd}>
                 <Plus className="w-4 h-4 mr-2" />
                 Quick Add
@@ -339,11 +330,220 @@ export default function MentorshipDashboard() {
         </div>
       </div>
 
-      <div className="flex">
-        {/* Main Content */}
-        <div className={`flex-1 transition-all duration-300 ${showSidebar ? 'lg:mr-72' : ''}`}>
-          <div className="p-6 space-y-6">
-            {/* Calendar Section */}
+      <div className="p-6 space-y-6">
+        {/* Quick Info Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Next Call Agenda */}
+          {nextCall && (
+            <Card className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-0 shadow-lg">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                  <Video className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Next Call</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Upcoming Session</p>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-slate-900 dark:text-white">
+                  {nextCall.title}
+                </h4>
+                <div className="flex items-center space-x-4 text-sm text-slate-600 dark:text-slate-400">
+                  <div className="flex items-center space-x-1">
+                    <CalendarIcon className="w-4 h-4" />
+                    <span>{new Date(nextCall.date).toLocaleDateString()}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Clock className="w-4 h-4" />
+                    <span>{nextCall.time}</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Agenda:</p>
+                  {nextCall.agenda.map((item, index) => (
+                    <div key={index} className="flex items-center space-x-2 text-sm text-slate-600 dark:text-slate-400">
+                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <Button size="sm" className="w-full mt-4">
+                  <CalendarIcon className="w-4 h-4 mr-2" />
+                  Add to Calendar
+                </Button>
+              </div>
+            </Card>
+          )}
+
+          {/* Quick Reminders */}
+          <Card className="p-6 border-0 shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <Bell className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Quick Reminders</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Important tasks</p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowAddReminder(!showAddReminder)}
+                className="h-8 w-8 p-0"
+              >
+                <Plus className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            {showAddReminder && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mb-4 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg"
+              >
+                <input
+                  type="text"
+                  value={newReminder}
+                  onChange={(e) => setNewReminder(e.target.value)}
+                  placeholder="Add reminder..."
+                  className="w-full text-sm px-3 py-2 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white mb-2"
+                />
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center space-x-2 text-sm text-slate-600 dark:text-slate-400">
+                    <input
+                      type="checkbox"
+                      checked={newReminderUrgent}
+                      onChange={(e) => setNewReminderUrgent(e.target.checked)}
+                      className="rounded"
+                    />
+                    <span>Urgent</span>
+                  </label>
+                  <div className="flex space-x-2">
+                    <Button size="sm" variant="ghost" onClick={addReminder} className="h-7 px-3 text-sm">
+                      Add
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => setShowAddReminder(false)} className="h-7 px-3 text-sm">
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+            
+            <div className="space-y-3">
+              {[
+                { text: 'Submit weekly trading journal', urgent: true },
+                { text: 'Review market analysis notes', urgent: false },
+                { text: 'Prepare questions for next call', urgent: false }
+              ].map((reminder, index) => (
+                <div key={index} className="flex items-start space-x-3">
+                  <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${reminder.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
+                  <span className={`text-sm ${reminder.urgent ? 'text-red-600 dark:text-red-400' : 'text-slate-600 dark:text-slate-400'}`}>
+                    {reminder.text}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* To-Do List */}
+          <Card className="p-6 border-0 shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                  <ListTodo className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">To-Do List</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Personal tasks</p>
+                </div>
+              </div>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setShowAddTask(!showAddTask)}
+                className="h-8 w-8 p-0"
+              >
+                <Plus className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            {showAddTask && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mb-4 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg"
+              >
+                <input
+                  type="text"
+                  value={newTask}
+                  onChange={(e) => setNewTask(e.target.value)}
+                  placeholder="Add new task..."
+                  className="w-full text-sm px-3 py-2 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white mb-2"
+                  onKeyPress={(e) => e.key === 'Enter' && addTask()}
+                />
+                <div className="flex justify-end space-x-2">
+                  <Button size="sm" variant="ghost" onClick={addTask} className="h-7 px-3 text-sm">
+                    Add
+                  </Button>
+                  <Button size="sm" variant="ghost" onClick={() => setShowAddTask(false)} className="h-7 px-3 text-sm">
+                    Cancel
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+            
+            <div className="space-y-3">
+              {tasks.map((task) => (
+                <motion.div
+                  key={task.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`flex items-center space-x-3 p-3 rounded-lg transition-colors group ${
+                    task.completed ? 'bg-green-50 dark:bg-green-900/20' : 'bg-slate-50 dark:bg-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-600/50'
+                  }`}
+                >
+                  <button
+                    onClick={() => toggleTask(task.id)}
+                    className="flex-shrink-0"
+                  >
+                    <CheckCircle className={`w-5 h-5 transition-colors ${
+                      task.completed ? 'text-green-500' : 'text-slate-400 hover:text-green-500'
+                    }`} />
+                  </button>
+                  <span className={`text-sm flex-1 ${
+                    task.completed ? 'line-through text-slate-500' : 'text-slate-700 dark:text-slate-300'
+                  }`}>
+                    {task.title}
+                  </span>
+                  <span className={`text-xs px-2 py-1 rounded flex-shrink-0 ${
+                    task.priority === 'high' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
+                    task.priority === 'medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
+                    'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                  }`}>
+                    {task.priority}
+                  </span>
+                  <button
+                    onClick={() => deleteTask(task.id)}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-600 flex-shrink-0"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </motion.div>
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        {/* Calendar Section */}
             <Card className="p-6 bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl border-0 shadow-xl">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-4">
@@ -749,8 +949,8 @@ export default function MentorshipDashboard() {
           </div>
         </div>
 
-        {/* Sidebar */}
-        {showSidebar && (
+        {/* Sidebar removed - content moved to main area */}
+        {false && (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
