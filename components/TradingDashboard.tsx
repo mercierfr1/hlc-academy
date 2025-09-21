@@ -15,6 +15,7 @@ import XPBar from './XPBar'
 import ContentSection from './ContentSection'
 import TradingStats from './TradingStats'
 import EnhancedTradingPlan from './EnhancedTradingPlan'
+import MentorshipDashboard from './MentorshipDashboard'
 import { 
   BarChart3, 
   Target, 
@@ -28,7 +29,8 @@ import {
   ArrowLeft,
   Home,
   Menu,
-  X
+  X,
+  Trophy
 } from 'lucide-react'
 
 export default function TradingDashboard() {
@@ -64,7 +66,8 @@ export default function TradingDashboard() {
     { id: 'journal', label: 'Trade Journal', icon: BookOpen },
     { id: 'goals', label: 'Goals', icon: Target },
     { id: 'daily-goals', label: 'Daily Goals', icon: Award },
-    { id: 'plan', label: 'Trading Plan', icon: Brain }
+    { id: 'plan', label: 'Trading Plan', icon: Brain },
+    { id: 'mentorship', label: 'Premium Mentorship', icon: Trophy }
   ]
 
   // Load trade data on component mount
@@ -504,6 +507,7 @@ export default function TradingDashboard() {
           {activeTab === 'goals' && <TradingGoals />}
           {activeTab === 'daily-goals' && <DailyGoalSettings />}
           {activeTab === 'plan' && renderTradingPlan()}
+          {activeTab === 'mentorship' && <MentorshipDashboard />}
         </motion.div>
       </Container>
       </div>

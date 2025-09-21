@@ -17,18 +17,48 @@ export async function POST(req: NextRequest) {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     )
 
-    // Get the user ID from the email
-    const { data: userData, error: userError } = await supabase
+    // Get the user ID from the email, or create a new profile if it doesn't exist
+    let { data: userData, error: userError } = await supabase
       .from('profiles')
       .select('id')
       .eq('email', email)
       .single()
 
     if (userError || !userData) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      )
+      // For now, let's use a fallback approach - save onboarding without user_id
+      console.log('User not found, saving onboarding responses without user_id for:', email)
+      
+      // Save onboarding responses without user_id (we'll add it later when user signs up properly)
+      const { data, error } = await supabase
+        .from('onboarding_responses')
+        .upsert({
+          user_id: null, // Will be updated later when user properly signs up
+          email: email,
+          trading_experience: responses.tradingExperience,
+          current_profitability: responses.currentProfitability,
+          biggest_challenge: responses.biggestChallenge,
+          account_size: responses.accountSize,
+          time_commitment: responses.timeCommitment,
+          primary_goal: responses.primaryGoal,
+          motivation_level: responses.motivationLevel,
+          preferred_learning_style: responses.preferredLearningStyle,
+          completed_at: new Date().toISOString()
+        })
+        .select()
+
+      if (error) {
+        console.error('Error saving onboarding responses:', error)
+        return NextResponse.json(
+          { error: 'Failed to save onboarding responses' },
+          { status: 500 }
+        )
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: 'Onboarding responses saved successfully (user will be created on signup)',
+        data
+      })
     }
 
     // Save onboarding responses
