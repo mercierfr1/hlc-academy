@@ -28,7 +28,8 @@ import {
   Trash2,
   X,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  List
 } from 'lucide-react'
 
 interface FundingAccount {
