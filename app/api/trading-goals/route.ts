@@ -48,6 +48,7 @@ export async function POST(req: NextRequest) {
       title: goal.title,
       description: goal.description,
       target_date: goal.targetDate,
+      goal_date: goal.targetDate || goal.goalDate || '2025-12-31', // Add goal_date field
       priority: goal.priority,
       completed: goal.completed,
       created_at: goal.createdAt || new Date().toISOString()
