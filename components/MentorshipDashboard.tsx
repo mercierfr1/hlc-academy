@@ -35,7 +35,8 @@ import {
   Search,
   Filter,
   Plus,
-  ExternalLink
+  ExternalLink,
+  X
 } from 'lucide-react'
 
 interface Call {
