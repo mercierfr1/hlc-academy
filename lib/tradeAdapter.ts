@@ -1,5 +1,5 @@
 // Trade data model and adapter functions
-// TODO: Replace with real API calls when backend is available
+// Now using real Supabase API calls
 
 export interface Trade {
   id: string
@@ -111,75 +111,186 @@ let mockTrades: Trade[] = [
 
 // Adapter functions
 export const fetchTrades = async (start: string, end: string, filters?: TradeFilters): Promise<Trade[]> => {
-  // TODO: Replace with real API call
-  // const response = await fetch(`/api/trades?start=${start}&end=${end}`, {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(filters)
-  // })
-  // return response.json()
+  // Get user email from localStorage
+  const userEmail = localStorage.getItem('userEmail')
+  if (!userEmail) {
+    console.error('No user email found in localStorage')
+    return []
+  }
 
-  // Mock implementation
-  let filteredTrades = mockTrades.filter(trade => {
-    const tradeDate = new Date(trade.date)
-    const startDate = new Date(start)
-    const endDate = new Date(end)
-    
-    if (tradeDate < startDate || tradeDate > endDate) return false
-    
-    if (filters?.symbols && !filters.symbols.includes(trade.symbol)) return false
-    if (filters?.sides && !filters.sides.includes(trade.side)) return false
-    if (filters?.tags && !filters.tags.some(tag => trade.tags.includes(tag))) return false
-    if (filters?.journaledOnly && !trade.journalId) return false
-    
-    return true
+  // Build query parameters
+  const params = new URLSearchParams({
+    email: userEmail,
+    start: start,
+    end: end
   })
 
-  return filteredTrades
+  if (filters?.symbols && filters.symbols.length > 0) {
+    params.append('symbol', filters.symbols[0]) // For now, only support single symbol filter
+  }
+  if (filters?.sides && filters.sides.length > 0) {
+    params.append('side', filters.sides[0]) // For now, only support single side filter
+  }
+
+  try {
+    const response = await fetch(`/api/trade-journal?${params.toString()}`)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    
+    const result = await response.json()
+    
+    if (!result.success) {
+      console.error('API error:', result.error)
+      return []
+    }
+
+    // Transform Supabase data to Trade interface
+    return result.trades.map((trade: any) => ({
+      id: trade.id,
+      date: trade.trade_date,
+      symbol: trade.symbol,
+      side: trade.side,
+      size: parseFloat(trade.size) || 0,
+      rr: parseFloat(trade.rr) || 0,
+      pnl: parseFloat(trade.pnl) || 0,
+      tags: trade.tags || [],
+      journalId: trade.journal_id,
+      notes: trade.notes || ''
+    }))
+  } catch (error) {
+    console.error('Error fetching trades:', error)
+    return []
+  }
 }
 
 export const saveTrade = async (trade: Omit<Trade, 'id'>): Promise<Trade> => {
-  // TODO: Replace with real API call
-  // const response = await fetch('/api/trades', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(trade)
-  // })
-  // return response.json()
-
-  // Mock implementation
-  const newTrade: Trade = {
-    ...trade,
-    id: `trade-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  // Get user email from localStorage
+  const userEmail = localStorage.getItem('userEmail')
+  if (!userEmail) {
+    throw new Error('No user email found in localStorage')
   }
-  
-  mockTrades.push(newTrade)
-  return newTrade
+
+  try {
+    const response = await fetch('/api/trade-journal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: userEmail, trade })
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const result = await response.json()
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to save trade')
+    }
+
+    // Transform Supabase data to Trade interface
+    const savedTrade = result.data
+    return {
+      id: savedTrade.id,
+      date: savedTrade.trade_date,
+      symbol: savedTrade.symbol,
+      side: savedTrade.side,
+      size: parseFloat(savedTrade.size) || 0,
+      rr: parseFloat(savedTrade.rr) || 0,
+      pnl: parseFloat(savedTrade.pnl) || 0,
+      tags: savedTrade.tags || [],
+      journalId: savedTrade.journal_id,
+      notes: savedTrade.notes || ''
+    }
+  } catch (error) {
+    console.error('Error saving trade:', error)
+    throw error
+  }
 }
 
 export const updateTrade = async (id: string, updates: Partial<Trade>): Promise<Trade> => {
-  // TODO: Replace with real API call
-  // const response = await fetch(`/api/trades/${id}`, {
-  //   method: 'PUT',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(updates)
-  // })
-  // return response.json()
+  // Get user email from localStorage
+  const userEmail = localStorage.getItem('userEmail')
+  if (!userEmail) {
+    throw new Error('No user email found in localStorage')
+  }
 
-  // Mock implementation
-  const index = mockTrades.findIndex(trade => trade.id === id)
-  if (index === -1) throw new Error('Trade not found')
-  
-  mockTrades[index] = { ...mockTrades[index], ...updates }
-  return mockTrades[index]
+  try {
+    const response = await fetch('/api/trade-journal', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        email: userEmail, 
+        tradeId: id, 
+        updates: {
+          symbol: updates.symbol,
+          side: updates.side,
+          size: updates.size,
+          rr: updates.rr,
+          pnl: updates.pnl,
+          tags: updates.tags,
+          notes: updates.notes,
+          journal_id: updates.journalId,
+          trade_date: updates.date
+        }
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const result = await response.json()
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to update trade')
+    }
+
+    // Transform Supabase data to Trade interface
+    const updatedTrade = result.data
+    return {
+      id: updatedTrade.id,
+      date: updatedTrade.trade_date,
+      symbol: updatedTrade.symbol,
+      side: updatedTrade.side,
+      size: parseFloat(updatedTrade.size) || 0,
+      rr: parseFloat(updatedTrade.rr) || 0,
+      pnl: parseFloat(updatedTrade.pnl) || 0,
+      tags: updatedTrade.tags || [],
+      journalId: updatedTrade.journal_id,
+      notes: updatedTrade.notes || ''
+    }
+  } catch (error) {
+    console.error('Error updating trade:', error)
+    throw error
+  }
 }
 
 export const deleteTrade = async (id: string): Promise<void> => {
-  // TODO: Replace with real API call
-  // await fetch(`/api/trades/${id}`, { method: 'DELETE' })
+  // Get user email from localStorage
+  const userEmail = localStorage.getItem('userEmail')
+  if (!userEmail) {
+    throw new Error('No user email found in localStorage')
+  }
 
-  // Mock implementation
-  mockTrades = mockTrades.filter(trade => trade.id !== id)
+  try {
+    const response = await fetch(`/api/trade-journal?email=${encodeURIComponent(userEmail)}&tradeId=${id}`, {
+      method: 'DELETE'
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const result = await response.json()
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to delete trade')
+    }
+  } catch (error) {
+    console.error('Error deleting trade:', error)
+    throw error
+  }
 }
 
 export const getDailyAggregations = async (start: string, end: string, filters?: TradeFilters): Promise<DailyAggregation[]> => {

@@ -37,14 +37,52 @@ export default function TradeJournal() {
   const emotions = ['Confident', 'Anxious', 'Greedy', 'Fearful', 'Patient', 'Impatient', 'Focused', 'Distracted']
 
   useEffect(() => {
-    // Load trades from localStorage
-    const savedTrades = localStorage.getItem('trade-journal')
-    if (savedTrades) {
-      setTrades(JSON.parse(savedTrades))
-    }
+    loadTradesFromSupabase()
   }, [])
 
-  const saveTrades = (updatedTrades: Trade[]) => {
+  const loadTradesFromSupabase = async () => {
+    try {
+      const userEmail = localStorage.getItem('userEmail')
+      if (!userEmail) {
+        console.log('No user email found, skipping trade load')
+        return
+      }
+
+      const response = await fetch(`/api/trade-journal?email=${encodeURIComponent(userEmail)}`)
+      if (response.ok) {
+        const result = await response.json()
+        if (result.success) {
+          // Transform Supabase data to Trade interface
+          const transformedTrades = result.trades.map((trade: any) => ({
+            id: trade.id,
+            symbol: trade.symbol,
+            type: trade.side.toLowerCase() as 'long' | 'short',
+            entryPrice: parseFloat(trade.entry_price) || 0,
+            exitPrice: parseFloat(trade.exit_price) || 0,
+            quantity: parseFloat(trade.quantity) || 0,
+            pnl: parseFloat(trade.pnl) || 0,
+            date: trade.trade_date.split('T')[0], // Convert to date string
+            notes: trade.notes || '',
+            emotions: trade.emotions || [],
+            lessons: trade.lessons || ''
+          }))
+          setTrades(transformedTrades)
+          
+          // Also save to localStorage for offline access
+          localStorage.setItem('trade-journal', JSON.stringify(transformedTrades))
+        }
+      }
+    } catch (error) {
+      console.error('Error loading trades from Supabase:', error)
+      // Fallback to localStorage
+      const savedTrades = localStorage.getItem('trade-journal')
+      if (savedTrades) {
+        setTrades(JSON.parse(savedTrades))
+      }
+    }
+  }
+
+  const saveTrades = async (updatedTrades: Trade[]) => {
     setTrades(updatedTrades)
     localStorage.setItem('trade-journal', JSON.stringify(updatedTrades))
     
@@ -52,7 +90,37 @@ export default function TradeJournal() {
     window.dispatchEvent(new CustomEvent('dataUpdated'))
   }
 
-  const addTrade = () => {
+  const saveTradeToSupabase = async (tradeData: any) => {
+    try {
+      const userEmail = localStorage.getItem('userEmail')
+      if (!userEmail) {
+        console.error('No user email found')
+        return false
+      }
+
+      const response = await fetch('/api/trade-journal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          trade: tradeData
+        })
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        return result.success
+      }
+      return false
+    } catch (error) {
+      console.error('Error saving trade to Supabase:', error)
+      return false
+    }
+  }
+
+  const addTrade = async () => {
     if (!newTrade.symbol.trim() || !newTrade.entryPrice || !newTrade.exitPrice || !newTrade.quantity) return
 
     const entryPrice = parseFloat(newTrade.entryPrice)
@@ -63,22 +131,47 @@ export default function TradeJournal() {
       ? (exitPrice - entryPrice) * quantity
       : (entryPrice - exitPrice) * quantity
 
-    const trade: Trade = {
-      id: Date.now().toString(),
+    const tradeData = {
       symbol: newTrade.symbol.toUpperCase(),
-      type: newTrade.type,
-      entryPrice,
-      exitPrice,
-      quantity,
-      pnl,
-      date: new Date().toISOString().split('T')[0],
+      side: newTrade.type.toUpperCase(),
+      size: quantity,
+      rr: 1, // Default risk:reward ratio
+      pnl: pnl,
+      entryPrice: entryPrice,
+      exitPrice: exitPrice,
+      quantity: quantity,
+      date: new Date().toISOString(),
       notes: newTrade.notes,
       emotions: newTrade.emotions,
-      lessons: newTrade.lessons
+      lessons: newTrade.lessons,
+      tags: []
     }
 
-    const updatedTrades = [...trades, trade]
-    saveTrades(updatedTrades)
+    // Save to Supabase
+    const success = await saveTradeToSupabase(tradeData)
+    
+    if (success) {
+      // Create local trade object for immediate UI update
+      const trade: Trade = {
+        id: Date.now().toString(),
+        symbol: newTrade.symbol.toUpperCase(),
+        type: newTrade.type,
+        entryPrice,
+        exitPrice,
+        quantity,
+        pnl,
+        date: new Date().toISOString().split('T')[0],
+        notes: newTrade.notes,
+        emotions: newTrade.emotions,
+        lessons: newTrade.lessons
+      }
+
+      const updatedTrades = [...trades, trade]
+      await saveTrades(updatedTrades)
+      
+      // Reload from Supabase to get the actual ID
+      await loadTradesFromSupabase()
+    }
     
     setNewTrade({
       symbol: '',
@@ -93,9 +186,27 @@ export default function TradeJournal() {
     setShowAddForm(false)
   }
 
-  const deleteTrade = (id: string) => {
-    const updatedTrades = trades.filter(trade => trade.id !== id)
-    saveTrades(updatedTrades)
+  const deleteTrade = async (id: string) => {
+    try {
+      const userEmail = localStorage.getItem('userEmail')
+      if (!userEmail) {
+        console.error('No user email found')
+        return
+      }
+
+      const response = await fetch(`/api/trade-journal?email=${encodeURIComponent(userEmail)}&tradeId=${id}`, {
+        method: 'DELETE'
+      })
+
+      if (response.ok) {
+        const updatedTrades = trades.filter(trade => trade.id !== id)
+        await saveTrades(updatedTrades)
+      } else {
+        console.error('Failed to delete trade from Supabase')
+      }
+    } catch (error) {
+      console.error('Error deleting trade:', error)
+    }
   }
 
   const toggleEmotion = (emotion: string) => {

@@ -70,6 +70,7 @@ export default function TradingDashboard() {
   // Load trade data on component mount
   useEffect(() => {
     loadTradeData()
+    loadTradingStats()
     
     // Get user name from localStorage
     const savedUserName = localStorage.getItem('userName')
@@ -80,6 +81,7 @@ export default function TradingDashboard() {
     // Listen for trade updates
     const handleDataUpdate = () => {
       loadTradeData()
+      loadTradingStats()
     }
     
     window.addEventListener('dataUpdated', handleDataUpdate)
@@ -88,6 +90,52 @@ export default function TradingDashboard() {
       window.removeEventListener('dataUpdated', handleDataUpdate)
     }
   }, [])
+
+  const loadTradingStats = async () => {
+    try {
+      const userEmail = localStorage.getItem('userEmail')
+      if (!userEmail) {
+        console.log('No user email found, using default stats')
+        return
+      }
+
+      const response = await fetch(`/api/trading-stats?email=${encodeURIComponent(userEmail)}`)
+      if (response.ok) {
+        const result = await response.json()
+        if (result.success) {
+          const statsData = result.stats
+          setStats([
+            { 
+              label: 'Total P&L', 
+              value: `£${statsData.totalPnL.toFixed(2)}`, 
+              change: '0%', 
+              positive: statsData.totalPnL >= 0 
+            },
+            { 
+              label: 'Win Rate', 
+              value: `${statsData.winRate.toFixed(1)}%`, 
+              change: '0%', 
+              positive: statsData.winRate >= 50 
+            },
+            { 
+              label: 'Trades This Month', 
+              value: statsData.tradesThisMonth.toString(), 
+              change: '0', 
+              positive: true 
+            },
+            { 
+              label: 'Streak', 
+              value: `${statsData.currentStreak} days`, 
+              change: '0', 
+              positive: statsData.currentStreak > 0 
+            }
+          ])
+        }
+      }
+    } catch (error) {
+      console.error('Error loading trading stats:', error)
+    }
+  }
 
   const loadTradeData = () => {
     try {
@@ -110,9 +158,6 @@ export default function TradingDashboard() {
         }))
         
         setRecentTrades(formattedTrades)
-        
-        // Calculate stats
-        calculateStats(trades)
       }
     } catch (error) {
       console.error('Error loading trade data:', error)
