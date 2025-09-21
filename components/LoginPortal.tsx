@@ -60,7 +60,12 @@ export default function LoginPortal({ onLoginSuccess }: LoginPortalProps) {
     const observer = new MutationObserver(checkDarkMode)
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
     
-        // Clean login page - no payment-specific logic
+    // Check if user should be forced into signup mode (from payment success page)
+    const forceSignupMode = localStorage.getItem('forceSignupMode')
+    if (forceSignupMode === 'true') {
+      setIsSignUp(true)
+      localStorage.removeItem('forceSignupMode') // Clear the flag
+    }
     
     return () => observer.disconnect()
   }, [])
